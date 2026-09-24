@@ -1,0 +1,1080 @@
+{
+  "meta": {
+    "module": "Module 11",
+    "title": "Python Object-Oriented Programming (OOP) - Interview Questions",
+    "language": "English",
+    "level": "Beginner to Advanced",
+    "question_count": 60,
+    "answer_format": [
+      "Short Answer",
+      "Detailed Explanation",
+      "Code Examples"
+    ],
+    "description": "A comprehensive 60-question Python OOP interview module with easy, detailed explanations and practical code examples. Explanations are designed to build conceptual understanding rather than relying on one-line definitions.",
+    "detail_level": "Detailed and beginner-friendly"
+  },
+  "categories": [
+    {
+      "id": "oop-fundamentals",
+      "name": "OOP Fundamentals",
+      "question_count": 10
+    },
+    {
+      "id": "methods",
+      "name": "Methods",
+      "question_count": 8
+    },
+    {
+      "id": "encapsulation",
+      "name": "Encapsulation",
+      "question_count": 6
+    },
+    {
+      "id": "inheritance",
+      "name": "Inheritance",
+      "question_count": 11
+    },
+    {
+      "id": "mro",
+      "name": "Method Resolution Order (MRO)",
+      "question_count": 5
+    },
+    {
+      "id": "polymorphism",
+      "name": "Polymorphism",
+      "question_count": 6
+    },
+    {
+      "id": "abstraction",
+      "name": "Abstraction",
+      "question_count": 4
+    },
+    {
+      "id": "advanced-oop",
+      "name": "Advanced OOP",
+      "question_count": 10
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is Object-Oriented Programming (OOP), and why is it used in Python?",
+      "category": "oop-fundamentals",
+      "answer": {
+        "short_answer": "Object-Oriented Programming (OOP) is a programming approach where data and the behavior that works on that data are organized into classes and objects. Python supports OOP and provides features such as inheritance, polymorphism, encapsulation, and abstraction.",
+        "detailed_explanation": "OOP (Object-Oriented Programming) is a way of designing programs by grouping related data and behavior into objects. Think of a real-world Student: a student has data such as name and age, and can perform actions such as introduce() or calculate_marks(). In Python, a class defines the structure and behavior, while an object is a real instance of that class. OOP becomes especially useful when an application grows because related code stays together instead of being scattered across many functions and variables. It also supports reuse through inheritance, flexible behavior through polymorphism, controlled access through encapsulation, and clear interfaces through abstraction. Python is not purely object-oriented; it is a multi-paradigm language, so you can use procedural, functional, and object-oriented styles together.",
+        "code_examples": [
+          {
+            "title": "Basic OOP Example",
+            "code": "class Student:\n    def __init__(self, name):\n        self.name = name\n\n    def introduce(self):\n        return f\"My name is {self.name}.\"\n\nstudent = Student(\"Rahul\")\nprint(student.introduce())",
+            "output": "My name is Rahul.",
+            "explanation": "Student is the class, student is an object, and introduce() is behavior associated with that object. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "question": "What are the main principles of OOP?",
+      "category": "oop-fundamentals",
+      "answer": {
+        "short_answer": "The four commonly discussed principles of OOP are encapsulation, inheritance, polymorphism, and abstraction.",
+        "detailed_explanation": "The four principles commonly associated with OOP are encapsulation, inheritance, polymorphism, and abstraction. Encapsulation means keeping related data and methods together and controlling how internal state is changed. Inheritance allows a new class to reuse and extend an existing class. Polymorphism means different objects can respond to the same operation in different ways. Abstraction means exposing what the user needs while hiding unnecessary implementation details. A useful way to remember them is: encapsulation is about controlling data and behavior, inheritance is about reusing relationships, polymorphism is about one interface with different behavior, and abstraction is about simplifying what the caller sees. These principles are design ideas; Python implements them flexibly rather than forcing strict rules.",
+        "code_examples": [
+          {
+            "title": "Four Principles in a Small Example",
+            "code": "from abc import ABC, abstractmethod\n\nclass Animal(ABC):\n    def __init__(self, name):\n        self.name = name\n\n    @abstractmethod\n    def sound(self):\n        pass\n\nclass Dog(Animal):\n    def sound(self):\n        return \"Bark\"\n\nclass Cat(Animal):\n    def sound(self):\n        return \"Meow\"\n\nanimals = [Dog(\"Tommy\"), Cat(\"Mimi\")]\nfor animal in animals:\n    print(animal.name, animal.sound())",
+            "output": "Tommy Bark\nMimi Meow",
+            "explanation": "The example uses encapsulated object data, inheritance, abstraction through Animal, and polymorphism because different animals respond to sound() differently. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "question": "What is a class in Python?",
+      "category": "oop-fundamentals",
+      "answer": {
+        "short_answer": "A class is a blueprint or definition used to create objects. It can contain attributes and methods.",
+        "detailed_explanation": "A class is a definition from which objects are created. It describes what information an object can hold and what actions the object can perform. Attributes usually represent data, while methods represent behavior. For example, a BankAccount class may contain balance as data and deposit() and withdraw() as behavior. Writing a class does not mean you have created one particular account; it defines the structure that future account objects can follow. A single class can create many objects, and each object can have different instance data. Classes are useful because they keep related state and behavior together and make code easier to understand and reuse.",
+        "code_examples": [
+          {
+            "title": "Creating a Class",
+            "code": "class Car:\n    brand = \"Toyota\"\n\n    def start(self):\n        return \"Car started\"\n\ncar = Car()\nprint(car.brand)\nprint(car.start())",
+            "output": "Toyota\nCar started",
+            "explanation": "Car defines an attribute and a method. car is an object created from the Car class. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "question": "What is an object in Python?",
+      "category": "oop-fundamentals",
+      "answer": {
+        "short_answer": "An object is an instance of a class. It contains or accesses data and behavior defined by its class.",
+        "detailed_explanation": "An object is a concrete instance created from a class. If Student is the class, student1 = Student(\"Aman\") is an object. The object has its own identity and can hold its own instance attributes. Objects use the methods defined by their class to perform behavior. Python itself treats almost everything as an object: integers, strings, lists, functions, and instances of user-defined classes are all objects. This is an important Python concept because it explains why methods and attributes can be used on many different values. Two objects can come from the same class but contain different data, so changing one object's instance state normally does not change another object's instance state.",
+        "code_examples": [
+          {
+            "title": "Two Objects from One Class",
+            "code": "class Student:\n    def __init__(self, name):\n        self.name = name\n\nstudent1 = Student(\"Aman\")\nstudent2 = Student(\"Priya\")\n\nprint(student1.name)\nprint(student2.name)",
+            "output": "Aman\nPriya",
+            "explanation": "student1 and student2 are separate objects created from the same Student class, and each object has its own name value. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "question": "What is the difference between a class and an object?",
+      "category": "oop-fundamentals",
+      "answer": {
+        "short_answer": "A class is a definition or blueprint, while an object is a particular instance created from that class.",
+        "detailed_explanation": "The easiest way to understand the difference is: a class is the blueprint, while an object is the actual thing created from that blueprint. For example, Car can be a class that describes brand, color, and start(). car1 and car2 can be two different objects created from Car. The class defines what these objects can have and do; each object represents a separate runtime instance. One class can therefore produce many objects. A useful real-world analogy is a house plan versus actual houses: the plan describes the structure, while each built house is a separate object. In Python, class definitions are themselves objects too, but for basic OOP interviews the blueprint/instance distinction is the key idea.",
+        "code_examples": [
+          {
+            "title": "Class vs Object",
+            "code": "class Employee:\n    def __init__(self, name):\n        self.name = name\n\nemployee1 = Employee(\"Asha\")\nemployee2 = Employee(\"Ravi\")\n\nprint(employee1.name)\nprint(employee2.name)",
+            "output": "Asha\nRavi",
+            "explanation": "Employee is the class. employee1 and employee2 are objects created from it. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "question": "How do you create a class and an object in Python?",
+      "category": "oop-fundamentals",
+      "answer": {
+        "short_answer": "Use the class keyword to define a class and call the class name to create an object.",
+        "detailed_explanation": "First define a class using the class keyword. Inside it, define attributes and methods. Then create an object by calling the class like a function. If the class has an __init__() method, Python calls it during initialization and passes the supplied constructor arguments to it. For example, Person(\"Neha\") creates an instance and sends \"Neha\" to __init__(). The variable person then refers to that object. You can create any number of objects from the same class. Each object normally gets its own instance attributes, while class-level attributes can be shared through the class.",
+        "code_examples": [
+          {
+            "title": "Create Class and Object",
+            "code": "class Person:\n    def __init__(self, name):\n        self.name = name\n\nperson = Person(\"Neha\")\nprint(person.name)",
+            "output": "Neha",
+            "explanation": "Person defines the class and Person(\"Neha\") creates an object and initializes its name. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "question": "What is the __init__() method in Python?",
+      "category": "oop-fundamentals",
+      "answer": {
+        "short_answer": "__init__() is an initializer method that runs when an object is initialized and is commonly used to set its initial state.",
+        "detailed_explanation": "__init__() is the initializer method that Python normally calls after a new instance has been created. Its main job is to put the object into a valid initial state, usually by assigning instance attributes such as self.name or self.balance. Beginners often call __init__() the constructor, and that is common interview language, but technically object creation and initialization are separate: __new__() is involved in creating/returning the instance, while __init__() initializes it. You normally do not call __init__() manually. When you write Product(\"Laptop\", 50000), Python handles the instance creation and then calls __init__() with the supplied arguments.",
+        "code_examples": [
+          {
+            "title": "Initializing Object Data",
+            "code": "class Product:\n    def __init__(self, name, price):\n        self.name = name\n        self.price = price\n\nproduct = Product(\"Laptop\", 50000)\nprint(product.name)\nprint(product.price)",
+            "output": "Laptop\n50000",
+            "explanation": "When Product(...) is called, __init__() receives the supplied values and stores them in the new object's instance attributes. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "question": "What is self in Python, and why is it used?",
+      "category": "oop-fundamentals",
+      "answer": {
+        "short_answer": "self refers to the current instance inside an instance method. It lets the method access that object's attributes and other instance methods.",
+        "detailed_explanation": "self represents the current object inside an instance method. It is how a method knows which object's data it should read or change. For example, if two Student objects have different names, self.name refers to the name of whichever object called the method. self is not a reserved keyword; it is the standard convention and should almost always be used because it makes Python code clear. When you write student.greet(), Python effectively supplies student as the first argument to the instance method. That is why the method definition contains self explicitly. Without self, an instance method would not have the normal reference through which it accesses that object's state.",
+        "code_examples": [
+          {
+            "title": "Using self",
+            "code": "class Student:\n    def __init__(self, name):\n        self.name = name\n\n    def greet(self):\n        return f\"Hello, {self.name}!\"\n\nstudent = Student(\"Riya\")\nprint(student.greet())",
+            "output": "Hello, Riya!",
+            "explanation": "self.name refers to the name stored in the particular Student object on which greet() is called. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "question": "What is the difference between instance variables and class variables?",
+      "category": "oop-fundamentals",
+      "answer": {
+        "short_answer": "Instance variables belong to individual objects, while class variables are defined at class level and are shared through the class unless an instance shadows the name.",
+        "detailed_explanation": "An instance variable belongs to a particular object. It is commonly created with self.attribute, usually inside __init__(), so different objects can store different values. A class variable is defined directly inside the class and represents data associated with the class itself. Instances can read a class variable through normal attribute lookup, but if an instance assigns the same attribute name, it creates/shadows an instance attribute instead of changing the class variable. A common example is employee.name as instance-specific data and Employee.company as shared class-level data. Be especially careful with mutable class variables such as lists or dictionaries because all instances can reference the same mutable object unless you create separate instance values.",
+        "code_examples": [
+          {
+            "title": "Instance vs Class Variable",
+            "code": "class Employee:\n    company = \"ABC Ltd\"\n\n    def __init__(self, name):\n        self.name = name\n\nemp1 = Employee(\"Asha\")\nemp2 = Employee(\"Ravi\")\n\nprint(emp1.name)\nprint(emp2.name)\nprint(emp1.company)\nprint(emp2.company)",
+            "output": "Asha\nRavi\nABC Ltd\nABC Ltd",
+            "explanation": "name is different for each object, while company is defined at class level and is shared through the class. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "question": "How can you access and modify attributes of an object?",
+      "category": "oop-fundamentals",
+      "answer": {
+        "short_answer": "Use dot notation to access or assign attributes, such as object.name or object.name = value.",
+        "detailed_explanation": "Object attributes are normally accessed with dot notation: object.attribute. You can read an attribute, assign a new value, or, when appropriate, create an instance attribute dynamically. For example, student.name reads the current name and student.name = \"Rahul\" changes it. However, direct modification is not always the best design. If changing a value requires validation or other rules, a class can expose a method or property instead. Python also provides built-ins such as getattr() and setattr() when attribute names are stored dynamically. In interviews, the main point is that attributes represent object state and Python's normal interface for accessing them is dot notation.",
+        "code_examples": [
+          {
+            "title": "Access and Modify Attributes",
+            "code": "class Student:\n    def __init__(self, name):\n        self.name = name\n\nstudent = Student(\"Aman\")\nprint(student.name)\n\nstudent.name = \"Rahul\"\nprint(student.name)",
+            "output": "Aman\nRahul",
+            "explanation": "The name attribute is read with student.name and changed by assigning a new value. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "question": "What are instance methods in Python?",
+      "category": "methods",
+      "answer": {
+        "short_answer": "Instance methods are methods that operate on a particular object and normally receive self as their first parameter.",
+        "detailed_explanation": "An instance method is a method designed to work with a particular object. Its first parameter is conventionally self, which receives the instance automatically when the method is called through that object. Because it has self, the method can read or modify instance variables and call other instance methods. For example, account.deposit(500) changes the balance of that particular account, not every account. Instance methods are the most common method type in everyday classes. If a method needs information specific to one object, instance method is usually the natural choice. The object does not need to be passed manually when the method is called with dot notation.",
+        "code_examples": [
+          {
+            "title": "Instance Method",
+            "code": "class BankAccount:\n    def __init__(self, balance):\n        self.balance = balance\n\n    def deposit(self, amount):\n        self.balance += amount\n\naccount = BankAccount(1000)\naccount.deposit(500)\nprint(account.balance)",
+            "output": "1500",
+            "explanation": "deposit() changes the balance of the specific BankAccount object represented by self. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "question": "What are class methods in Python?",
+      "category": "methods",
+      "answer": {
+        "short_answer": "A class method is a method bound to the class rather than a particular instance. It receives the class as its first argument, conventionally named cls.",
+        "detailed_explanation": "A class method is bound to the class rather than to one particular instance. It is created using @classmethod, and Python automatically passes the class as the first argument, conventionally named cls. Because it receives cls, it can access class variables and can create objects using the class. One of its most common uses is an alternative constructor, such as from_string() or from_dict(). Class methods can be called using the class name and can also be called through an instance, although the class-oriented form is usually clearer. The important interview distinction is: instance method receives self; class method receives cls; static method receives neither automatically.",
+        "code_examples": [
+          {
+            "title": "Class Method",
+            "code": "class Student:\n    school = \"ABC School\"\n\n    @classmethod\n    def get_school(cls):\n        return cls.school\n\nprint(Student.get_school())",
+            "output": "ABC School",
+            "explanation": "The method receives the Student class as cls and reads the class variable school. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "question": "What are static methods in Python?",
+      "category": "methods",
+      "answer": {
+        "short_answer": "A static method is a method placed inside a class that does not automatically receive self or cls.",
+        "detailed_explanation": "A static method is a function placed inside a class namespace that does not receive self or cls automatically. It is useful when the operation is logically related to the class but does not need any particular object's state or the class's state. For example, a Validator class may have is_positive(number). The method can be called as Validator.is_positive(10). A static method can still accept normal parameters; it simply does not get an implicit first parameter. Do not choose staticmethod merely because it looks cleaner. If the operation needs object data, use an instance method; if it needs class data or class construction, a class method may be more appropriate.",
+        "code_examples": [
+          {
+            "title": "Static Method",
+            "code": "class MathHelper:\n    @staticmethod\n    def add(a, b):\n        return a + b\n\nprint(MathHelper.add(10, 20))",
+            "output": "30",
+            "explanation": "add() does not need any object or class state, so it can be a static method. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "question": "What is the difference between instance methods, class methods, and static methods?",
+      "category": "methods",
+      "answer": {
+        "short_answer": "Instance methods use self and work with object state; class methods use cls and work with class state; static methods receive neither automatically.",
+        "detailed_explanation": "The key difference is the context each method receives. An instance method receives self and is designed around one particular object's state. A class method receives cls and is designed around class-level state or class construction. A static method receives neither automatically and behaves like a normal function that is grouped under the class for organization. For example, deposit() on a bank account needs self.balance, so it is an instance method. from_dict() that creates a new account can be a class method. A validation helper that only receives explicit arguments can be static. This distinction is frequently asked because it tests whether you understand Python's method binding model rather than just decorator syntax.",
+        "code_examples": [
+          {
+            "title": "All Three Method Types",
+            "code": "class Demo:\n    count = 10\n\n    def instance_method(self):\n        return \"instance\"\n\n    @classmethod\n    def class_method(cls):\n        return cls.count\n\n    @staticmethod\n    def static_method(a, b):\n        return a + b\n\nobj = Demo()\nprint(obj.instance_method())\nprint(Demo.class_method())\nprint(Demo.static_method(2, 3))",
+            "output": "instance\n10\n5",
+            "explanation": "Each method type is selected based on whether instance state, class state, or no automatic state is required. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "question": "What is the @classmethod decorator?",
+      "category": "methods",
+      "answer": {
+        "short_answer": "@classmethod converts a function into a class method whose first automatic argument is the class, conventionally called cls.",
+        "detailed_explanation": "@classmethod is a decorator that changes how a function is bound when accessed from a class or instance. Python passes the class object as the first argument, conventionally called cls. Because cls refers to the actual class through which the method is being used, class methods are useful for alternative constructors and inheritance-friendly class-level operations. For example, Person.from_string(\"Aman,25\") can parse input and return cls(name, age). Using cls instead of explicitly writing Person is important because a subclass can inherit that method and potentially receive an instance of the subclass. This makes class methods more flexible than simply hard-coding the original class name.",
+        "code_examples": [
+          {
+            "title": "Alternative Constructor",
+            "code": "class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\n    @classmethod\n    def from_string(cls, data):\n        name, age = data.split(\",\")\n        return cls(name, int(age))\n\nperson = Person.from_string(\"Aman,25\")\nprint(person.name, person.age)",
+            "output": "Aman 25",
+            "explanation": "from_string() creates a Person object from a string and uses cls so the constructor remains class-aware. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "question": "What is the @staticmethod decorator?",
+      "category": "methods",
+      "answer": {
+        "short_answer": "@staticmethod defines a method that does not receive an instance or class automatically.",
+        "detailed_explanation": "@staticmethod tells Python not to bind an instance or class automatically to the method. In other words, there is no automatic self and no automatic cls. This is useful for helper operations that are conceptually related to a class but do not depend on object or class state. For example, MathHelper.add(a, b) only needs a and b. A static method can be called through the class or an instance, but calling it through the class makes its purpose clearer. In interviews, remember that staticmethod is mainly about namespacing and organization, not about making a method private or faster.",
+        "code_examples": [
+          {
+            "title": "Utility with staticmethod",
+            "code": "class Validator:\n    @staticmethod\n    def is_positive(number):\n        return number > 0\n\nprint(Validator.is_positive(10))\nprint(Validator.is_positive(-2))",
+            "output": "True\nFalse",
+            "explanation": "The validation logic does not need object or class state, so staticmethod is suitable. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "question": "When should you use a class method instead of an instance method?",
+      "category": "methods",
+      "answer": {
+        "short_answer": "Use a class method when the operation needs class-level information or should create/configure objects using the class, rather than depending on an existing object's state.",
+        "detailed_explanation": "Use a class method when the operation is related to the class itself rather than an already-existing object. A very common example is an alternative constructor. Suppose a Product normally expects name and price, but you also want to create a Product from a dictionary. A class method can accept the dictionary, extract the values, and return cls(...). This is different from an instance method because there is no Product object yet on which the method could operate. The class method receives the class instead. This also makes the code inheritance-friendly because cls can refer to a subclass when the inherited class method is called through that subclass.",
+        "code_examples": [
+          {
+            "title": "Class Method as Alternative Constructor",
+            "code": "class Product:\n    def __init__(self, name, price):\n        self.name = name\n        self.price = price\n\n    @classmethod\n    def from_dict(cls, data):\n        return cls(data[\"name\"], data[\"price\"])\n\nproduct = Product.from_dict({\"name\": \"Phone\", \"price\": 20000})\nprint(product.name, product.price)",
+            "output": "Phone 20000",
+            "explanation": "No existing Product object is needed. The class method receives data and creates an object through cls. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "question": "Can a static method access instance variables or class variables directly?",
+      "category": "methods",
+      "answer": {
+        "short_answer": "A static method cannot access self or cls automatically because neither is passed to it. It can access class data explicitly through a class name and can use explicitly supplied objects.",
+        "detailed_explanation": "A static method does not receive self or cls automatically, so it cannot directly write self.value or cls.value unless those names are otherwise supplied. It can access class data explicitly through the class name, such as Counter.count, and it can access instance data if an object is explicitly passed as an argument. The important point is that Python does not provide an implicit object/class reference to static methods. If a static method repeatedly needs class state, that may be a sign that a class method would communicate the design more clearly. Similarly, if it needs object state, an instance method is usually more appropriate.",
+        "code_examples": [
+          {
+            "title": "Explicit Access",
+            "code": "class Counter:\n    count = 10\n\n    @staticmethod\n    def get_count():\n        return Counter.count\n\nprint(Counter.get_count())",
+            "output": "10",
+            "explanation": "The static method accesses the class variable explicitly through Counter. It does not receive cls automatically. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "question": "What is encapsulation in Python?",
+      "category": "encapsulation",
+      "answer": {
+        "short_answer": "Encapsulation means keeping related data and behavior together and controlling or guiding how internal data is accessed or changed.",
+        "detailed_explanation": "Encapsulation means keeping related data and behavior together and providing a controlled way to work with the internal state. Imagine a bank account: instead of letting every part of the program freely change balance, the class can expose deposit() and withdraw() and validate the requested operation. Python does not enforce strict private fields like some languages. Instead, it uses conventions such as _balance, name mangling with __balance, methods, and properties. Encapsulation is therefore more about good design and clear boundaries than absolute access prevention. It also makes future changes easier because outside code depends on the class interface rather than on every internal implementation detail.",
+        "code_examples": [
+          {
+            "title": "Encapsulation with a Method",
+            "code": "class BankAccount:\n    def __init__(self, balance):\n        self._balance = balance\n\n    def deposit(self, amount):\n        if amount > 0:\n            self._balance += amount\n\n    def get_balance(self):\n        return self._balance\n\naccount = BankAccount(1000)\naccount.deposit(500)\nprint(account.get_balance())",
+            "output": "1500",
+            "explanation": "The class keeps balance-related behavior together and uses an underscore to signal that _balance is intended for internal use. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "question": "Does Python support private, protected, and public variables?",
+      "category": "encapsulation",
+      "answer": {
+        "short_answer": "Python does not enforce Java-style public/protected/private access modifiers. It uses naming conventions and name mangling to communicate or limit accidental access.",
+        "detailed_explanation": "Python does not have strict public/protected/private field access modifiers in the same way as languages such as Java or C++. A normal name such as name is conventionally public. A single leading underscore, _name, means 'this is intended for internal use' and is a convention rather than an access restriction. A double leading underscore, __name, triggers name mangling, which reduces accidental collisions with subclass attributes. Even a name-mangled attribute can technically be accessed deliberately. Therefore, in an interview, avoid saying that Python's __name is completely private. A more accurate statement is that Python uses conventions and name mangling to encourage encapsulation and reduce accidental access/collision.",
+        "code_examples": [
+          {
+            "title": "Python Attribute Conventions",
+            "code": "class User:\n    def __init__(self):\n        self.name = \"Aman\"\n        self._email = \"internal@example.com\"\n        self.__password = \"secret\"\n\nuser = User()\nprint(user.name)\nprint(user._email)",
+            "output": "Aman\ninternal@example.com",
+            "explanation": "name is public by convention, _email signals internal use, and __password is name-mangled. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "question": "What is the difference between _variable and __variable?",
+      "category": "encapsulation",
+      "answer": {
+        "short_answer": "A single leading underscore is a convention for internal use, while a double leading underscore triggers name mangling.",
+        "detailed_explanation": "A single leading underscore and a double leading underscore have different meanings. _variable is simply a naming convention that signals internal or non-public use. Python does not automatically block access to it. __variable inside a class triggers name mangling. For example, __password inside User is generally stored under a name like _User__password. The purpose is mainly to avoid accidental name clashes, especially when inheritance is involved. It is not a security mechanism. A third pattern, names with two leading and two trailing underscores such as __init__, is different again: those are special/dunder methods and are handled according to Python's data model.",
+        "code_examples": [
+          {
+            "title": "Single vs Double Underscore",
+            "code": "class Demo:\n    def __init__(self):\n        self._internal = 10\n        self.__hidden = 20\n\nobj = Demo()\nprint(obj._internal)\nprint(obj._Demo__hidden)",
+            "output": "10\n20",
+            "explanation": "_internal is directly accessible by its original name. __hidden is name-mangled to _Demo__hidden. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "question": "What is name mangling in Python?",
+      "category": "encapsulation",
+      "answer": {
+        "short_answer": "Name mangling changes the internal name of an attribute beginning with two leading underscores so that accidental name collisions are less likely.",
+        "detailed_explanation": "Name mangling is Python's automatic renaming of certain class attributes that begin with two underscores. If a class User contains self.__password, Python generally stores it internally as self._User__password. This prevents accidental collisions when a subclass independently uses an attribute with the same double-underscore name. It is especially useful in inheritance because parent and child internal attributes can remain separate. Name mangling does not encrypt the value, and it does not make the attribute impossible to access. You can technically access it using the mangled name. Its purpose is primarily namespace protection against accidental conflicts, not security.",
+        "code_examples": [
+          {
+            "title": "Name Mangling Example",
+            "code": "class Parent:\n    def __init__(self):\n        self.__value = \"parent\"\n\nclass Child(Parent):\n    def __init__(self):\n        super().__init__()\n        self.__value = \"child\"\n\nobj = Child()\nprint(obj._Parent__value)\nprint(obj._Child__value)",
+            "output": "parent\nchild",
+            "explanation": "The parent and child __value attributes are mangled to different names, so they do not accidentally collide. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "question": "How can you access a name-mangled variable?",
+      "category": "encapsulation",
+      "answer": {
+        "short_answer": "A double-underscore attribute can technically be accessed using its mangled name, such as _ClassName__variable.",
+        "detailed_explanation": "A name-mangled attribute can technically be reached using _ClassName__attribute. For example, __password inside User becomes _User__password. This demonstrates an important Python philosophy: privacy is not enforced as an absolute security boundary. In normal application code, deliberately accessing the mangled name is usually a poor design because it couples your code to the class's internal implementation. If the class provides a method or property for the data, that public interface should normally be used. In interviews, explain both facts: yes, the value can technically be accessed, but name mangling exists to reduce accidental access and naming collisions, not to provide security.",
+        "code_examples": [
+          {
+            "title": "Accessing a Mangled Attribute",
+            "code": "class User:\n    def __init__(self):\n        self.__password = \"12345\"\n\nuser = User()\nprint(user._User__password)",
+            "output": "12345",
+            "explanation": "The attribute is accessible through its mangled name, which demonstrates why Python's double underscore is not absolute privacy. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "question": "Why is encapsulation useful in real-world applications?",
+      "category": "encapsulation",
+      "answer": {
+        "short_answer": "Encapsulation helps keep implementation details organized and allows a class to control how its internal state is changed.",
+        "detailed_explanation": "Encapsulation is especially useful when an object's state has rules that must remain valid. Consider a bank account: balance should not become invalid simply because another part of the program assigned an arbitrary value. A class can keep its internal state behind methods or properties and validate changes. This also makes maintenance easier. If the internal representation changes later, code using the public interface does not necessarily need to change. Encapsulation therefore provides a boundary between a class's implementation and its users. In Python this boundary is cooperative: developers are expected to respect conventions and public interfaces rather than relying on a strict private-access mechanism.",
+        "code_examples": [
+          {
+            "title": "Validation through Encapsulation",
+            "code": "class BankAccount:\n    def __init__(self, balance=0):\n        self._balance = balance\n\n    def deposit(self, amount):\n        if amount <= 0:\n            raise ValueError(\"Deposit must be positive\")\n        self._balance += amount\n\naccount = BankAccount(1000)\naccount.deposit(500)\nprint(account._balance)",
+            "output": "1500",
+            "explanation": "The class controls the deposit operation and prevents invalid values through validation. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "question": "What is inheritance in Python, and why is it used?",
+      "category": "inheritance",
+      "answer": {
+        "short_answer": "Inheritance allows a child class to reuse and extend attributes and methods from a parent class.",
+        "detailed_explanation": "Inheritance allows a new class to reuse and extend an existing class. The existing class is often called the parent, base, or superclass; the new class is the child, derived class, or subclass. If Dog inherits from Animal, Dog can reuse suitable Animal behavior and add or override its own behavior. Inheritance is most meaningful when the relationship represents an is-a relationship: a Dog is an Animal. It can reduce duplicated code and provide a common interface, but it should not be used just to share a few unrelated utility functions. Python also supports multiple inheritance, so inheritance design must sometimes be understood together with MRO and super().",
+        "code_examples": [
+          {
+            "title": "Basic Inheritance",
+            "code": "class Animal:\n    def eat(self):\n        return \"Eating\"\n\nclass Dog(Animal):\n    def bark(self):\n        return \"Barking\"\n\ndog = Dog()\nprint(dog.eat())\nprint(dog.bark())",
+            "output": "Eating\nBarking",
+            "explanation": "Dog inherits eat() from Animal and adds its own bark() method. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "question": "What are the different types of inheritance in Python?",
+      "category": "inheritance",
+      "answer": {
+        "short_answer": "Commonly discussed types are single, multiple, multilevel, hierarchical, and hybrid inheritance.",
+        "detailed_explanation": "Python commonly describes five inheritance patterns: single, multiple, multilevel, hierarchical, and hybrid. Single means one parent. Multiple means one child has multiple parents. Multilevel forms a chain such as A -> B -> C. Hierarchical means multiple children share one parent. Hybrid is a combination of patterns. These are conceptual classifications, not separate syntax features. You create them using the normal class and inheritance syntax. Multiple and hybrid inheritance introduce MRO considerations because Python must decide where to search for a method. In interviews, being able to draw a small class hierarchy and explain the relationship is often more useful than memorizing the names alone.",
+        "code_examples": [
+          {
+            "title": "Inheritance Patterns",
+            "code": "class A:\n    pass\n\nclass B(A):\n    pass\n\nclass C(B):\n    pass\n\nclass D(A):\n    pass\n\nclass E(B, D):\n    pass\n\nprint(E.__mro__)",
+            "output": "(<class '__main__.E'>, <class '__main__.B'>, <class '__main__.D'>, <class '__main__.A'>, <class 'object'>)",
+            "explanation": "B(A) and C(B) demonstrate a chain, B and D share A for hierarchical structure, and E(B, D) demonstrates multiple/hybrid inheritance. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "question": "What is single inheritance?",
+      "category": "inheritance",
+      "answer": {
+        "short_answer": "Single inheritance means a child class inherits from one parent class.",
+        "detailed_explanation": "Single inheritance is the simplest inheritance form: one child class inherits from one parent class. For example, Car(Vehicle) means Car gets accessible behavior from Vehicle and can add its own features. If Car does not override start(), calling Car().start() can use Vehicle.start(). Single inheritance is easy to reason about because there is only one direct parent path. It is useful when the subclass is a genuine specialization of the parent. The child can also override methods when it needs different behavior. This pattern forms the foundation for understanding the more complex inheritance structures used by Python.",
+        "code_examples": [
+          {
+            "title": "Single Inheritance",
+            "code": "class Vehicle:\n    def start(self):\n        return \"Vehicle started\"\n\nclass Car(Vehicle):\n    pass\n\ncar = Car()\nprint(car.start())",
+            "output": "Vehicle started",
+            "explanation": "Car has one parent, Vehicle, and can use its start() method. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "question": "What is multiple inheritance?",
+      "category": "inheritance",
+      "answer": {
+        "short_answer": "Multiple inheritance means a class inherits from more than one parent class.",
+        "detailed_explanation": "Multiple inheritance means a class has more than one direct parent, such as class Smartphone(Camera, Phone). Python allows this and calculates an MRO to determine the order in which methods are searched. Multiple inheritance can be useful when parent classes provide distinct, compatible behaviors. However, if two parents define the same method, the MRO determines which implementation is found first. Cooperative multiple inheritance often uses super() so each participating class can contribute its behavior. In an interview, mention both the definition and the MRO consequence. The important point is not simply that Python allows multiple parents, but that method lookup remains deterministic through MRO.",
+        "code_examples": [
+          {
+            "title": "Multiple Inheritance",
+            "code": "class Camera:\n    def take_photo(self):\n        return \"Photo taken\"\n\nclass Phone:\n    def call(self):\n        return \"Calling\"\n\nclass Smartphone(Camera, Phone):\n    pass\n\nphone = Smartphone()\nprint(phone.take_photo())\nprint(phone.call())",
+            "output": "Photo taken\nCalling",
+            "explanation": "Smartphone inherits behavior from both Camera and Phone. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "question": "What is multilevel inheritance?",
+      "category": "inheritance",
+      "answer": {
+        "short_answer": "Multilevel inheritance is an inheritance chain where a class inherits from a class that itself inherits from another class.",
+        "detailed_explanation": "Multilevel inheritance is a chain of inheritance with multiple levels, for example Grandparent -> Parent -> Child. The Child inherits from Parent, and Parent inherits from Grandparent. As a result, the Child can normally access suitable inherited behavior from both levels. This can model naturally layered specialization, but very deep hierarchies can become harder to understand and maintain. In Python, attribute lookup follows the MRO through the hierarchy. The important distinction from multiple inheritance is that multilevel inheritance is a chain, while multiple inheritance means a class has more than one direct parent.",
+        "code_examples": [
+          {
+            "title": "Multilevel Inheritance",
+            "code": "class Grandparent:\n    def house(self):\n        return \"House\"\n\nclass Parent(Grandparent):\n    def car(self):\n        return \"Car\"\n\nclass Child(Parent):\n    def bike(self):\n        return \"Bike\"\n\nchild = Child()\nprint(child.house())\nprint(child.car())\nprint(child.bike())",
+            "output": "House\nCar\nBike",
+            "explanation": "Child inherits from Parent, and Parent inherits from Grandparent, forming a three-level chain. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "question": "What is hierarchical inheritance?",
+      "category": "inheritance",
+      "answer": {
+        "short_answer": "Hierarchical inheritance means multiple child classes inherit from the same parent class.",
+        "detailed_explanation": "Hierarchical inheritance occurs when multiple child classes inherit from the same parent. For example, Dog(Animal) and Cat(Animal) both reuse Animal behavior while implementing their own specialized behavior. This is useful when several related classes share common functionality or a common interface. The parent can contain the behavior that genuinely applies to all children, while each child can add or override details. A common polymorphism pattern is to keep a common method such as sound() in the conceptual interface and let each child implement it differently.",
+        "code_examples": [
+          {
+            "title": "Hierarchical Inheritance",
+            "code": "class Animal:\n    def eat(self):\n        return \"Eating\"\n\nclass Dog(Animal):\n    def sound(self):\n        return \"Bark\"\n\nclass Cat(Animal):\n    def sound(self):\n        return \"Meow\"\n\nprint(Dog().eat())\nprint(Cat().eat())",
+            "output": "Eating\nEating",
+            "explanation": "Dog and Cat both inherit from Animal, so both get the shared eat() method. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 31,
+      "question": "What is hybrid inheritance?",
+      "category": "inheritance",
+      "answer": {
+        "short_answer": "Hybrid inheritance is a combination of two or more inheritance patterns, such as multiple and hierarchical inheritance.",
+        "detailed_explanation": "Hybrid inheritance is a combination of multiple inheritance patterns. For example, B and C may both inherit from A, and D may inherit from both B and C. That structure combines hierarchical and multiple inheritance. Hybrid inheritance is not a special keyword; it is simply a way of describing the shape of a class hierarchy. The important Python issue is that complex hybrid structures can create overlapping inheritance paths. Python handles method lookup through MRO, and cooperative use of super() is important when several classes need to participate in initialization or behavior.",
+        "code_examples": [
+          {
+            "title": "Hybrid Inheritance",
+            "code": "class A:\n    def show(self):\n        return \"A\"\n\nclass B(A):\n    pass\n\nclass C(A):\n    pass\n\nclass D(B, C):\n    pass\n\nprint(D().show())\nprint([cls.__name__ for cls in D.mro()])",
+            "output": "A\n['D', 'B', 'C', 'A', 'object']",
+            "explanation": "B and C both inherit from A, while D inherits from both B and C, combining hierarchical and multiple inheritance. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 32,
+      "question": "What is method overriding in Python?",
+      "category": "inheritance",
+      "answer": {
+        "short_answer": "Method overriding occurs when a child class defines a method with the same name as a method in its parent class, providing its own implementation.",
+        "detailed_explanation": "Method overriding happens when a subclass defines a method with the same name as a method available in its parent. When that method is called on the subclass object, Python normally finds the subclass implementation first according to the MRO. This lets a subclass specialize behavior while keeping a common method name. For example, Animal.sound() can provide a general interface, while Dog.sound() returns Bark. The child does not have to completely replace the parent behavior; it can call super().sound() and then add or modify behavior. Overriding is therefore both an inheritance feature and an important mechanism behind polymorphism.",
+        "code_examples": [
+          {
+            "title": "Method Overriding",
+            "code": "class Animal:\n    def sound(self):\n        return \"Some sound\"\n\nclass Dog(Animal):\n    def sound(self):\n        return \"Bark\"\n\nprint(Animal().sound())\nprint(Dog().sound())",
+            "output": "Some sound\nBark",
+            "explanation": "Dog overrides the sound() implementation inherited from Animal. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 33,
+      "question": "What is the super() function, and why is it used?",
+      "category": "inheritance",
+      "answer": {
+        "short_answer": "super() gives access to the next implementation in the MRO and is commonly used to reuse parent-class behavior.",
+        "detailed_explanation": "super() provides access to the next implementation in the MRO. In simple parent-child inheritance, super().method() commonly calls the parent implementation. It is especially useful in __init__() because it lets a child reuse parent initialization instead of duplicating it. The deeper reason super() matters is multiple inheritance: it follows the MRO rather than simply naming one fixed parent. This supports cooperative class hierarchies where each class can perform its part and pass control onward. In modern Python, zero-argument super() is normally used inside methods. The key interview point is that super() means 'continue through the MRO', not simply 'call my direct parent'.",
+        "code_examples": [
+          {
+            "title": "Using super()",
+            "code": "class Person:\n    def __init__(self, name):\n        self.name = name\n\nclass Student(Person):\n    def __init__(self, name, course):\n        super().__init__(name)\n        self.course = course\n\nstudent = Student(\"Aman\", \"Python\")\nprint(student.name)\nprint(student.course)",
+            "output": "Aman\nPython",
+            "explanation": "super().__init__(name) reuses the parent initializer instead of duplicating the code that sets name. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "question": "Can a child class access the attributes and methods of its parent class?",
+      "category": "inheritance",
+      "answer": {
+        "short_answer": "Yes. A child class can normally access inherited attributes and methods according to Python's attribute lookup rules, unless they are overridden or otherwise inaccessible.",
+        "detailed_explanation": "Yes, a child class normally inherits accessible attributes and methods from its parent. When you create Child(), Python's attribute lookup can search Child and then its base classes according to the MRO. If the child defines the same name, its own definition normally takes precedence. If the child needs the parent's implementation, super() can be used. There are exceptions involving name mangling, descriptors, and other Python object-model details, but for standard OOP the rule is simple: inheritance allows reuse of parent behavior. This is why a Child object can call a method that is defined only in Parent.",
+        "code_examples": [
+          {
+            "title": "Accessing Parent Behavior",
+            "code": "class Parent:\n    value = 100\n\n    def show(self):\n        return \"Parent method\"\n\nclass Child(Parent):\n    pass\n\nobj = Child()\nprint(obj.value)\nprint(obj.show())",
+            "output": "100\nParent method",
+            "explanation": "Child inherits both the class attribute value and the show() method from Parent. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 35,
+      "question": "What happens when a child class and parent class have methods with the same name?",
+      "category": "inheritance",
+      "answer": {
+        "short_answer": "The child implementation normally takes precedence for a child object. This is method overriding.",
+        "detailed_explanation": "If both parent and child define a method with the same name, the child's implementation normally wins when the method is called on a child object. This is method overriding. Python finds the first matching attribute according to the class's MRO, and the child class appears before its parent in the normal single-inheritance case. The parent implementation is still available if the child explicitly calls super().method(). This mechanism lets a child preserve the same interface while changing the implementation. It is one of the simplest ways Python demonstrates runtime polymorphism.",
+        "code_examples": [
+          {
+            "title": "Child Method Takes Precedence",
+            "code": "class Parent:\n    def show(self):\n        return \"Parent\"\n\nclass Child(Parent):\n    def show(self):\n        return \"Child\"\n\nprint(Child().show())",
+            "output": "Child",
+            "explanation": "The Child implementation is found before Parent.show(), so it is used for the Child object. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 36,
+      "question": "What is Method Resolution Order (MRO) in Python?",
+      "category": "mro",
+      "answer": {
+        "short_answer": "MRO is the order Python follows when searching for methods and attributes in a class hierarchy.",
+        "detailed_explanation": "Method Resolution Order, or MRO, is the sequence Python follows when looking for attributes and methods in a class hierarchy. It starts with the class itself and then continues through its base classes according to Python's inheritance rules. MRO becomes particularly important with multiple inheritance because there can be several possible paths to a method. Python calculates one consistent order so method lookup is deterministic. You can inspect it with Class.mro() or Class.__mro__. When you use super(), Python uses this MRO to determine which implementation should be called next. Understanding MRO helps explain why a particular method runs when several classes define the same method.",
+        "code_examples": [
+          {
+            "title": "Checking MRO",
+            "code": "class A:\n    pass\n\nclass B(A):\n    pass\n\nclass C(B):\n    pass\n\nprint([cls.__name__ for cls in C.mro()])",
+            "output": "['C', 'B', 'A', 'object']",
+            "explanation": "Python searches C first, then B, then A, and finally object for inherited behavior. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 37,
+      "question": "How can you check the MRO of a class?",
+      "category": "mro",
+      "answer": {
+        "short_answer": "Use Class.mro() or Class.__mro__ to inspect the method resolution order.",
+        "detailed_explanation": "You can inspect a class's MRO in two common ways: Class.mro() and Class.__mro__. mro() returns a list, while __mro__ is a tuple containing the same class-resolution sequence. For example, D.mro() might produce D, B, C, A, object. Reading the result from left to right tells you the order Python uses when searching for attributes and methods. This is particularly useful for debugging multiple-inheritance behavior. In interviews, showing that you know both forms demonstrates practical understanding: print(MyClass.mro()) is usually the most convenient way to inspect it.",
+        "code_examples": [
+          {
+            "title": "mro() and __mro__",
+            "code": "class A:\n    pass\n\nclass B(A):\n    pass\n\nprint([cls.__name__ for cls in B.mro()])\nprint([cls.__name__ for cls in B.__mro__])",
+            "output": "['B', 'A', 'object']\n['B', 'A', 'object']",
+            "explanation": "Both interfaces show the same lookup order in this simple inheritance hierarchy. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 38,
+      "question": "What is the C3 linearization algorithm in Python?",
+      "category": "mro",
+      "answer": {
+        "short_answer": "C3 linearization is the algorithm Python uses to calculate a consistent MRO for multiple inheritance.",
+        "detailed_explanation": "C3 linearization is the algorithm Python uses to calculate the MRO for classes, especially when multiple inheritance is involved. It produces an order that respects the local order of base classes and preserves the ordering already established by parent MROs. You normally do not need to implement the algorithm manually. What matters in an interview is understanding why Python needs a formal algorithm: with multiple parents, a simple depth-first search can produce inconsistent or surprising results. C3 gives Python a predictable, consistent resolution order. When you call D.mro(), the result you see is the outcome of this MRO calculation.",
+        "code_examples": [
+          {
+            "title": "C3 MRO Example",
+            "code": "class A:\n    pass\n\nclass B(A):\n    pass\n\nclass C(A):\n    pass\n\nclass D(B, C):\n    pass\n\nprint([cls.__name__ for cls in D.mro()])",
+            "output": "['D', 'B', 'C', 'A', 'object']",
+            "explanation": "The MRO produced for D respects the declared order B, C and the inheritance relationship leading to A. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 39,
+      "question": "How does Python resolve a method when multiple parent classes contain the same method?",
+      "category": "mro",
+      "answer": {
+        "short_answer": "Python searches classes according to the MRO and uses the first matching method it finds.",
+        "detailed_explanation": "When multiple parent classes define the same method, Python does not randomly choose one. It searches according to the class's MRO and uses the first matching implementation it finds. For class D(B, C), the MRO might be D -> B -> C -> A -> object, so B.show() is found before C.show(). If the hierarchy is designed for cooperative multiple inheritance, B and C can use super() to continue the lookup chain rather than directly calling a specific parent. This is why base-class order matters. Understanding the MRO is the correct way to predict which method Python will execute.",
+        "code_examples": [
+          {
+            "title": "Method Resolution in Multiple Inheritance",
+            "code": "class A:\n    def show(self):\n        return \"A\"\n\nclass B(A):\n    def show(self):\n        return \"B\"\n\nclass C(A):\n    def show(self):\n        return \"C\"\n\nclass D(B, C):\n    pass\n\nprint(D().show())\nprint([cls.__name__ for cls in D.mro()])",
+            "output": "B\n['D', 'B', 'C', 'A', 'object']",
+            "explanation": "B appears before C in D's MRO, so B.show() is the first matching method. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 40,
+      "question": "What is the difference between super() and directly calling the parent class?",
+      "category": "mro",
+      "answer": {
+        "short_answer": "super() follows Python's MRO and supports cooperative inheritance, while directly naming a parent class explicitly targets that specific class.",
+        "detailed_explanation": "A direct parent call explicitly names a particular class, for example Parent.show(self). super() is different: it asks Python for the next class in the MRO. In simple single inheritance, both can appear to produce the same result. In multiple inheritance, however, a hard-coded Parent.show(self) can bypass other classes that should participate, while super() can continue through the cooperative MRO. Therefore, super() is generally the more flexible tool for inheritance hierarchies designed around cooperative method calls. In an interview, avoid describing super() simply as an alias for 'parent'; its more accurate meaning is MRO-aware delegation to the next class in the resolution order.",
+        "code_examples": [
+          {
+            "title": "super() vs Direct Parent Call",
+            "code": "class Parent:\n    def show(self):\n        return \"Parent\"\n\nclass Child(Parent):\n    def show_with_super(self):\n        return super().show()\n\n    def show_with_parent(self):\n        return Parent.show(self)\n\nobj = Child()\nprint(obj.show_with_super())\nprint(obj.show_with_parent())",
+            "output": "Parent\nParent",
+            "explanation": "In this simple hierarchy both produce the same result, but super() remains MRO-aware and is generally preferable for cooperative inheritance. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 41,
+      "question": "What is polymorphism in Python?",
+      "category": "polymorphism",
+      "answer": {
+        "short_answer": "Polymorphism means that the same interface, operation, or method call can work with different object types and produce type-specific behavior.",
+        "detailed_explanation": "Polymorphism means that code can work with different object types through a common operation or interface, while each object can provide its own behavior. In Python, this often appears through method overriding and duck typing. For example, Dog and Cat can both provide sound(), and a loop can call animal.sound() without caring whether animal is a Dog or Cat. This reduces the need for long type-checking chains. Python's dynamic nature makes polymorphism particularly natural. The important idea is not that different classes must be related by inheritance; Python can also achieve polymorphic behavior between completely unrelated classes as long as they provide the expected interface.",
+        "code_examples": [
+          {
+            "title": "Polymorphism with a Common Method",
+            "code": "class Dog:\n    def sound(self):\n        return \"Bark\"\n\nclass Cat:\n    def sound(self):\n        return \"Meow\"\n\nfor animal in [Dog(), Cat()]:\n    print(animal.sound())",
+            "output": "Bark\nMeow",
+            "explanation": "The same sound() call works with different object types and each object provides its own behavior. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 42,
+      "question": "What is method overriding as a form of polymorphism?",
+      "category": "polymorphism",
+      "answer": {
+        "short_answer": "Method overriding allows different subclasses to provide their own implementation of the same parent method, enabling different behavior through a common interface.",
+        "detailed_explanation": "Method overriding becomes polymorphism when different subclasses implement the same parent-defined operation in their own ways. Suppose Shape defines area(), while Square and Rectangle each override area(). Code can work with a collection of Shape-like objects and simply call shape.area(). Python dispatches to the implementation appropriate for the actual object. This lets calling code focus on the common interface instead of knowing every concrete type. In interviews, connect the concepts clearly: inheritance provides the relationship, overriding provides different implementations, and polymorphism lets client code use the common operation without manually selecting which implementation to call.",
+        "code_examples": [
+          {
+            "title": "Overriding for Polymorphism",
+            "code": "class Shape:\n    def area(self):\n        return 0\n\nclass Square(Shape):\n    def __init__(self, side):\n        self.side = side\n\n    def area(self):\n        return self.side ** 2\n\nclass Rectangle(Shape):\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n\n    def area(self):\n        return self.width * self.height\n\nfor shape in [Square(4), Rectangle(4, 5)]:\n    print(shape.area())",
+            "output": "16\n20",
+            "explanation": "Both objects support area(), but each subclass calculates it differently. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 43,
+      "question": "What is duck typing in Python?",
+      "category": "polymorphism",
+      "answer": {
+        "short_answer": "Duck typing means Python code often cares about what an object can do rather than what class the object belongs to.",
+        "detailed_explanation": "Duck typing is a core Python idea: code often cares about whether an object supports the required behavior rather than checking its exact class. The phrase comes from the idea that if an object behaves like the expected thing, it can be used accordingly. For example, a function that calls obj.speak() can accept Dog, Robot, or another object as long as it provides speak(). This makes APIs flexible and reduces unnecessary type checks. The trade-off is that if an object does not provide the expected method, the call can fail at runtime. Clear interfaces, documentation, protocols, or type hints can help make the expected behavior explicit.",
+        "code_examples": [
+          {
+            "title": "Duck Typing",
+            "code": "class Dog:\n    def speak(self):\n        return \"Bark\"\n\nclass Robot:\n    def speak(self):\n        return \"Beep\"\n\ndef make_speak(obj):\n    print(obj.speak())\n\nmake_speak(Dog())\nmake_speak(Robot())",
+            "output": "Bark\nBeep",
+            "explanation": "make_speak() does not check the object's class. It simply expects the object to provide speak(). This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 44,
+      "question": "Does Python support method overloading?",
+      "category": "polymorphism",
+      "answer": {
+        "short_answer": "Python does not support traditional compile-time method overloading by defining multiple methods with the same name and different parameter lists.",
+        "detailed_explanation": "Python does not support traditional runtime method overloading where you define several methods with the same name and different parameter lists. A class can contain only one active definition for a given method name; a later definition replaces the earlier one. Python instead uses flexible techniques such as default arguments, *args, **kwargs, or conditional logic. The typing module also has @overload for describing multiple call signatures to static type checkers, but those overload declarations do not create multiple runtime implementations. This distinction is important in interviews: Python can express overloaded APIs, but it does not perform Java-style method overloading by parameter signature at runtime.",
+        "code_examples": [
+          {
+            "title": "Default Arguments Instead of Traditional Overloading",
+            "code": "class Calculator:\n    def add(self, a, b=0, c=0):\n        return a + b + c\n\ncalc = Calculator()\nprint(calc.add(10))\nprint(calc.add(10, 20))\nprint(calc.add(10, 20, 30))",
+            "output": "10\n30\n60",
+            "explanation": "One method supports multiple calling patterns through default arguments instead of multiple same-named runtime methods. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 45,
+      "question": "How can you achieve method overloading-like behavior in Python?",
+      "category": "polymorphism",
+      "answer": {
+        "short_answer": "You can use default arguments, *args, **kwargs, or conditional logic to support different numbers or forms of arguments.",
+        "detailed_explanation": "Because Python does not use traditional runtime method overloading, you normally design one method that can accept the required variations. Default arguments are good when only a few parameters are optional. *args handles a variable number of positional arguments, while **kwargs handles variable keyword arguments. You can also inspect values and choose behavior conditionally. The goal should be a clear API rather than simply trying to imitate another language's overload mechanism. For example, add(*numbers) can naturally support one, two, or many numbers. For larger APIs, explicit keyword-only parameters can often make the supported calling patterns easier to understand.",
+        "code_examples": [
+          {
+            "title": "Using *args",
+            "code": "class Calculator:\n    def add(self, *numbers):\n        return sum(numbers)\n\ncalc = Calculator()\nprint(calc.add(10))\nprint(calc.add(10, 20, 30, 40))",
+            "output": "10\n100",
+            "explanation": "The same method can accept any number of positional arguments. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 46,
+      "question": "What is operator overloading in Python?",
+      "category": "polymorphism",
+      "answer": {
+        "short_answer": "Operator overloading allows a class to define how operators such as +, ==, <, and len() behave for its objects by implementing special methods.",
+        "detailed_explanation": "Operator overloading means defining how Python operators should behave for your custom objects. Python connects operators to special methods: + can use __add__(), == can use __eq__(), * can use __mul__(), < can use __lt__(), and len(obj) can use __len__(). When you write p1 + p2, Python can delegate the operation to the object's special method. This allows classes such as Point, Money, Vector, or Matrix to work naturally with normal Python syntax. Operator overloading should represent a sensible meaning for the domain; defining an operator in an unexpected way can make code confusing.",
+        "code_examples": [
+          {
+            "title": "Overloading +",
+            "code": "class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __add__(self, other):\n        return Point(self.x + other.x, self.y + other.y)\n\np1 = Point(2, 3)\np2 = Point(4, 5)\np3 = p1 + p2\nprint(p3.x, p3.y)",
+            "output": "6 8",
+            "explanation": "The + operator is customized through __add__() to add two Point objects. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 47,
+      "question": "What is abstraction in Python?",
+      "category": "abstraction",
+      "answer": {
+        "short_answer": "Abstraction means exposing the essential interface of an object while hiding unnecessary implementation details.",
+        "detailed_explanation": "Abstraction means focusing on what an object should provide while hiding unnecessary details about how it performs the work. Imagine a payment system: the caller needs to know that payment.pay(1000) performs a payment, but it does not necessarily need to know every internal step of a card gateway. Python supports abstraction through the abc module, abstract base classes, abstract methods, protocols, and ordinary well-designed interfaces. Abstraction reduces mental complexity because users interact with a smaller, clearer surface. It does not mean the implementation literally disappears; it means the caller is not required to depend on those implementation details.",
+        "code_examples": [
+          {
+            "title": "Abstraction with ABC",
+            "code": "from abc import ABC, abstractmethod\n\nclass Payment(ABC):\n    @abstractmethod\n    def pay(self, amount):\n        pass\n\nclass CardPayment(Payment):\n    def pay(self, amount):\n        return f\"Paid {amount} by card\"\n\npayment = CardPayment()\nprint(payment.pay(1000))",
+            "output": "Paid 1000 by card",
+            "explanation": "Payment defines the required pay() interface, while CardPayment provides the implementation. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 48,
+      "question": "What is an abstract class?",
+      "category": "abstraction",
+      "answer": {
+        "short_answer": "An abstract class is a class designed to define a common interface or base behavior and may contain abstract methods that subclasses must implement.",
+        "detailed_explanation": "An abstract class is a class intended to act as a base or interface and may require subclasses to implement certain operations. Python's abc module provides ABC and abstractmethod for this purpose. If an ABC contains an unimplemented abstract method, Python normally prevents direct instantiation of that abstract class. A concrete subclass must implement the required abstract methods before it can be instantiated. An abstract class can still contain normal methods and shared implementation. This makes it useful when several concrete classes should follow a common contract while retaining different internal implementations.",
+        "code_examples": [
+          {
+            "title": "Abstract Class",
+            "code": "from abc import ABC, abstractmethod\n\nclass Animal(ABC):\n    @abstractmethod\n    def sound(self):\n        pass\n\nclass Dog(Animal):\n    def sound(self):\n        return \"Bark\"\n\n# animal = Animal()  # TypeError\nprint(Dog().sound())",
+            "output": "Bark",
+            "explanation": "Animal requires subclasses to implement sound(). Dog provides the implementation, so Dog can be instantiated. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 49,
+      "question": "What are abstract methods and the @abstractmethod decorator?",
+      "category": "abstraction",
+      "answer": {
+        "short_answer": "An abstract method defines a required operation that concrete subclasses are expected to implement. @abstractmethod marks the method as abstract.",
+        "detailed_explanation": "An abstract method is a method that defines a required part of an interface. Using @abstractmethod marks it as abstract. When the containing class participates in Python's ABC mechanism, a concrete subclass must implement the required abstract methods before it can normally be instantiated. The abstract method body may be empty with pass, or it can contain some shared/default behavior in appropriate designs; the important point is that the method remains abstract until overridden. Abstract methods are useful for enforcing a common API across implementations, such as every payment provider implementing pay() or every shape implementing area().",
+        "code_examples": [
+          {
+            "title": "Abstract Method",
+            "code": "from abc import ABC, abstractmethod\n\nclass Vehicle(ABC):\n    @abstractmethod\n    def start(self):\n        pass\n\nclass Car(Vehicle):\n    def start(self):\n        return \"Car started\"\n\ncar = Car()\nprint(car.start())",
+            "output": "Car started",
+            "explanation": "Vehicle requires start(), and Car satisfies that contract by implementing it. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 50,
+      "question": "What is the difference between abstraction and encapsulation?",
+      "category": "abstraction",
+      "answer": {
+        "short_answer": "Abstraction focuses on what an object exposes, while encapsulation focuses on bundling data and behavior and controlling or guiding access to internal state.",
+        "detailed_explanation": "Abstraction and encapsulation are related but answer different questions. Abstraction is mainly about what the outside world needs to know: expose a simple interface and hide unnecessary implementation details. Encapsulation is about how data and behavior are bundled together and how internal state is controlled or accessed. For example, Payment.pay() can be the abstract interface, while _balance and the validation around changing it demonstrate encapsulation. A useful memory trick is: abstraction hides complexity; encapsulation protects or organizes state and behavior. In a real class, both can appear together and support each other.",
+        "code_examples": [
+          {
+            "title": "Abstraction and Encapsulation Together",
+            "code": "from abc import ABC, abstractmethod\n\nclass Payment(ABC):\n    @abstractmethod\n    def pay(self, amount):\n        pass\n\nclass CardPayment(Payment):\n    def __init__(self, balance):\n        self._balance = balance\n\n    def pay(self, amount):\n        if amount <= self._balance:\n            self._balance -= amount\n            return \"Payment successful\"\n        return \"Insufficient balance\"\n\npayment = CardPayment(1000)\nprint(payment.pay(300))",
+            "output": "Payment successful",
+            "explanation": "The abstract pay() interface demonstrates abstraction, while _balance and its controlled update demonstrate encapsulation. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 51,
+      "question": "What are magic methods (dunder methods) in Python?",
+      "category": "advanced-oop",
+      "answer": {
+        "short_answer": "Magic or dunder methods are special methods whose names begin and end with double underscores and let objects integrate with Python's built-in syntax and operations.",
+        "detailed_explanation": "Magic methods, more precisely called special methods in Python's data model, are methods with names such as __init__, __str__, __len__, and __add__. They allow user-defined objects to participate in Python's built-in syntax and operations. You normally do not call many of these methods directly; Python invokes them as a consequence of an operation. For example, print(obj) can use __str__(), len(obj) can use __len__(), and obj1 + obj2 can use __add__(). They are called dunder methods because their names have double underscores on both sides. Knowing common dunder methods is important because they connect custom classes to Python's object model.",
+        "code_examples": [
+          {
+            "title": "Dunder Methods",
+            "code": "class Book:\n    def __init__(self, title):\n        self.title = title\n\n    def __str__(self):\n        return self.title\n\n    def __len__(self):\n        return len(self.title)\n\nbook = Book(\"Python\")\nprint(book)\nprint(len(book))",
+            "output": "Python\n6",
+            "explanation": "print(book) uses __str__(), while len(book) uses __len__(). This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 52,
+      "question": "What is the difference between __str__() and __repr__() in Python?",
+      "category": "advanced-oop",
+      "answer": {
+        "short_answer": "__str__() is intended for a readable representation for users, while __repr__() is intended to provide a detailed, developer-oriented representation.",
+        "detailed_explanation": "__str__() and __repr__() both produce string representations, but their intended audiences are different. __str__() should generally be readable and user-friendly, such as displaying a person's name. __repr__() should generally be detailed, unambiguous, and useful to developers during debugging. print(obj) and str(obj) generally use __str__() when it exists, while repr(obj) uses __repr__(). If __str__() is not defined, Python can fall back to __repr__() for str(obj). A useful rule is: __str__ is for a friendly presentation; __repr__ is for a useful developer representation. A good repr often includes enough information to identify the object's state.",
+        "code_examples": [
+          {
+            "title": "__str__ vs __repr__",
+            "code": "class User:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\n    def __str__(self):\n        return self.name\n\n    def __repr__(self):\n        return f\"User(name={self.name!r}, age={self.age})\"\n\nuser = User(\"Aman\", 25)\nprint(str(user))\nprint(repr(user))",
+            "output": "Aman\nUser(name='Aman', age=25)",
+            "explanation": "__str__ gives a simple readable value, while __repr__ provides more information useful for debugging. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 53,
+      "question": "What is operator overloading in Python? Explain with __add__(), __eq__(), and other dunder methods.",
+      "category": "advanced-oop",
+      "answer": {
+        "short_answer": "Operator overloading lets custom objects define the behavior of operators through special methods such as __add__() and __eq__().",
+        "detailed_explanation": "Operator overloading is implemented through special methods that define how operators work with your class. For example, __add__ handles addition, __eq__ handles equality, __lt__ handles less-than comparison, and __mul__ handles multiplication. Python's syntax remains clean because users can write p1 + p2 rather than calling p1.__add__(p2) directly. The class decides what the operation means. When implementing these methods, consider incompatible types and return appropriate results rather than assuming every object is valid. Operator overloading is essentially a practical form of polymorphism: the same operator syntax can behave differently depending on the object type.",
+        "code_examples": [
+          {
+            "title": "Overloading + and ==",
+            "code": "class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __add__(self, other):\n        return Point(self.x + other.x, self.y + other.y)\n\n    def __eq__(self, other):\n        return self.x == other.x and self.y == other.y\n\np1 = Point(1, 2)\np2 = Point(3, 4)\np3 = Point(4, 6)\n\nprint((p1 + p2) == p3)",
+            "output": "True",
+            "explanation": "__add__ defines how Point objects are added, and __eq__ defines how equality is checked. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 54,
+      "question": "What is a property in Python, and how does the @property decorator work?",
+      "category": "advanced-oop",
+      "answer": {
+        "short_answer": "A property lets a method be accessed like an attribute, allowing controlled reading or computed values without changing the public interface.",
+        "detailed_explanation": "The @property decorator allows a method to be accessed using attribute syntax. Instead of writing circle.area(), you can write circle.area. This is useful for calculated values, validation, and controlled access. The biggest benefit is that the public interface can look like a normal attribute even though Python is executing method logic behind it. A property can start as a simple getter and later include validation or other logic without forcing callers to change from attribute syntax. Properties are therefore a common Pythonic way to implement encapsulation while keeping classes convenient to use.",
+        "code_examples": [
+          {
+            "title": "Basic Property",
+            "code": "class Circle:\n    def __init__(self, radius):\n        self.radius = radius\n\n    @property\n    def area(self):\n        return 3.14 * self.radius ** 2\n\ncircle = Circle(5)\nprint(circle.area)",
+            "output": "78.5",
+            "explanation": "area is implemented as a method but accessed like an attribute because of @property. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 55,
+      "question": "How do you create getter, setter, and deleter methods using @property?",
+      "category": "advanced-oop",
+      "answer": {
+        "short_answer": "Define a property getter with @property, then add @property_name.setter and @property_name.deleter when controlled assignment or deletion is required.",
+        "detailed_explanation": "A property getter is created with @property. If you want assignment to that property, define a setter using @property_name.setter. If deletion needs custom behavior, define a deleter with @property_name.deleter. A common pattern is to store the actual value in an internal attribute such as _marks and expose marks as the property. The setter can validate the incoming value before storing it. This gives callers simple syntax such as student.marks = 90 while allowing the class to enforce rules. The key benefit is separating the public attribute-like interface from the internal storage and validation logic.",
+        "code_examples": [
+          {
+            "title": "Property with Getter and Setter",
+            "code": "class Student:\n    def __init__(self, marks):\n        self.marks = marks\n\n    @property\n    def marks(self):\n        return self._marks\n\n    @marks.setter\n    def marks(self, value):\n        if not 0 <= value <= 100:\n            raise ValueError(\"Marks must be between 0 and 100\")\n        self._marks = value\n\nstudent = Student(85)\nprint(student.marks)\nstudent.marks = 90\nprint(student.marks)",
+            "output": "85\n90",
+            "explanation": "The setter validates the value while the caller still uses normal attribute syntax. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 56,
+      "question": "What is composition in Python, and how is it different from inheritance?",
+      "category": "advanced-oop",
+      "answer": {
+        "short_answer": "Composition means building a class using objects of other classes, representing a has-a relationship; inheritance represents an is-a relationship.",
+        "detailed_explanation": "Composition means one class contains or uses an object of another class. It represents a has-a relationship. For example, a Car has an Engine, so Car can store an Engine object and delegate engine-related work to it. Inheritance represents an is-a relationship: a Car may be a Vehicle. Composition often makes it possible to replace one component without changing the entire class hierarchy. Inheritance can be useful when subclasses truly share a common type and interface. The decision should come from the domain relationship and design needs, not from a rule that one technique is always better than the other.",
+        "code_examples": [
+          {
+            "title": "Composition Example",
+            "code": "class Engine:\n    def start(self):\n        return \"Engine started\"\n\nclass Car:\n    def __init__(self):\n        self.engine = Engine()\n\n    def start(self):\n        return self.engine.start()\n\ncar = Car()\nprint(car.start())",
+            "output": "Engine started",
+            "explanation": "Car contains an Engine object, so this is a has-a relationship and an example of composition. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 57,
+      "question": "What is the difference between isinstance() and issubclass()?",
+      "category": "advanced-oop",
+      "answer": {
+        "short_answer": "isinstance() checks whether an object is an instance of a class or compatible type, while issubclass() checks whether one class inherits from another.",
+        "detailed_explanation": "isinstance() and issubclass() check two different kinds of relationships. isinstance(obj, Class) asks whether an object is an instance of the specified class or a compatible subclass. issubclass(Child, Parent) asks whether one class inherits from another. For example, dog is an object, so isinstance(dog, Animal) is appropriate. Dog and Animal are classes, so issubclass(Dog, Animal) is appropriate. isinstance() follows inheritance too, which is why a Dog object can be an isinstance of Animal. Remember the simple rule: isinstance checks an object; issubclass checks a class relationship.",
+        "code_examples": [
+          {
+            "title": "isinstance vs issubclass",
+            "code": "class Animal:\n    pass\n\nclass Dog(Animal):\n    pass\n\ndog = Dog()\n\nprint(isinstance(dog, Dog))\nprint(isinstance(dog, Animal))\nprint(issubclass(Dog, Animal))",
+            "output": "True\nTrue\nTrue",
+            "explanation": "dog is an object, so isinstance() is appropriate. Dog and Animal are classes, so issubclass() checks their inheritance relationship. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 58,
+      "question": "What is the difference between shallow copy and deep copy of objects in Python?",
+      "category": "advanced-oop",
+      "answer": {
+        "short_answer": "A shallow copy creates a new outer object but keeps references to nested objects, while a deep copy recursively copies nested objects too.",
+        "detailed_explanation": "A shallow copy creates a new outer container or object but does not recursively copy nested objects. Therefore, nested mutable objects can still be shared between the original and shallow copy. A deep copy recursively copies nested objects so the copied structure has independent nested objects. Python's copy module provides copy.copy() and copy.deepcopy(). This matters with lists of lists, dictionaries containing lists, and custom objects containing mutable attributes. Deep copying is not automatically better: it can use more memory and may copy objects that do not need to be copied. The correct choice depends on whether shared nested references are intended.",
+        "code_examples": [
+          {
+            "title": "Shallow vs Deep Copy",
+            "code": "import copy\n\noriginal = [[1, 2], [3, 4]]\nshallow = copy.copy(original)\ndeep = copy.deepcopy(original)\n\nshallow[0].append(99)\ndeep[1].append(88)\n\nprint(original)\nprint(shallow)\nprint(deep)",
+            "output": "[[1, 2, 99], [3, 4]]\n[[1, 2, 99], [3, 4]]\n[[1, 2], [3, 4, 88]]",
+            "explanation": "The shallow copy shares the nested lists with original, while the deep copy has independent nested lists. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 59,
+      "question": "What is object lifecycle in Python? Explain __new__(), __init__(), and __del__().",
+      "category": "advanced-oop",
+      "answer": {
+        "short_answer": "__new__() is involved in creating an instance, __init__() initializes that instance, and __del__() is a finalizer that may be called when an object is being finalized.",
+        "detailed_explanation": "Object lifecycle describes the stages involved in creating, initializing, using, and eventually finalizing an object. __new__() is responsible for creating or returning an instance and is particularly important for immutable types and advanced object creation. After __new__ returns an instance, __init__() initializes that instance. __del__() is a finalizer that may be invoked when an object is being finalized, but its timing should not be treated as deterministic cleanup. In particular, critical resources such as files, database connections, or locks should be managed with context managers or explicit cleanup. This distinction between creation and initialization is a common advanced OOP interview topic.",
+        "code_examples": [
+          {
+            "title": "Object Creation and Initialization",
+            "code": "class Demo:\n    def __new__(cls):\n        print(\"__new__ called\")\n        return super().__new__(cls)\n\n    def __init__(self):\n        print(\"__init__ called\")\n\nobj = Demo()",
+            "output": "__new__ called\n__init__ called",
+            "explanation": "__new__ creates or returns the instance first, and __init__ initializes that instance afterward. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    },
+    {
+      "id": 60,
+      "question": "What are dataclasses in Python, and how does @dataclass simplify class creation?",
+      "category": "advanced-oop",
+      "answer": {
+        "short_answer": "A dataclass is a class created with the dataclasses module that can automatically generate common methods such as __init__(), __repr__(), and comparisons based on declared fields.",
+        "detailed_explanation": "A dataclass is a convenient way to define classes whose main purpose is to store structured data. The @dataclass decorator from the dataclasses module can automatically generate methods such as __init__() and __repr__(), and can also provide comparison-related behavior depending on configuration. You declare fields with type annotations, and the decorator handles much of the repetitive boilerplate. Dataclasses can also support defaults, default factories, frozen instances, ordering, and __post_init__(). They do not replace normal classes; they are a tool for data-focused classes. They are especially useful when manually writing constructors and representations would add repetitive code without much additional behavior.",
+        "code_examples": [
+          {
+            "title": "Basic Dataclass",
+            "code": "from dataclasses import dataclass\n\n@dataclass\nclass Student:\n    name: str\n    age: int\n\nstudent = Student(\"Aman\", 22)\nprint(student)\nprint(student.name)\nprint(student.age)",
+            "output": "Student(name='Aman', age=22)\nAman\n22",
+            "explanation": "The dataclass decorator automatically creates a useful __init__() and __repr__() for the declared fields. This example is intentionally small so the core OOP concept is easy to see and explain in an interview."
+          }
+        ]
+      }
+    }
+  ]
+}

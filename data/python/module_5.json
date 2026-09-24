@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "module": "Module 5",
+    "title": "Python Lists - Interview Questions",
+    "description": "Beginner-friendly interview questions covering the most important concepts of Python lists, including creation, indexing, slicing, modification, sorting, list comprehension, and duplicate removal.",
+    "language": "English",
+    "level": "Beginner",
+    "question_count": 10,
+    "answer_format": [
+      "Short Answer",
+      "Detailed Explanation",
+      "Code Examples"
+    ]
+  },
+  "categories": [
+    {
+      "id": "list-basics",
+      "name": "List Basics",
+      "description": "Basic concepts, creation, indexing, and slicing of Python lists.",
+      "question_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "list-methods",
+      "name": "List Methods",
+      "description": "Common methods used to add, remove, and sort elements in lists.",
+      "question_ids": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "list-comprehension-and-duplicates",
+      "name": "List Comprehension and Duplicates",
+      "description": "Useful techniques for creating lists and handling duplicate values.",
+      "question_ids": [
+        9,
+        10
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is a list in Python, and why is it used?",
+      "category": "list-basics",
+      "answer": {
+        "short_answer": "A list is an ordered and mutable collection in Python that can store multiple values in a single variable. Lists are used when we need to store and work with a group of items.",
+        "detailed_explanation": "A Python list is a collection of elements written inside square brackets []. The elements are separated by commas. A list can store multiple values, and those values can be of the same or different data types.\n\nLists are ordered, which means the elements maintain their position. Every element has an index, starting from 0. Lists are also mutable, which means we can add, remove, or change elements after creating the list.\n\nA list can contain integers, strings, floats, booleans, or even other lists. Because lists are flexible and easy to modify, they are one of the most commonly used data structures in Python.",
+        "code_examples": [
+          {
+            "title": "Creating and using a list",
+            "code": "fruits = [\"apple\", \"banana\", \"mango\"]\n\nprint(fruits)\nprint(fruits[0])\nfruits.append(\"orange\")\nprint(fruits)",
+            "output": "[\"apple\", \"banana\", \"mango\"]\napple\n[\"apple\", \"banana\", \"mango\", \"orange\"]",
+            "explanation": "The list stores three fruits. Index 0 accesses the first element, and append() adds a new element at the end."
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "question": "How do you create a list and access its elements?",
+      "category": "list-basics",
+      "answer": {
+        "short_answer": "A list is created using square brackets []. Its elements can be accessed using their index, where the first element has index 0.",
+        "detailed_explanation": "To create a list, place elements inside square brackets and separate them with commas. For example, [10, 20, 30] creates a list containing three integers.\n\nPython uses zero-based indexing. This means the first element is at index 0, the second is at index 1, and so on. We can access an element by writing the list name followed by its index inside square brackets.\n\nWe can also use negative indexes. Index -1 refers to the last element, -2 refers to the second-last element, and so on.",
+        "code_examples": [
+          {
+            "title": "Creating and accessing list elements",
+            "code": "numbers = [10, 20, 30, 40]\n\nprint(numbers[0])\nprint(numbers[2])\nprint(numbers[-1])",
+            "output": "10\n30\n40",
+            "explanation": "numbers[0] gives the first element, numbers[2] gives the third element, and numbers[-1] gives the last element."
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "question": "Are lists mutable or immutable in Python?",
+      "category": "list-basics",
+      "answer": {
+        "short_answer": "Lists are mutable in Python. This means their elements can be changed, added, or removed after the list is created.",
+        "detailed_explanation": "Mutable means an object can be modified after it has been created. Python lists are mutable, so we can change an existing element without creating a completely new list.\n\nFor example, if a list contains [10, 20, 30], we can change 20 to 50 using its index. We can also add elements using methods such as append() and insert(), or remove elements using methods such as remove() and pop().\n\nThis is an important difference between lists and tuples. Tuples are immutable, while lists are mutable.",
+        "code_examples": [
+          {
+            "title": "Changing a list element",
+            "code": "numbers = [10, 20, 30]\n\nnumbers[1] = 50\nprint(numbers)\n\nnumbers.append(40)\nprint(numbers)",
+            "output": "[10, 50, 30]\n[10, 50, 30, 40]",
+            "explanation": "The second element is changed from 20 to 50, and append() adds 40 to the end. Both operations are possible because lists are mutable."
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "question": "What is list indexing and negative indexing?",
+      "category": "list-basics",
+      "answer": {
+        "short_answer": "Indexing is used to access individual elements of a list. Positive indexing starts from 0, while negative indexing starts from -1 at the end of the list.",
+        "detailed_explanation": "Each element in a Python list has a position called an index. Python uses zero-based indexing, so the first element has index 0.\n\nPositive indexes move from left to right: 0, 1, 2, 3, and so on. Negative indexes move from right to left: -1 represents the last element, -2 represents the second-last element, and so on.\n\nNegative indexing is especially useful when we want to access elements from the end of a list without calculating the last index.",
+        "code_examples": [
+          {
+            "title": "Positive and negative indexing",
+            "code": "colors = [\"red\", \"green\", \"blue\", \"yellow\"]\n\nprint(colors[0])\nprint(colors[2])\nprint(colors[-1])\nprint(colors[-2])",
+            "output": "red\nblue\nyellow\nblue",
+            "explanation": "The first element is accessed using 0, while -1 accesses the last element and -2 accesses the second-last element."
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "question": "What is list slicing in Python?",
+      "category": "list-basics",
+      "answer": {
+        "short_answer": "List slicing is used to extract a portion of a list using the syntax list[start:stop:step].",
+        "detailed_explanation": "Slicing allows us to get multiple elements from a list without changing the original list. The basic syntax is list[start:stop:step].\n\nThe start index is included, but the stop index is excluded. If start is omitted, Python starts from the beginning. If stop is omitted, Python continues to the end. The step controls how many positions Python moves at a time.\n\nSlicing is commonly used when we need a subset of a list or want to create a reversed copy using [::-1].",
+        "code_examples": [
+          {
+            "title": "Using list slicing",
+            "code": "numbers = [10, 20, 30, 40, 50]\n\nprint(numbers[1:4])\nprint(numbers[:3])\nprint(numbers[2:])\nprint(numbers[::-1])",
+            "output": "[20, 30, 40]\n[10, 20, 30]\n[30, 40, 50]\n[50, 40, 30, 20, 10]",
+            "explanation": "The slice [1:4] returns indexes 1 through 3. [::-1] uses a step of -1, so it returns the list in reverse order."
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "question": "What is the difference between append(), extend(), and insert()?",
+      "category": "list-methods",
+      "answer": {
+        "short_answer": "append() adds one item at the end, extend() adds multiple items from another iterable, and insert() adds one item at a specific position.",
+        "detailed_explanation": "All three methods are used to add elements to a list, but they work differently.\n\nappend() adds exactly one object to the end of the list. If that object is another list, the entire list becomes one nested element.\n\nextend() takes an iterable such as a list, tuple, or string and adds its individual elements to the existing list.\n\ninsert(index, value) adds one value at a specific position. Existing elements from that position onward are shifted to the right.\n\nA common interview point is that append() adds one item, while extend() adds each element from another iterable.",
+        "code_examples": [
+          {
+            "title": "append(), extend(), and insert()",
+            "code": "numbers = [1, 2]\n\nnumbers.append(3)\nprint(numbers)\n\nnumbers.extend([4, 5])\nprint(numbers)\n\nnumbers.insert(1, 10)\nprint(numbers)",
+            "output": "[1, 2, 3]\n[1, 2, 3, 4, 5]\n[1, 10, 2, 3, 4, 5]",
+            "explanation": "append() adds 3 at the end, extend() adds 4 and 5 individually, and insert() places 10 at index 1."
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "question": "What is the difference between remove(), pop(), and del?",
+      "category": "list-methods",
+      "answer": {
+        "short_answer": "remove() deletes an element by value, pop() deletes and returns an element by index, and del is used to delete an element, multiple elements, or the entire list.",
+        "detailed_explanation": "Python provides several ways to remove data from a list.\n\nremove(value) searches for the first matching value and removes it. If the value does not exist, Python raises a ValueError.\n\npop(index) removes the element at the specified index and returns that element. If no index is provided, pop() removes and returns the last element.\n\ndel is a Python statement that can delete an element at an index, a slice of elements, or even the complete list variable.\n\nThe key difference to remember is: remove() works with a value, pop() works with an index and returns the removed value, and del is a deletion statement.",
+        "code_examples": [
+          {
+            "title": "remove(), pop(), and del",
+            "code": "numbers = [10, 20, 30, 40, 50]\n\nnumbers.remove(30)\nprint(numbers)\n\nremoved = numbers.pop(1)\nprint(removed)\nprint(numbers)\n\ndel numbers[0]\nprint(numbers)",
+            "output": "[10, 20, 40, 50]\n20\n[10, 40, 50]\n[40, 50]",
+            "explanation": "remove(30) deletes the value 30. pop(1) removes the element at index 1 and returns it. del numbers[0] deletes the first element."
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "question": "What is the difference between sort() and sorted()?",
+      "category": "list-methods",
+      "answer": {
+        "short_answer": "sort() sorts a list in place and changes the original list, while sorted() returns a new sorted list without changing the original list.",
+        "detailed_explanation": "Both sort() and sorted() are used to arrange elements in sorted order, but they behave differently.\n\nThe sort() method belongs to lists and modifies the original list. It returns None.\n\nThe sorted() function can work with many iterable objects and returns a new sorted list. The original list remains unchanged.\n\nBy default, both sort() and sorted() arrange values in ascending order. We can use reverse=True to sort in descending order.",
+        "code_examples": [
+          {
+            "title": "sort() versus sorted()",
+            "code": "numbers = [30, 10, 20]\n\nnumbers.sort()\nprint(numbers)\n\nnumbers = [30, 10, 20]\nsorted_numbers = sorted(numbers)\n\nprint(numbers)\nprint(sorted_numbers)",
+            "output": "[10, 20, 30]\n[30, 10, 20]\n[10, 20, 30]",
+            "explanation": "sort() changes the original list. sorted() creates and returns a new sorted list, leaving the original list unchanged."
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "question": "What is list comprehension in Python?",
+      "category": "list-comprehension-and-duplicates",
+      "answer": {
+        "short_answer": "List comprehension is a short and readable way to create a new list from an iterable, optionally using a condition.",
+        "detailed_explanation": "List comprehension provides a compact way to create lists using a single expression. It is often used instead of writing a complete for loop when the logic is simple.\n\nThe basic syntax is [expression for item in iterable]. We can also add a condition using [expression for item in iterable if condition].\n\nList comprehensions are useful because they make simple list-building operations concise and readable. However, very complicated logic is usually clearer when written using a normal loop.",
+        "code_examples": [
+          {
+            "title": "Creating a list using comprehension",
+            "code": "numbers = [1, 2, 3, 4, 5]\n\nsquares = [n * n for n in numbers]\neven_numbers = [n for n in numbers if n % 2 == 0]\n\nprint(squares)\nprint(even_numbers)",
+            "output": "[1, 4, 9, 16, 25]\n[2, 4]",
+            "explanation": "The first comprehension creates squares of all numbers. The second creates a list containing only even numbers."
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "question": "How do you remove duplicates from a list in Python?",
+      "category": "list-comprehension-and-duplicates",
+      "answer": {
+        "short_answer": "A common way to remove duplicates is to convert the list to a set and then back to a list. If the original order must be preserved, dict.fromkeys() or a loop can be used.",
+        "detailed_explanation": "A set stores only unique values, so converting a list to a set automatically removes duplicate values. For example, list(set(numbers)) can remove duplicates.\n\nHowever, a set-based approach is not the best choice when you need to preserve the original order in all situations. A useful order-preserving approach is list(dict.fromkeys(numbers)). Python dictionaries preserve insertion order, so this method keeps the first occurrence of each value.\n\nIn an interview, mention the requirement clearly: if order does not matter, set conversion is simple; if order matters, use an order-preserving approach such as dict.fromkeys() or a loop.",
+        "code_examples": [
+          {
+            "title": "Remove duplicates while preserving order",
+            "code": "numbers = [1, 2, 2, 3, 1, 4, 3]\n\nunique_numbers = list(dict.fromkeys(numbers))\n\nprint(unique_numbers)",
+            "output": "[1, 2, 3, 4]",
+            "explanation": "dict.fromkeys() keeps each value only once while preserving the order in which the values first appeared."
+          },
+          {
+            "title": "Remove duplicates using a set",
+            "code": "numbers = [1, 2, 2, 3, 1, 4]\n\nunique_numbers = list(set(numbers))\nprint(unique_numbers)",
+            "output": "Order is not guaranteed by this approach.",
+            "explanation": "A set removes duplicates, but the resulting order should not be relied upon. Use dict.fromkeys() when preserving insertion order is important."
+          }
+        ]
+      }
+    }
+  ]
+}

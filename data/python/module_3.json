@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "module": "Module 3",
+    "title": "Python Conditional Statements - Interview Questions",
+    "description": "10 important Python conditional statement interview questions with easy, detailed, interview-focused explanations and practical code examples.",
+    "language": "English",
+    "level": "Beginner",
+    "question_count": 10,
+    "answer_format": ["Short Answer", "Detailed Explanation", "Code Examples"]
+  },
+  "categories": [
+    {"id":"conditional-basics","name":"Conditional Statement Basics","description":"Core concepts of if, elif, else, and nested conditions.","question_ids":[1,2,3,4,5,6]},
+    {"id":"condition-operators","name":"Conditions & Operators","description":"Comparison, logical operators, identity, and truthy/falsy values used in conditions.","question_ids":[7,8,9,10]}
+  ],
+  "questions": [
+    {
+      "id":1,"category":"conditional-basics","question":"What are conditional statements in Python?",
+      "answer":{"short_answer":"Conditional statements allow Python to execute different blocks of code depending on whether a condition is true or false.","detailed_explanation":"Conditional statements are used when a program needs to make decisions. Python mainly provides if, elif, and else for this purpose. The if block runs when its condition is true. If the if condition is false, Python can check one or more elif conditions. If none of the conditions are true, the optional else block runs. Python uses indentation to define each block.","code_examples":[{"title":"Basic if-else condition","code":"age = 20\n\nif age >= 18:\n    print(\"You are an adult\")\nelse:\n    print(\"You are a minor\")","output":"You are an adult","explanation":"Python checks whether age >= 18 is true. Since it is true, the if block is executed."}]}
+    },
+    {
+      "id":2,"category":"conditional-basics","question":"What is the difference between if, elif, and else?",
+      "answer":{"short_answer":"if checks the first condition, elif checks additional conditions when previous conditions are false, and else runs when none of the conditions are true.","detailed_explanation":"An if statement starts the decision-making process. You can add one or more elif blocks to test additional conditions. The else block does not have a condition; it runs when all preceding if and elif conditions are false. In an if-elif-else chain, Python executes only the first matching block and skips the remaining conditions.","code_examples":[{"title":"if, elif and else","code":"marks = 75\n\nif marks >= 90:\n    print(\"Grade A\")\nelif marks >= 60:\n    print(\"Grade B\")\nelse:\n    print(\"Grade C\")","output":"Grade B","explanation":"The first condition is false, so Python checks the elif condition. It is true, so Grade B is printed and else is skipped."}]}
+    },
+    {
+      "id":3,"category":"conditional-basics","question":"Can we use an if statement without an else statement?",
+      "answer":{"short_answer":"Yes. An if statement can be used by itself when you only need to perform an action when a condition is true.","detailed_explanation":"The else block is optional. If the condition is true, the code inside the if block runs. If it is false, Python skips that block and continues with the next statement. This is useful when there is no alternative action required for the false case.","code_examples":[{"title":"if without else","code":"temperature = 35\n\nif temperature > 30:\n    print(\"It is hot today\")\n\nprint(\"Program continues\")","output":"It is hot today\nProgram continues","explanation":"Only the true condition needs an action, so an else block is unnecessary."}]}
+    },
+    {
+      "id":4,"category":"conditional-basics","question":"Can we use multiple elif statements in Python?",
+      "answer":{"short_answer":"Yes. Python allows multiple elif statements in a single conditional chain.","detailed_explanation":"Multiple elif blocks are useful when there are several possible conditions. Python checks them from top to bottom. As soon as one condition is true, its block executes and the remaining elif and else blocks are skipped. There is no fixed practical limit on the number of elif blocks, although too many conditions can make code harder to read.","code_examples":[{"title":"Multiple elif blocks","code":"marks = 82\n\nif marks >= 90:\n    print(\"A\")\nelif marks >= 80:\n    print(\"B\")\nelif marks >= 70:\n    print(\"C\")\nelif marks >= 60:\n    print(\"D\")\nelse:\n    print(\"F\")","output":"B","explanation":"Python checks conditions from top to bottom. The second condition is true, so B is printed and the remaining conditions are skipped."}]}
+    },
+    {
+      "id":5,"category":"conditional-basics","question":"What is a nested if statement?",
+      "answer":{"short_answer":"A nested if statement is an if statement placed inside another if, elif, or else block.","detailed_explanation":"Nested conditions are useful when one decision depends on another decision. Python first evaluates the outer condition. Only if the outer condition is satisfied does it evaluate the inner condition. Although nesting can be useful, too many levels can make code difficult to read.","code_examples":[{"title":"Nested if example","code":"age = 22\nhas_id = True\n\nif age >= 18:\n    if has_id:\n        print(\"Entry allowed\")\n    else:\n        print(\"ID required\")\nelse:\n    print(\"Entry not allowed\")","output":"Entry allowed","explanation":"The outer condition checks age. Because it is true, Python then checks the inner condition for the ID."}]}
+    },
+    {
+      "id":6,"category":"conditional-basics","question":"What is the difference between elif and nested if?",
+      "answer":{"short_answer":"elif checks alternative conditions at the same decision level, while a nested if checks a condition inside another condition.","detailed_explanation":"An if-elif-else chain represents multiple alternatives where Python chooses the first matching condition. A nested if represents a dependent decision: the inner condition is checked only after the outer condition is satisfied. If conditions are alternatives, elif is usually clearer. If the second check depends on the first, nesting may be appropriate.","code_examples":[{"title":"elif for alternatives","code":"number = 0\n\nif number > 0:\n    print(\"Positive\")\nelif number < 0:\n    print(\"Negative\")\nelse:\n    print(\"Zero\")","output":"Zero","explanation":"The three conditions are alternative possibilities for the same number, so an if-elif-else chain is appropriate."},{"title":"Nested if for dependent decisions","code":"age = 25\n\nif age >= 18:\n    if age >= 21:\n        print(\"Adult and 21 or older\")\n    else:\n        print(\"Adult but under 21\")","output":"Adult and 21 or older","explanation":"The second condition is checked only after the person has first been determined to be an adult."}]}
+    },
+    {
+      "id":7,"category":"condition-operators","question":"What are comparison operators, and how are they used in conditional statements?",
+      "answer":{"short_answer":"Comparison operators compare values and return True or False. They are commonly used as conditions in if statements.","detailed_explanation":"Python provides comparison operators such as ==, !=, >, <, >=, and <=. These operators produce Boolean results. For example, 10 > 5 returns True, while 10 == 5 returns False. Conditional statements use these results to decide which block of code should execute.","code_examples":[{"title":"Comparison operators in if","code":"age = 20\n\nif age >= 18:\n    print(\"Eligible\")\n\nif age == 20:\n    print(\"Age is exactly 20\")","output":"Eligible\nAge is exactly 20","explanation":"Both comparisons evaluate to True, so both if blocks execute."}]}
+    },
+    {
+      "id":8,"category":"condition-operators","question":"What are logical operators and, or, and not in Python?",
+      "answer":{"short_answer":"and requires all relevant conditions to be true, or requires at least one condition to be true, and not reverses a Boolean result.","detailed_explanation":"Logical operators combine conditions. With and, every condition must be true. With or, at least one condition must be true. With not, True becomes False and False becomes True. They are commonly combined with comparison operators to create useful conditions.","code_examples":[{"title":"Using logical operators","code":"age = 25\nhas_id = True\n\nif age >= 18 and has_id:\n    print(\"Entry allowed\")\n\nis_weekend = False\n\nif is_weekend or age >= 60:\n    print(\"Special condition\")\nelse:\n    print(\"Normal condition\")\n\nif not is_weekend:\n    print(\"It is a weekday\")","output":"Entry allowed\nNormal condition\nIt is a weekday","explanation":"and requires both conditions, or requires at least one condition, and not reverses the Boolean value."}]}
+    },
+    {
+      "id":9,"category":"condition-operators","question":"What is the difference between == and is in conditional statements?",
+      "answer":{"short_answer":"== checks whether two values are equal, while is checks whether two references point to the same object.","detailed_explanation":"The equality operator == compares values. The identity operator is checks object identity. Two different objects can contain the same value, so == can be True while is is False. Use == when comparing values. The is operator is commonly used with singleton values such as None, for example value is None.","code_examples":[{"title":"Equality versus identity","code":"a = [1, 2, 3]\nb = [1, 2, 3]\nc = a\n\nprint(a == b)\nprint(a is b)\nprint(a is c)","output":"True\nFalse\nTrue","explanation":"a and b contain equal values but are different list objects. c refers to the same object as a."},{"title":"Common use of is with None","code":"value = None\n\nif value is None:\n    print(\"No value provided\")","output":"No value provided","explanation":"is None checks whether the variable refers to the singleton None object."}]}
+    },
+    {
+      "id":10,"category":"condition-operators","question":"What are truthy and falsy values in Python?",
+      "answer":{"short_answer":"Truthy values behave like True in a condition, while falsy values behave like False.","detailed_explanation":"Python allows many objects to be used directly as conditions. Common falsy values include False, None, numeric zero such as 0, and empty collections or strings such as \"\", [], {}, and set(). Most other values are truthy. This is useful for concise checks such as if name: to determine whether a string contains a value.","code_examples":[{"title":"Truthy and falsy values","code":"name = \"\"\nitems = [1, 2, 3]\n\nif name:\n    print(\"Name is available\")\nelse:\n    print(\"Name is empty\")\n\nif items:\n    print(\"List has items\")","output":"Name is empty\nList has items","explanation":"An empty string is falsy, while a non-empty list is truthy, so Python can use them directly in if conditions."}]}
+    }
+  ]
+}

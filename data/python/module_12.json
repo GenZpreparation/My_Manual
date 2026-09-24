@@ -1,0 +1,554 @@
+{
+  "meta": {
+    "module_number": 12,
+    "module_name": "Python Advanced Data Structures",
+    "description": "A practical interview-focused module covering specialized Python data structures, collections, deque, heaps, priority queues, stacks, queues, and time complexity.",
+    "total_questions": 30,
+    "detail_level": "Detailed and beginner-friendly",
+    "language": "English"
+  },
+  "categories": [
+    {
+      "id": "collections-module",
+      "name": "collections Module",
+      "question_count": 10
+    },
+    {
+      "id": "deque",
+      "name": "deque",
+      "question_count": 5
+    },
+    {
+      "id": "heap-and-priority-queue",
+      "name": "heapq and Priority Queue",
+      "question_count": 8
+    },
+    {
+      "id": "stack-and-queue",
+      "name": "Stack, Queue and Deque",
+      "question_count": 4
+    },
+    {
+      "id": "time-complexity",
+      "name": "Time Complexity",
+      "question_count": 2
+    },
+    {
+      "id": "choosing-data-structures",
+      "name": "Choosing the Right Data Structure",
+      "question_count": 1
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is the collections module in Python, and why is it used?",
+      "category": "collections-module",
+      "answer": {
+        "short_answer": "The collections module provides specialized container data types that extend or improve Python's built-in list, tuple, set, and dictionary behavior. Commonly used types include Counter, defaultdict, deque, namedtuple, and OrderedDict.",
+        "detailed_explanation": "Python's built-in data structures are powerful, but many programming problems need a more specialized behavior. The collections module provides ready-made data structures for these situations. Counter is useful for counting frequencies, defaultdict automatically creates a default value for missing keys, deque provides efficient insertion and removal from both ends, namedtuple creates tuple-like objects with named fields, and OrderedDict provides dictionary ordering features beyond basic dictionary behavior. Using these classes can make code shorter, clearer, and more efficient than manually implementing the same behavior with basic dictionaries or lists.",
+        "code_examples": [
+          {
+            "title": "Using common collections types",
+            "code": "from collections import Counter, defaultdict, deque\n\ncounts = Counter(['apple', 'banana', 'apple'])\nprint(counts)\n\nscores = defaultdict(int)\nscores['Alice'] += 10\nprint(scores)\n\nqueue = deque([1, 2, 3])\nqueue.append(4)\nqueue.appendleft(0)\nprint(queue)",
+            "output": "Counter({'apple': 2, 'banana': 1})\ndefaultdict(<class 'int'>, {'Alice': 10})\ndeque([0, 1, 2, 3, 4])",
+            "explanation": "Counter counts items, defaultdict supplies a default integer value for a missing key, and deque supports efficient operations at both ends."
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "question": "What is Counter in Python, and when should you use it?",
+      "category": "collections-module",
+      "answer": {
+        "short_answer": "Counter is a dictionary-like class from collections that counts how many times each value occurs in an iterable.",
+        "detailed_explanation": "Counter is useful whenever you need frequency information. It stores each unique item as a key and its occurrence count as the value. It works with strings, lists, tuples, and other iterables. It is especially common in interview questions such as finding the most frequent character, counting words, finding duplicate values, or checking whether two collections contain the same frequencies. Counter also provides useful methods such as most_common(), elements(), and update().",
+        "code_examples": [
+          {
+            "title": "Count item frequencies",
+            "code": "from collections import Counter\n\nnumbers = [1, 2, 2, 3, 3, 3, 4]\ncount = Counter(numbers)\n\nprint(count)\nprint(count.most_common(2))",
+            "output": "Counter({3: 3, 2: 2, 1: 1, 4: 1})\n[(3, 3), (2, 2)]",
+            "explanation": "Counter automatically builds a frequency table, and most_common(2) returns the two most frequent items."
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "question": "How does Counter work with strings, lists, and other iterables?",
+      "category": "collections-module",
+      "answer": {
+        "short_answer": "Counter accepts an iterable and counts each item. For a string, it counts characters; for a list, it counts list elements.",
+        "detailed_explanation": "Counter treats every element of the supplied iterable as one item to count. With a string, each character is processed individually. With a list or tuple, each element is counted. This makes Counter convenient for frequency-based problems without writing a manual dictionary loop. The resulting Counter behaves similarly to a dictionary, so you can access a count with counter[item]. If an item is not present, its count is zero when accessed through Counter.",
+        "code_examples": [
+          {
+            "title": "Counting characters and list values",
+            "code": "from collections import Counter\n\ntext = \"banana\"\nletters = Counter(text)\nprint(letters)\n\nvalues = [10, 10, 20, 30, 20, 10]\nitems = Counter(values)\nprint(items)\nprint(items[40])",
+            "output": "Counter({'a': 3, 'n': 2, 'b': 1})\nCounter({10: 3, 20: 2, 30: 1})\n0",
+            "explanation": "The first Counter counts characters, the second counts numbers, and a missing Counter key returns 0."
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "question": "What is the difference between Counter and a normal dictionary?",
+      "category": "collections-module",
+      "answer": {
+        "short_answer": "A normal dictionary stores key-value pairs that you manage yourself, while Counter is specialized for storing and working with frequencies.",
+        "detailed_explanation": "A dictionary can certainly be used to count items, but you normally need to initialize and update each count manually. Counter provides this counting behavior directly. Counter also supports methods such as most_common() and useful arithmetic operations between counters. A normal dictionary is more general-purpose, while Counter communicates clearly that the values represent counts. In interviews, Counter is usually preferable when the main purpose of the structure is frequency counting.",
+        "code_examples": [
+          {
+            "title": "Manual dictionary counting vs Counter",
+            "code": "from collections import Counter\n\nitems = ['a', 'b', 'a', 'c', 'a']\n\ncounts = {}\nfor item in items:\n    counts[item] = counts.get(item, 0) + 1\nprint(counts)\n\ncount = Counter(items)\nprint(count)",
+            "output": "{'a': 3, 'b': 1, 'c': 1}\nCounter({'a': 3, 'b': 1, 'c': 1})",
+            "explanation": "Both approaches produce frequency information, but Counter expresses the intent directly and provides additional counting operations."
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "question": "What is defaultdict, and why is it useful?",
+      "category": "collections-module",
+      "answer": {
+        "short_answer": "defaultdict is a dictionary subclass that automatically creates a default value when a missing key is accessed.",
+        "detailed_explanation": "With a normal dictionary, accessing a missing key raises KeyError. defaultdict avoids this when you provide a default factory such as int, list, or set. For example, defaultdict(list) is very useful for grouping values because you can directly append to a key without first checking whether the key exists. defaultdict(int) is useful for counters, while defaultdict(set) is useful when each key should store unique values. The default value is created only when the missing key is accessed.",
+        "code_examples": [
+          {
+            "title": "Grouping values with defaultdict",
+            "code": "from collections import defaultdict\n\ngroups = defaultdict(list)\ngroups['fruit'].append('apple')\ngroups['fruit'].append('banana')\ngroups['color'].append('blue')\n\nprint(groups)",
+            "output": "defaultdict(<class 'list'>, {'fruit': ['apple', 'banana'], 'color': ['blue']})",
+            "explanation": "The list for each new key is created automatically, so there is no need to write a separate key-existence check."
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "question": "What is the difference between defaultdict and a normal dictionary?",
+      "category": "collections-module",
+      "answer": {
+        "short_answer": "A normal dictionary raises KeyError for a missing key, while defaultdict can automatically create a default value for that key.",
+        "detailed_explanation": "Both structures store key-value pairs, but their behavior for missing keys differs. In a normal dictionary, data['x'] raises KeyError if x does not exist. In defaultdict, data['x'] calls the default factory and stores the resulting value under x. This is particularly useful for grouping, counting, and building nested structures. However, simply reading a missing key from defaultdict can create that key, so this behavior should be used intentionally.",
+        "code_examples": [
+          {
+            "title": "Missing key behavior",
+            "code": "from collections import defaultdict\n\nnormal = {}\ntry:\n    print(normal['x'])\nexcept KeyError:\n    print('KeyError')\n\ndata = defaultdict(int)\nprint(data['x'])\nprint(data)",
+            "output": "KeyError\n0\ndefaultdict(<class 'int'>, {'x': 0})",
+            "explanation": "The normal dictionary raises KeyError. defaultdict(int) creates 0 for the missing key and stores it."
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "question": "What is the difference between defaultdict and dict.get()?",
+      "category": "collections-module",
+      "answer": {
+        "short_answer": "dict.get() returns a default value without creating the missing key, while defaultdict creates and stores the default value when the missing key is accessed.",
+        "detailed_explanation": "Both can prevent KeyError, but their behavior is different. With d.get('key', default), the returned default is temporary unless you explicitly assign it. With defaultdict, accessing d['key'] calls the default factory and inserts the new key. Therefore, get() is often useful when you only want to safely read a value, while defaultdict is useful when you are building or updating grouped data structures.",
+        "code_examples": [
+          {
+            "title": "get() versus defaultdict",
+            "code": "from collections import defaultdict\n\nnormal = {}\nprint(normal.get('x', 0))\nprint(normal)\n\ndata = defaultdict(int)\nprint(data['x'])\nprint(data)",
+            "output": "0\n{}\n0\ndefaultdict(<class 'int'>, {'x': 0})",
+            "explanation": "get() returns 0 but leaves the dictionary unchanged. defaultdict creates the key with value 0."
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "question": "What is OrderedDict, and is it still needed in modern Python?",
+      "category": "collections-module",
+      "answer": {
+        "short_answer": "OrderedDict is a dictionary subclass that remembers insertion order and provides some ordering-specific methods. Since normal dict preserves insertion order in modern Python, OrderedDict is less necessary for basic ordering.",
+        "detailed_explanation": "In modern Python, regular dictionaries preserve insertion order as part of the language specification, so you generally do not need OrderedDict just to remember the order in which keys were inserted. However, OrderedDict still provides behavior and methods designed specifically for ordered mappings, such as move_to_end(), and it can be useful when working with code that specifically needs OrderedDict semantics. It is important in interviews to distinguish historical usage from modern Python behavior.",
+        "code_examples": [
+          {
+            "title": "OrderedDict move_to_end",
+            "code": "from collections import OrderedDict\n\ndata = OrderedDict([('a', 1), ('b', 2), ('c', 3)])\ndata.move_to_end('a')\n\nprint(data)",
+            "output": "OrderedDict([('b', 2), ('c', 3), ('a', 1)])",
+            "explanation": "move_to_end() is an ordering-specific operation provided by OrderedDict."
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "question": "What is namedtuple, and when should you use it?",
+      "category": "collections-module",
+      "answer": {
+        "short_answer": "namedtuple creates tuple-like objects whose fields can be accessed by readable names as well as by position.",
+        "detailed_explanation": "A namedtuple is useful when you need a small, immutable record with a fixed number of fields. A normal tuple requires positional access such as person[0], which can become unclear. A namedtuple lets you write person.name and person.age, making code easier to understand while retaining tuple-like behavior. It is lightweight and immutable, but for richer behavior, validation, or mutable data, a normal class or dataclass may be more appropriate.",
+        "code_examples": [
+          {
+            "title": "Creating a namedtuple",
+            "code": "from collections import namedtuple\n\nPerson = namedtuple('Person', ['name', 'age'])\np = Person('Aman', 25)\n\nprint(p.name)\nprint(p.age)\nprint(p[0])",
+            "output": "Aman\n25\nAman",
+            "explanation": "The same value can be accessed using a meaningful field name or its tuple position."
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "question": "What is the difference between a tuple, namedtuple, and a normal class?",
+      "category": "collections-module",
+      "answer": {
+        "short_answer": "A tuple is a simple immutable sequence, a namedtuple adds named fields to tuple-like data, and a class provides a flexible structure for data, behavior, and custom logic.",
+        "detailed_explanation": "Choose a tuple when you only need a small fixed sequence of values and positional access is clear. Choose namedtuple when the values form a fixed record and readable field names would improve clarity. Choose a class when you need methods, custom initialization, validation, mutable state, inheritance, or more complex behavior. namedtuple instances are immutable like tuples, while normal class instances can usually be changed unless you deliberately restrict them.",
+        "code_examples": [
+          {
+            "title": "Three approaches",
+            "code": "from collections import namedtuple\n\npoint_tuple = (10, 20)\nPoint = namedtuple('Point', ['x', 'y'])\npoint_named = Point(10, 20)\n\nclass PointClass:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\npoint_class = PointClass(10, 20)\n\nprint(point_tuple[0])\nprint(point_named.x)\nprint(point_class.x)",
+            "output": "10\n10\n10",
+            "explanation": "All three can represent a point, but they provide different levels of structure and behavior."
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "question": "What is deque in Python, and why is it useful?",
+      "category": "deque",
+      "answer": {
+        "short_answer": "deque, or double-ended queue, is a collection from collections that supports efficient insertion and removal from both the left and right ends.",
+        "detailed_explanation": "A deque is useful when a program frequently adds or removes items from both ends. It provides append() and pop() on the right and appendleft() and popleft() on the left. These end operations are designed to be efficient, unlike inserting or removing from the beginning of a list, which requires shifting many elements. Deque is therefore commonly used for queues, sliding windows, breadth-first search, and recent-item buffers.",
+        "code_examples": [
+          {
+            "title": "Basic deque operations",
+            "code": "from collections import deque\n\nitems = deque([2, 3])\nitems.append(4)\nitems.appendleft(1)\nprint(items)\n\nitems.popleft()\nitems.pop()\nprint(items)",
+            "output": "deque([1, 2, 3, 4])\ndeque([2, 3])",
+            "explanation": "deque allows efficient operations at both ends of the collection."
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "question": "What is the difference between a list and a deque?",
+      "category": "deque",
+      "answer": {
+        "short_answer": "Lists are general-purpose dynamic arrays with fast indexing, while deque is optimized for adding and removing elements from both ends.",
+        "detailed_explanation": "A list is usually the better choice when you need indexing, slicing, and general sequence operations. Accessing an element by index in a list is efficient. A deque is better when your main operations are append and pop at either end, especially when removing from the left. list.pop(0) requires shifting the remaining elements, while deque.popleft() is designed for this use case. Therefore, the right structure depends on the operations your algorithm performs most often.",
+        "code_examples": [
+          {
+            "title": "Left-side removal",
+            "code": "from collections import deque\n\nnumbers = [1, 2, 3, 4]\nnumbers.pop(0)\nprint(numbers)\n\nqueue = deque([1, 2, 3, 4])\nqueue.popleft()\nprint(queue)",
+            "output": "[2, 3, 4]\ndeque([2, 3, 4])",
+            "explanation": "Both remove the first item, but deque is designed for efficient operations at the left end."
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "question": "Why is deque preferred for implementing a queue?",
+      "category": "deque",
+      "answer": {
+        "short_answer": "A queue needs FIFO behavior, and deque provides efficient insertion at the right with append() and removal from the left with popleft().",
+        "detailed_explanation": "FIFO means First In, First Out: the item that enters first should leave first. A deque naturally supports this with append() to add new items at the right and popleft() to remove the oldest item from the left. Using a normal list and pop(0) also gives FIFO behavior, but removing from the beginning of a list is inefficient because the remaining elements must be shifted. deque avoids that problem and is the standard built-in choice for a simple queue.",
+        "code_examples": [
+          {
+            "title": "FIFO queue with deque",
+            "code": "from collections import deque\n\nqueue = deque()\nqueue.append('A')\nqueue.append('B')\nqueue.append('C')\n\nprint(queue.popleft())\nprint(queue.popleft())",
+            "output": "A\nB",
+            "explanation": "A enters first and leaves first, which is exactly FIFO queue behavior."
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "question": "How do append(), appendleft(), pop(), and popleft() work with deque?",
+      "category": "deque",
+      "answer": {
+        "short_answer": "append() adds to the right, appendleft() adds to the left, pop() removes from the right, and popleft() removes from the left.",
+        "detailed_explanation": "These four methods are the core deque operations. append(value) puts an item at the right end, while appendleft(value) puts it at the left end. pop() removes and returns the rightmost item, and popleft() removes and returns the leftmost item. These operations make deque useful for both stack-like and queue-like behavior. Attempting to pop from an empty deque raises IndexError.",
+        "code_examples": [
+          {
+            "title": "Four core operations",
+            "code": "from collections import deque\n\nitems = deque([2, 3])\nitems.append(4)\nitems.appendleft(1)\nprint(items)\n\nprint(items.pop())\nprint(items.popleft())\nprint(items)",
+            "output": "deque([1, 2, 3, 4])\n4\n1\ndeque([2, 3])",
+            "explanation": "The example demonstrates insertion and removal independently from both ends."
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "question": "What is the maxlen parameter in deque?",
+      "category": "deque",
+      "answer": {
+        "short_answer": "maxlen sets a maximum size for a deque. When it is full and a new item is added, an item is automatically removed from the opposite end.",
+        "detailed_explanation": "A bounded deque is useful when you want to keep only the most recent N items. For example, deque(maxlen=3) can store the latest three events. When a fourth item is appended on the right, the oldest item on the left is automatically discarded. This is useful for recent-history buffers, rolling windows, caches, and log/event tracking. maxlen cannot be increased after the deque is created.",
+        "code_examples": [
+          {
+            "title": "Keeping the latest items",
+            "code": "from collections import deque\n\nrecent = deque(maxlen=3)\nrecent.append('A')\nrecent.append('B')\nrecent.append('C')\nrecent.append('D')\n\nprint(recent)",
+            "output": "deque(['B', 'C', 'D'], maxlen=3)",
+            "explanation": "When D is added, A is automatically removed so the deque remains at its maximum length of three."
+          }
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "question": "What is a heap data structure?",
+      "category": "heap-and-priority-queue",
+      "answer": {
+        "short_answer": "A heap is a tree-based data structure that maintains a special ordering between a parent and its children. A min-heap keeps the smallest value at the root.",
+        "detailed_explanation": "A heap is commonly used when you repeatedly need the smallest or largest priority item. In a min-heap, every parent is less than or equal to its children, so the smallest element is always at the root. A heap is not a fully sorted structure; only the heap property is guaranteed. Python's heapq module implements a min-heap using a regular list. Inserting and removing the root are efficient, making heaps useful for priority queues and scheduling problems.",
+        "code_examples": [
+          {
+            "title": "Understanding a min-heap",
+            "code": "import heapq\n\nheap = [5, 2, 8, 1]\nheapq.heapify(heap)\nprint(heap)\nprint(heap[0])",
+            "output": "[1, 2, 8, 5]\n1",
+            "explanation": "After heapify, the smallest value is at index 0. The remaining elements are arranged according to heap rules, not fully sorted order."
+          }
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "question": "What is the heapq module in Python?",
+      "category": "heap-and-priority-queue",
+      "answer": {
+        "short_answer": "heapq is Python's built-in module for maintaining a heap using a regular list. It provides functions for heap creation, insertion, removal, and related operations.",
+        "detailed_explanation": "The heapq module implements the heap queue algorithm, commonly called a priority queue algorithm. Python's heapq provides a min-heap, meaning the smallest item has the highest priority and is available at index 0. Important functions include heapify(), heappush(), heappop(), heappushpop(), and heapreplace(). The heap is stored in a normal list, but heapq maintains the required heap property after supported operations.",
+        "code_examples": [
+          {
+            "title": "Basic heapq usage",
+            "code": "import heapq\n\nheap = []\nheapq.heappush(heap, 30)\nheapq.heappush(heap, 10)\nheapq.heappush(heap, 20)\n\nprint(heap)\nprint(heapq.heappop(heap))\nprint(heap)",
+            "output": "[10, 30, 20]\n10\n[20, 30]",
+            "explanation": "heappush maintains the min-heap property, and heappop removes the smallest element."
+          }
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "question": "How does a min-heap work in Python?",
+      "category": "heap-and-priority-queue",
+      "answer": {
+        "short_answer": "Python's heapq maintains a min-heap where the smallest element is always at index 0.",
+        "detailed_explanation": "In a min-heap, each parent node has a value less than or equal to its children. Python represents the heap as a list rather than a separate tree object. For an element at index i, its children are located using heap relationships based on the index. You normally should not modify the heap list arbitrarily because that can break the heap property. Instead, use heapq functions such as heappush and heappop.",
+        "code_examples": [
+          {
+            "title": "Smallest element stays at the root",
+            "code": "import heapq\n\nheap = [7, 3, 9, 1, 5]\nheapq.heapify(heap)\n\nprint(heap)\nprint('Smallest:', heap[0])",
+            "output": "[1, 3, 9, 7, 5]\nSmallest: 1",
+            "explanation": "The exact internal arrangement can vary by valid heap representation, but index 0 contains the smallest item."
+          }
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "question": "How can you implement a max-heap using heapq?",
+      "category": "heap-and-priority-queue",
+      "answer": {
+        "short_answer": "Because heapq is a min-heap, a common technique is to store negative values so the largest original value becomes the smallest heap value.",
+        "detailed_explanation": "heapq directly provides a min-heap, not a traditional max-heap interface. For numeric values, you can negate each value before inserting it. For example, storing -50, -20, and -30 means -50 is the smallest heap value, so the original value 50 is removed first. When retrieving an item, negate it again to get the original positive value. This technique is simple and commonly used in coding interviews.",
+        "code_examples": [
+          {
+            "title": "Max-heap using negative values",
+            "code": "import heapq\n\nmax_heap = []\nfor value in [10, 50, 20, 30]:\n    heapq.heappush(max_heap, -value)\n\nprint(-heapq.heappop(max_heap))\nprint(-heapq.heappop(max_heap))",
+            "output": "50\n30",
+            "explanation": "The negative values turn the largest original number into the smallest heap value, so it is popped first."
+          }
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "question": "How do heappush() and heappop() work?",
+      "category": "heap-and-priority-queue",
+      "answer": {
+        "short_answer": "heappush() adds an item while maintaining heap order, and heappop() removes and returns the smallest item from a min-heap.",
+        "detailed_explanation": "heappush(heap, item) inserts an item into the heap and rearranges the necessary elements so the heap property remains valid. heappop(heap) removes and returns the smallest element from a min-heap. These operations are the standard way to add and remove priorities dynamically. Their typical time complexity is O(log n), because the item may need to move through the height of the heap.",
+        "code_examples": [
+          {
+            "title": "Push and pop",
+            "code": "import heapq\n\nheap = [2, 5, 8]\nheapq.heapify(heap)\n\nheapq.heappush(heap, 1)\nprint(heap)\n\nsmallest = heapq.heappop(heap)\nprint(smallest)\nprint(heap)",
+            "output": "[1, 2, 8, 5]\n1\n[2, 5, 8]",
+            "explanation": "The heap automatically reorganizes after insertion and removal."
+          }
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "question": "What is the difference between heapq.heapify() and repeatedly using heappush()?",
+      "category": "heap-and-priority-queue",
+      "answer": {
+        "short_answer": "heapify() transforms an existing list into a heap efficiently, while heappush() adds elements one at a time and maintains the heap after each insertion.",
+        "detailed_explanation": "Use heapify() when you already have all the values in a list and want to turn that list into a heap. It runs in O(n) time. If values arrive one by one, use heappush(), which maintains the heap after each insertion and typically takes O(log n) per insertion. Therefore, for an existing collection, heapify is usually the natural choice; for a stream of incoming values, repeated heappush is appropriate.",
+        "code_examples": [
+          {
+            "title": "heapify existing data vs push",
+            "code": "import heapq\n\nvalues = [9, 4, 7, 1, 3]\nheapq.heapify(values)\nprint(values)\n\nheap = []\nfor value in [9, 4, 7, 1, 3]:\n    heapq.heappush(heap, value)\nprint(heap)",
+            "output": "[1, 3, 7, 4, 9]\n[1, 3, 7, 9, 4]",
+            "explanation": "Both results are valid heaps. A heap is not necessarily fully sorted; heap property is what matters."
+          }
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "question": "What are heapq.nlargest() and heapq.nsmallest() used for?",
+      "category": "heap-and-priority-queue",
+      "answer": {
+        "short_answer": "They return the n largest or n smallest elements from an iterable without requiring you to manually build and manage a heap.",
+        "detailed_explanation": "heapq.nlargest(n, iterable) returns the n largest elements, while heapq.nsmallest(n, iterable) returns the n smallest elements. They are useful when you need only a few extreme values rather than sorting the entire collection yourself. Both functions can also accept a key function for objects or complex records. They return a list, and the result is ordered according to the requested largest or smallest values.",
+        "code_examples": [
+          {
+            "title": "Find top and bottom values",
+            "code": "import heapq\n\nscores = [45, 90, 72, 88, 61, 95]\n\nprint(heapq.nlargest(3, scores))\nprint(heapq.nsmallest(2, scores))",
+            "output": "[95, 90, 88]\n[45, 61]",
+            "explanation": "nlargest returns the top three scores, while nsmallest returns the two lowest scores."
+          }
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "question": "How do you implement a priority queue using heapq?",
+      "category": "heap-and-priority-queue",
+      "answer": {
+        "short_answer": "A priority queue can be implemented with heapq by storing entries as tuples such as (priority, item). The smallest priority value is removed first.",
+        "detailed_explanation": "A priority queue removes items according to priority rather than simply according to insertion order. With heapq, tuples are compared lexicographically, so a tuple such as (1, 'urgent') has higher removal priority than (3, 'normal') because 1 is smaller. A common pattern is to store (priority, counter, item) when items can have equal priorities or when item comparison should be avoided. Lower numeric priority can represent more urgent work, depending on your chosen convention.",
+        "code_examples": [
+          {
+            "title": "Simple priority queue",
+            "code": "import heapq\n\nqueue = []\nheapq.heappush(queue, (2, 'Normal task'))\nheapq.heappush(queue, (1, 'Urgent task'))\nheapq.heappush(queue, (3, 'Low priority task'))\n\nwhile queue:\n    priority, task = heapq.heappop(queue)\n    print(priority, task)",
+            "output": "1 Urgent task\n2 Normal task\n3 Low priority task",
+            "explanation": "The task with the smallest priority number is removed first."
+          }
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "question": "How do you implement a stack in Python?",
+      "category": "stack-and-queue",
+      "answer": {
+        "short_answer": "A stack follows LIFO (Last In, First Out). It can be implemented easily with a list using append() to push and pop() to remove the top item.",
+        "detailed_explanation": "A stack allows the most recently added element to be removed first. In Python, a list is a natural stack because append() adds to the end and pop() removes from the end, both efficiently. A deque can also implement a stack using append() and pop(). Stacks are commonly used for undo operations, function-call concepts, expression evaluation, depth-first search, and bracket matching. For simple stack behavior, a list is usually enough.",
+        "code_examples": [
+          {
+            "title": "Stack using list",
+            "code": "stack = []\n\nstack.append('A')\nstack.append('B')\nstack.append('C')\n\nprint(stack.pop())\nprint(stack.pop())\nprint(stack)",
+            "output": "C\nB\n['A']",
+            "explanation": "C was inserted last, so it was removed first. This is LIFO behavior."
+          }
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "question": "How do you implement a queue efficiently in Python?",
+      "category": "stack-and-queue",
+      "answer": {
+        "short_answer": "For a simple FIFO queue, use collections.deque with append() to enqueue and popleft() to dequeue.",
+        "detailed_explanation": "A queue follows FIFO: First In, First Out. A deque is efficient because it supports adding at one end and removing from the other without shifting all remaining elements. You can use queue.append(item) to add and queue.popleft() to remove. Python also provides the queue module for thread-safe queue implementations such as Queue, PriorityQueue, and LifoQueue when synchronization between threads is required. For ordinary algorithm problems, deque is usually the simpler choice.",
+        "code_examples": [
+          {
+            "title": "Efficient FIFO queue",
+            "code": "from collections import deque\n\nqueue = deque()\nqueue.append('A')\nqueue.append('B')\nqueue.append('C')\n\nwhile queue:\n    print(queue.popleft())",
+            "output": "A\nB\nC",
+            "explanation": "Items leave in the same order in which they entered, which gives FIFO behavior."
+          }
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "question": "What is the difference between a stack, queue, and deque?",
+      "category": "stack-and-queue",
+      "answer": {
+        "short_answer": "A stack is LIFO, a queue is FIFO, and a deque allows insertion and removal from both ends.",
+        "detailed_explanation": "A stack removes the newest item first, so it follows LIFO. A queue removes the oldest item first, so it follows FIFO. A deque is more flexible because it supports operations at both ends and can therefore behave like either a stack or a queue. In Python, list is commonly used for a simple stack, deque is commonly used for a queue, and deque can also handle both patterns when needed.",
+        "code_examples": [
+          {
+            "title": "Stack and queue behavior",
+            "code": "from collections import deque\n\nstack = []\nstack.extend([1, 2, 3])\nprint('Stack:', stack.pop())\n\nqueue = deque([1, 2, 3])\nprint('Queue:', queue.popleft())\n\nboth = deque([1, 2, 3])\nboth.appendleft(0)\nboth.append(4)\nprint('Deque:', both)",
+            "output": "Stack: 3\nQueue: 1\nDeque: deque([0, 1, 2, 3, 4])",
+            "explanation": "The stack removes from the newest end, the queue removes from the oldest end, and the deque supports both ends."
+          }
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "question": "Why should you avoid using list.pop(0) for a queue?",
+      "category": "stack-and-queue",
+      "answer": {
+        "short_answer": "list.pop(0) is O(n) because the remaining elements have to be shifted. deque.popleft() is designed for efficient left-side removal.",
+        "detailed_explanation": "When you remove index 0 from a Python list, the elements that follow it need to move one position toward the beginning to keep the list contiguous. This makes pop(0) an O(n) operation. If a queue performs many such removals, this can become inefficient. collections.deque is designed for operations at both ends, so popleft() is typically O(1). This is a very common interview question because it tests whether you choose a data structure based on operation complexity.",
+        "code_examples": [
+          {
+            "title": "Use deque for left removal",
+            "code": "from collections import deque\n\n# Less suitable for a large queue\nitems = [1, 2, 3]\nitems.pop(0)\nprint(items)\n\n# Better queue operation\nqueue = deque([1, 2, 3])\nqueue.popleft()\nprint(queue)",
+            "output": "[2, 3]\ndeque([2, 3])",
+            "explanation": "Both produce the same logical result, but deque is designed for efficient removal from the left."
+          }
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "question": "What is the time complexity of common operations on list, set, and dict?",
+      "category": "time-complexity",
+      "answer": {
+        "short_answer": "Lists provide O(1) average indexing and append, but searching and inserting/removing in the middle can be O(n). Sets and dictionaries provide O(1) average lookup, insertion, and deletion.",
+        "detailed_explanation": "Knowing complexity helps you choose the right data structure. For a list, accessing an item by index is O(1) on average, append is amortized O(1), while searching with in is O(n) and inserting or deleting near the beginning or middle is generally O(n). Set membership and dictionary key lookup, insertion, and deletion are O(1) on average because they use hash tables. These are average-case complexities; worst-case behavior can differ due to hashing and implementation details.",
+        "code_examples": [
+          {
+            "title": "Choosing based on operation",
+            "code": "numbers = [10, 20, 30, 40]\nprint(numbers[2])\n\nvalues = {10, 20, 30, 40}\nprint(30 in values)\n\ndata = {'name': 'Aman', 'age': 25}\nprint(data['age'])",
+            "output": "30\nTrue\n25",
+            "explanation": "List indexing is efficient, while set and dictionary lookup are designed for fast membership and key-based access."
+          }
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "question": "What is the time complexity of common deque operations?",
+      "category": "time-complexity",
+      "answer": {
+        "short_answer": "append(), appendleft(), pop(), and popleft() are O(1) operations on a deque. Random indexing is not the main strength of deque and can be O(n) away from the ends.",
+        "detailed_explanation": "deque is optimized for operations at its two ends. Adding or removing an item with append(), appendleft(), pop(), and popleft() is O(1). This makes deque ideal for queues, stacks, and sliding-window problems. It is not designed to replace a list when you need frequent random access by index. Access near the ends is efficient, but accessing arbitrary positions can require traversal and is therefore not generally O(1).",
+        "code_examples": [
+          {
+            "title": "End operations",
+            "code": "from collections import deque\n\nitems = deque([1, 2, 3])\nitems.append(4)\nitems.appendleft(0)\nitems.pop()\nitems.popleft()\n\nprint(items)",
+            "output": "deque([1, 2, 3])",
+            "explanation": "All four operations work directly at the ends of the deque and are designed to be constant-time."
+          }
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "question": "When should you use list, set, dict, deque, Counter, defaultdict, and heapq?",
+      "category": "choosing-data-structures",
+      "answer": {
+        "short_answer": "Choose the structure according to the operation you need: list for ordered sequences, set for unique values and membership, dict for key-value mapping, deque for both-end operations, Counter for frequencies, defaultdict for automatic defaults, and heapq for priority-based smallest-item access.",
+        "detailed_explanation": "Data structure selection is about matching the problem to the operations. Use a list when order and indexing matter. Use a set when you need uniqueness and fast membership testing. Use a dictionary when values are naturally associated with keys. Use deque when you frequently add or remove from both ends. Use Counter when the main task is frequency counting. Use defaultdict when you repeatedly build grouped or default-valued dictionary data. Use heapq when you repeatedly need the smallest-priority item. Understanding these choices is often more important in interviews than simply memorizing syntax.",
+        "code_examples": [
+          {
+            "title": "Quick practical examples",
+            "code": "from collections import Counter, defaultdict, deque\nimport heapq\n\nordered = [3, 1, 2]\nunique = {1, 2, 2, 3}\nmapping = {'id': 101}\nfrequencies = Counter('banana')\ngroups = defaultdict(list)\nqueue = deque([1, 2, 3])\nheap = [5, 2, 8]\nheapq.heapify(heap)\n\nprint(ordered)\nprint(unique)\nprint(mapping)\nprint(frequencies)\nprint(groups)\nprint(queue)\nprint(heap[0])",
+            "output": "[3, 1, 2]\n{1, 2, 3}\n{'id': 101}\nCounter({'a': 3, 'n': 2, 'b': 1})\ndefaultdict(<class 'list'>, {})\ndeque([1, 2, 3])\n2",
+            "explanation": "Each structure is selected for a different job: sequence, uniqueness, mapping, counting, automatic grouping, end-based queue operations, and priority access."
+          }
+        ]
+      }
+    }
+  ]
+}

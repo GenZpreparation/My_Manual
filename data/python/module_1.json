@@ -1,0 +1,723 @@
+{
+  "meta": {
+    "module": "Module 1",
+    "title": "Python Fundamentals - Interview Questions",
+    "description": "30 mostly asked Python Fundamentals interview questions with easy, detailed explanations and practical code examples.",
+    "language": "English",
+    "level": "Beginner",
+    "question_count": 30,
+    "answer_format": [
+      "Short Answer",
+      "Detailed Explanation",
+      "Code Examples"
+    ]
+  },
+  "categories": [
+    {
+      "id": "data-types",
+      "name": "Data Types and Mutability"
+    },
+    {
+      "id": "lists",
+      "name": "Lists"
+    },
+    {
+      "id": "comprehensions",
+      "name": "Comprehensions"
+    },
+    {
+      "id": "copying",
+      "name": "Copying Objects"
+    },
+    {
+      "id": "truth-values",
+      "name": "Truth Values"
+    },
+    {
+      "id": "operators",
+      "name": "Operators"
+    },
+    {
+      "id": "sequences",
+      "name": "Sequences"
+    },
+    {
+      "id": "strings",
+      "name": "Strings"
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "category": "data-types",
+      "question": "What is the difference between mutable and immutable objects in Python?",
+      "answer": {
+        "short_answer": "Mutable objects can be changed after they are created, while immutable objects cannot be changed in place after creation.",
+        "detailed_explanation": "Mutability tells us whether an object’s state can be modified after the object exists. Lists, dictionaries, and sets are common mutable types. Integers, floats, strings, tuples, bytes, and booleans are common immutable types. With a mutable object, an operation such as append() can change the same object. With an immutable object, an apparent change creates or uses another object and the name can be rebound to it. This matters when multiple variables refer to the same object.",
+        "code_examples": [
+          {
+            "title": "Mutable List",
+            "code": "numbers = [1, 2, 3]\nnumbers.append(4)\nprint(numbers)",
+            "output": "[1, 2, 3, 4]",
+            "explanation": "The existing list is modified in place, so list is mutable."
+          },
+          {
+            "title": "Immutable String",
+            "code": "text = 'Python'\ntext = text + ' 3'\nprint(text)",
+            "output": "Python 3",
+            "explanation": "The original string cannot be modified in place; a new string value is created and text refers to it."
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "category": "data-types",
+      "question": "What are mutable and immutable data types in Python?",
+      "answer": {
+        "short_answer": "Mutable types include list, dict, set, and bytearray. Immutable types include int, float, bool, str, tuple, bytes, and frozenset.",
+        "detailed_explanation": "The important point is whether an object can change internally without being replaced. A dictionary can gain or remove keys, and a list can gain or remove elements, so they are mutable. A string or integer cannot have its existing value changed in place. A tuple is immutable as a container, although it may contain a mutable object such as a list. Understanding this distinction helps explain references, copying, function arguments, and bugs caused by shared mutable state.",
+        "code_examples": [
+          {
+            "title": "Mutable Dictionary",
+            "code": "user = {'name': 'Abhi'}\nuser['age'] = 21\nprint(user)",
+            "output": "{'name': 'Abhi', 'age': 21}",
+            "explanation": "The dictionary is changed after creation."
+          },
+          {
+            "title": "Immutable Integer",
+            "code": "x = 10\nx += 5\nprint(x)",
+            "output": "15",
+            "explanation": "The integer 10 is not modified; x is rebound to the integer 15."
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "category": "data-types",
+      "question": "What is the difference between a list and a tuple?",
+      "answer": {
+        "short_answer": "A list is an ordered, mutable collection, while a tuple is an ordered, immutable collection.",
+        "detailed_explanation": "Both can store multiple values, support indexing and slicing, and can contain mixed data types. The main difference is mutability. Use a list when the collection needs to change. Use a tuple when the structure should remain fixed. Tuples can also be used as dictionary keys when all their elements are hashable; lists cannot be dictionary keys because lists are mutable and unhashable.",
+        "code_examples": [
+          {
+            "title": "List",
+            "code": "items = [1, 2, 3]\nitems.append(4)\nprint(items)",
+            "output": "[1, 2, 3, 4]",
+            "explanation": "A list can be changed after creation."
+          },
+          {
+            "title": "Tuple",
+            "code": "items = (1, 2, 3)\nprint(items)",
+            "output": "(1, 2, 3)",
+            "explanation": "A tuple keeps its elements fixed and does not support item assignment."
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "category": "data-types",
+      "question": "What is the difference between a list and a set?",
+      "answer": {
+        "short_answer": "A list is an ordered sequence that allows duplicates and indexing. A set stores unique elements and is designed mainly for membership testing and set operations.",
+        "detailed_explanation": "Lists are useful when order and position matter. Sets are useful when you need unique values or operations such as union and intersection. A set automatically eliminates duplicate values. Set elements must be hashable. You should not use a set when you need reliable positional access like items[0].",
+        "code_examples": [
+          {
+            "title": "List",
+            "code": "values = [1, 2, 2, 3]\nprint(values[1])",
+            "output": "2",
+            "explanation": "The list keeps duplicates and supports indexing."
+          },
+          {
+            "title": "Set",
+            "code": "values = {1, 2, 2, 3}\nprint(values)",
+            "output": "{1, 2, 3}",
+            "explanation": "Duplicate values are stored only once in a set. The displayed order should not be relied upon for set ordering."
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "category": "data-types",
+      "question": "What is the difference between a list and a dictionary?",
+      "answer": {
+        "short_answer": "A list stores values in sequence and normally accesses them by position, while a dictionary stores key-value pairs and accesses values by keys.",
+        "detailed_explanation": "Choose a list when you have a collection where positional order is important. Choose a dictionary when each value has a meaningful key, such as name, id, or price. List indexes are positions starting from zero. Dictionary keys must be hashable and are used to retrieve associated values. Modern Python dictionaries preserve insertion order, but their main abstraction is mapping keys to values.",
+        "code_examples": [
+          {
+            "title": "List",
+            "code": "students = ['Amit', 'Abhi', 'Rahul']\nprint(students[1])",
+            "output": "Abhi",
+            "explanation": "The second item is accessed by its index."
+          },
+          {
+            "title": "Dictionary",
+            "code": "student = {'name': 'Abhi', 'age': 21}\nprint(student['name'])",
+            "output": "Abhi",
+            "explanation": "The value is accessed using the key name."
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "category": "lists",
+      "question": "What is the difference between append(), extend(), and insert()?",
+      "answer": {
+        "short_answer": "append() adds one object at the end, extend() adds elements from an iterable, and insert() adds one object at a specified index.",
+        "detailed_explanation": "append(x) treats x as one element even when x is another list. extend(iterable) iterates over the supplied iterable and adds its elements one by one. insert(index, value) places one value before the specified position. All three modify the existing list and return None.",
+        "code_examples": [
+          {
+            "title": "append()",
+            "code": "a = [1, 2]\na.append([3, 4])\nprint(a)",
+            "output": "[1, 2, [3, 4]]",
+            "explanation": "The whole [3, 4] list becomes one element."
+          },
+          {
+            "title": "extend()",
+            "code": "a = [1, 2]\na.extend([3, 4])\nprint(a)",
+            "output": "[1, 2, 3, 4]",
+            "explanation": "The elements 3 and 4 are added individually."
+          },
+          {
+            "title": "insert()",
+            "code": "a = [1, 3]\na.insert(1, 2)\nprint(a)",
+            "output": "[1, 2, 3]",
+            "explanation": "The value 2 is inserted at index 1."
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "category": "lists",
+      "question": "What is the difference between remove(), pop(), and del?",
+      "answer": {
+        "short_answer": "remove() deletes the first matching value, pop() removes and returns an item by index, and del is a statement that can delete an item, slice, or name.",
+        "detailed_explanation": "remove(value) is value-based and raises ValueError if the value is not found. pop(index) is index-based and returns the removed element; without an index it removes the last element. del can delete indexed elements, slices, or even a variable binding, but it does not return the deleted value. Knowing whether an operation is value-based, index-based, or a deletion statement is the key interview distinction.",
+        "code_examples": [
+          {
+            "title": "remove()",
+            "code": "items = ['a', 'b', 'c']\nitems.remove('b')\nprint(items)",
+            "output": "['a', 'c']",
+            "explanation": "It removes the first matching value."
+          },
+          {
+            "title": "pop()",
+            "code": "items = ['a', 'b', 'c']\nremoved = items.pop(1)\nprint(removed)\nprint(items)",
+            "output": "b\n['a', 'c']",
+            "explanation": "It removes index 1 and returns the removed value."
+          },
+          {
+            "title": "del",
+            "code": "items = ['a', 'b', 'c']\ndel items[1]\nprint(items)",
+            "output": "['a', 'c']",
+            "explanation": "del removes the item without returning it."
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "category": "lists",
+      "question": "What is the difference between sort() and sorted()?",
+      "answer": {
+        "short_answer": "sort() sorts a list in place and returns None, while sorted() returns a new sorted list and works with any iterable.",
+        "detailed_explanation": "list.sort() changes the original list. sorted() leaves the original object unchanged and returns a new list. Both support key= and reverse=. Use sort() when modifying the existing list is intended. Use sorted() when you need to preserve the original data or when the input is another iterable such as a tuple or set.",
+        "code_examples": [
+          {
+            "title": "sort()",
+            "code": "numbers = [3, 1, 2]\nresult = numbers.sort()\nprint(numbers)\nprint(result)",
+            "output": "[1, 2, 3]\nNone",
+            "explanation": "sort() changes the list and returns None."
+          },
+          {
+            "title": "sorted()",
+            "code": "numbers = [3, 1, 2]\nresult = sorted(numbers)\nprint(numbers)\nprint(result)",
+            "output": "[3, 1, 2]\n[1, 2, 3]",
+            "explanation": "sorted() creates and returns a new list."
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "category": "lists",
+      "question": "What is the difference between reverse() and reversed()?",
+      "answer": {
+        "short_answer": "reverse() reverses a list in place and returns None, while reversed() returns an iterator that produces items in reverse order without modifying the original sequence.",
+        "detailed_explanation": "list.reverse() is a list method and directly changes the list. reversed() is a built-in function that works with reversible objects and returns an iterator. Convert the iterator to list() when you need a new list. The distinction is similar to sort() versus sorted(): one mutates a list, while the other produces a separate iterable result.",
+        "code_examples": [
+          {
+            "title": "reverse()",
+            "code": "items = [1, 2, 3]\nresult = items.reverse()\nprint(items)\nprint(result)",
+            "output": "[3, 2, 1]\nNone",
+            "explanation": "The original list is modified."
+          },
+          {
+            "title": "reversed()",
+            "code": "items = [1, 2, 3]\nresult = list(reversed(items))\nprint(items)\nprint(result)",
+            "output": "[1, 2, 3]\n[3, 2, 1]",
+            "explanation": "The original remains unchanged and reversed() supplies an iterator."
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "category": "lists",
+      "question": "What is list slicing in Python?",
+      "answer": {
+        "short_answer": "List slicing extracts part of a list using list[start:stop:step]. The start is included, stop is excluded, and step controls the jump between elements.",
+        "detailed_explanation": "Slicing creates a new list containing the selected elements. If start is omitted, slicing begins at the start; if stop is omitted, it continues to the end; step defaults to 1. Negative indexes can count from the end and a negative step can move backward. A common interview point is that normal list slicing creates a shallow copy of the selected portion, not a deep copy of nested objects.",
+        "code_examples": [
+          {
+            "title": "Basic Slice",
+            "code": "numbers = [0, 1, 2, 3, 4]\nprint(numbers[1:4])",
+            "output": "[1, 2, 3]",
+            "explanation": "Index 1 is included and index 4 is excluded."
+          },
+          {
+            "title": "Step and Reverse",
+            "code": "numbers = [0, 1, 2, 3, 4]\nprint(numbers[::2])\nprint(numbers[::-1])",
+            "output": "[0, 2, 4]\n[4, 3, 2, 1, 0]",
+            "explanation": "A step of 2 selects every second item; -1 traverses the list backward."
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "category": "lists",
+      "question": "What is negative indexing in Python?",
+      "answer": {
+        "short_answer": "Negative indexing accesses sequence elements from the end. -1 means the last item, -2 means the second-last item, and so on.",
+        "detailed_explanation": "Negative indexing works with common sequences such as lists, tuples, and strings. It is useful when you want the last few elements without calculating len(sequence). An index outside the valid range raises IndexError. Negative indexes can also be used inside slices.",
+        "code_examples": [
+          {
+            "title": "Negative Index",
+            "code": "numbers = [10, 20, 30, 40]\nprint(numbers[-1])\nprint(numbers[-2])",
+            "output": "40\n30",
+            "explanation": "-1 points to the last element and -2 to the second-last element."
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "category": "comprehensions",
+      "question": "What is a list comprehension?",
+      "answer": {
+        "short_answer": "A list comprehension is a concise way to create a new list by applying an expression to items from an iterable, optionally filtering them with a condition.",
+        "detailed_explanation": "The common form is [expression for item in iterable if condition]. It replaces many simple loops with a compact expression. List comprehensions are useful for straightforward transformations and filtering. If the logic becomes complicated or requires multiple side effects, a normal for loop is usually easier to read. The result is always a new list.",
+        "code_examples": [
+          {
+            "title": "Basic",
+            "code": "squares = [x * x for x in range(5)]\nprint(squares)",
+            "output": "[0, 1, 4, 9, 16]",
+            "explanation": "Each number is transformed into its square."
+          },
+          {
+            "title": "With Condition",
+            "code": "even = [x for x in range(10) if x % 2 == 0]\nprint(even)",
+            "output": "[0, 2, 4, 6, 8]",
+            "explanation": "Only numbers satisfying the condition are included."
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "category": "comprehensions",
+      "question": "What is dictionary comprehension?",
+      "answer": {
+        "short_answer": "Dictionary comprehension is a concise way to build a dictionary from an iterable using key:value expressions, optionally with a condition.",
+        "detailed_explanation": "The general form is {key_expression: value_expression for item in iterable if condition}. It is useful when keys and values can be generated from existing data in a simple transformation. It creates a new dictionary. As with list comprehensions, keep the expression readable rather than forcing complicated business logic into one line.",
+        "code_examples": [
+          {
+            "title": "Squares Dictionary",
+            "code": "squares = {x: x * x for x in range(1, 4)}\nprint(squares)",
+            "output": "{1: 1, 2: 4, 3: 9}",
+            "explanation": "Each number becomes a key and its square becomes the value."
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "category": "comprehensions",
+      "question": "What is set comprehension?",
+      "answer": {
+        "short_answer": "Set comprehension creates a set from an iterable using an expression and optional condition. Duplicate results are automatically stored only once.",
+        "detailed_explanation": "Set comprehension has a form similar to list comprehension but uses set braces and produces a set. Because sets contain unique elements, repeated results are removed. It is useful for generating unique transformed values or filtered values. The resulting set should not be treated as a positional sequence.",
+        "code_examples": [
+          {
+            "title": "Unique Results",
+            "code": "values = [1, 2, 2, 3]\ndoubled = {x * 2 for x in values}\nprint(doubled)",
+            "output": "{2, 4, 6}",
+            "explanation": "The duplicate input produces the same result, but a set keeps each result only once."
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "category": "copying",
+      "question": "What is the difference between copy() and deepcopy()?",
+      "answer": {
+        "short_answer": "A shallow copy creates a new outer object but shares nested objects; a deep copy recursively copies nested objects so they can be changed independently.",
+        "detailed_explanation": "copy.copy() and methods such as list.copy() create shallow copies. This is enough when nested objects do not need to be independent. copy.deepcopy() recursively copies nested mutable structures. With nested lists or dictionaries, this difference is important because modifying a shared nested object through a shallow copy can also change what you see through the original. Deep copying can use more memory and time.",
+        "code_examples": [
+          {
+            "title": "Shallow Copy",
+            "code": "import copy\na = [[1, 2], [3, 4]]\nb = copy.copy(a)\nb[0].append(99)\nprint(a)",
+            "output": "[[1, 2, 99], [3, 4]]",
+            "explanation": "The nested list is shared between a and b."
+          },
+          {
+            "title": "Deep Copy",
+            "code": "import copy\na = [[1, 2], [3, 4]]\nb = copy.deepcopy(a)\nb[0].append(99)\nprint(a)\nprint(b)",
+            "output": "[[1, 2], [3, 4]]\n[[1, 2, 99], [3, 4]]",
+            "explanation": "Nested objects are copied independently."
+          }
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "category": "copying",
+      "question": "What is shallow copy in Python?",
+      "answer": {
+        "short_answer": "A shallow copy creates a new outer container but keeps references to the same nested objects.",
+        "detailed_explanation": "For a nested structure, a shallow copy separates only the top-level object. If the nested object is mutable, both the original and the shallow copy can still point to that same nested object. You can create shallow copies with copy.copy(), list.copy(), or list slicing for lists. Shallow copying is often enough for flat data, but nested mutable data needs more care.",
+        "code_examples": [
+          {
+            "title": "Nested Object Shared",
+            "code": "a = [[1, 2], [3, 4]]\nb = a.copy()\nb[0].append(5)\nprint(a)\nprint(b)",
+            "output": "[[1, 2, 5], [3, 4]]\n[[1, 2, 5], [3, 4]]",
+            "explanation": "The outer lists are different, but the nested first list is shared."
+          }
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "category": "copying",
+      "question": "What is deep copy in Python?",
+      "answer": {
+        "short_answer": "A deep copy recursively creates copies of nested objects so that mutable nested state is independent from the original.",
+        "detailed_explanation": "copy.deepcopy() is useful when you need a completely independent nested structure. It recursively copies objects that it can copy, while handling shared references and recursive structures according to the copy module rules. Deep copying can be more expensive than shallow copying, so it should be used when independent nested state is actually needed.",
+        "code_examples": [
+          {
+            "title": "Independent Nested Data",
+            "code": "import copy\na = [[1, 2], [3, 4]]\nb = copy.deepcopy(a)\nb[0].append(5)\nprint(a)\nprint(b)",
+            "output": "[[1, 2], [3, 4]]\n[[1, 2, 5], [3, 4]]",
+            "explanation": "Changing the nested list in b does not affect a."
+          }
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "category": "truth-values",
+      "question": "What is the difference between None, 0, False, and an empty string?",
+      "answer": {
+        "short_answer": "None means absence of a value, 0 is an integer, False is a Boolean, and an empty string is a string with no characters. They are different values and types, although all are falsy in Boolean contexts.",
+        "detailed_explanation": "None has type NoneType and is commonly used to represent missing, unavailable, or intentionally absent data. 0 is an integer numeric value, False is a Boolean value, and \"\" is an empty string. They should not be treated as interchangeable just because bool() returns False for each. In particular, use value is None when you specifically mean to test for None.",
+        "code_examples": [
+          {
+            "title": "Different Types",
+            "code": "print(type(None))\nprint(type(0))\nprint(type(False))\nprint(type(''))",
+            "output": "<class 'NoneType'>\n<class 'int'>\n<class 'bool'>\n<class 'str'>",
+            "explanation": "The four values have different types."
+          }
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "category": "truth-values",
+      "question": "What are truthy and falsy values in Python?",
+      "answer": {
+        "short_answer": "Truthy values behave like True in Boolean contexts, while falsy values behave like False. Common falsy values include None, False, zero, and empty strings or collections.",
+        "detailed_explanation": "Python evaluates an object’s truth value in if, while, and Boolean expressions. Common falsy values include None, False, 0, 0.0, 0j, \"\", [], (), {}, and set(). Most other objects are truthy unless their type defines different behavior. bool(value) can be used to see the truth value explicitly. This concept is frequently used for checking whether a collection has data.",
+        "code_examples": [
+          {
+            "title": "Falsy",
+            "code": "print(bool(0))\nprint(bool(''))\nprint(bool([]))",
+            "output": "False\nFalse\nFalse",
+            "explanation": "Zero, an empty string, and an empty list are falsy."
+          },
+          {
+            "title": "Truthy",
+            "code": "print(bool(10))\nprint(bool('Python'))\nprint(bool([1]))",
+            "output": "True\nTrue\nTrue",
+            "explanation": "Non-zero numbers and non-empty objects are normally truthy."
+          }
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "category": "operators",
+      "question": "What are membership operators in Python?",
+      "answer": {
+        "short_answer": "The membership operators are in and not in. They check whether a value is contained in an iterable or collection.",
+        "detailed_explanation": "in returns True when the value is found, and not in returns True when it is not found. For lists and strings, membership generally searches through the sequence. For sets and dictionaries, membership is based on their collection semantics and is typically efficient. For dictionaries, value in dictionary checks keys by default, not values.",
+        "code_examples": [
+          {
+            "title": "List Membership",
+            "code": "numbers = [10, 20, 30]\nprint(20 in numbers)\nprint(40 not in numbers)",
+            "output": "True\nTrue",
+            "explanation": "20 exists in the list, while 40 does not."
+          },
+          {
+            "title": "Dictionary Membership",
+            "code": "user = {'name': 'Abhi', 'age': 21}\nprint('name' in user)\nprint('Abhi' in user)",
+            "output": "True\nFalse",
+            "explanation": "Dictionary membership checks keys by default."
+          }
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "category": "operators",
+      "question": "What are identity operators in Python?",
+      "answer": {
+        "short_answer": "The identity operators are is and is not. They check whether two references point to the same object.",
+        "detailed_explanation": "Identity is different from equality. == asks whether two objects are equal according to their equality operation, while is asks whether they are the exact same object. The safest common use of is is checking singleton objects such as None: if value is None. Do not use is as a general replacement for == when comparing values.",
+        "code_examples": [
+          {
+            "title": "Same Object",
+            "code": "a = [1, 2]\nb = a\nprint(a is b)",
+            "output": "True",
+            "explanation": "Both names refer to the same list object."
+          },
+          {
+            "title": "Equal but Different",
+            "code": "a = [1, 2]\nb = [1, 2]\nprint(a == b)\nprint(a is b)",
+            "output": "True\nFalse",
+            "explanation": "The contents are equal, but the list objects are different."
+          }
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "category": "operators",
+      "question": "What is operator precedence in Python?",
+      "answer": {
+        "short_answer": "Operator precedence determines the order in which operators are evaluated in an expression. Parentheses can be used to make the desired order explicit.",
+        "detailed_explanation": "For example, multiplication has higher precedence than addition, so 2 + 3 * 4 becomes 2 + (3 * 4). Python defines precedence rules for arithmetic, comparisons, Boolean operators, and other operators. In interviews, explain the idea and use parentheses when an expression could be unclear. Parentheses improve readability even when you know the precedence rules.",
+        "code_examples": [
+          {
+            "title": "Precedence",
+            "code": "result = 2 + 3 * 4\nprint(result)",
+            "output": "14",
+            "explanation": "Multiplication is evaluated before addition."
+          },
+          {
+            "title": "Parentheses",
+            "code": "result = (2 + 3) * 4\nprint(result)",
+            "output": "20",
+            "explanation": "Parentheses force addition to happen first."
+          }
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "category": "operators",
+      "question": "What is the difference between /, //, %, and ** operators?",
+      "answer": {
+        "short_answer": "/ performs true division, // performs floor division, % returns the remainder, and ** performs exponentiation.",
+        "detailed_explanation": "These operators have distinct numerical purposes. / normally produces a floating-point result. // performs floor division, meaning it rounds down toward negative infinity. % returns the remainder associated with division. ** raises the left operand to a power. A common interview trap is negative floor division: -7 // 2 is -4, not -3, because floor means toward negative infinity.",
+        "code_examples": [
+          {
+            "title": "Four Operators",
+            "code": "print(7 / 2)\nprint(7 // 2)\nprint(7 % 2)\nprint(2 ** 3)",
+            "output": "3.5\n3\n1\n8",
+            "explanation": "The results show true division, floor division, remainder, and exponentiation."
+          },
+          {
+            "title": "Negative Floor Division",
+            "code": "print(-7 // 2)",
+            "output": "-4",
+            "explanation": "Floor division moves toward negative infinity."
+          }
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "category": "operators",
+      "question": "What is the difference between and, or, and not?",
+      "answer": {
+        "short_answer": "and combines conditions requiring the left side and the needed right side to be truthy, or returns a truthy result when the first truthy operand is found, and not reverses a truth value.",
+        "detailed_explanation": "Python’s Boolean operators are short-circuiting and return operands rather than always returning Boolean values. and stops at the first falsy operand and otherwise returns the last operand. or stops at the first truthy operand and otherwise returns the last operand. not always returns a Boolean value. This behavior is important for conditions and default-value patterns.",
+        "code_examples": [
+          {
+            "title": "Conditions",
+            "code": "age = 21\nhas_id = True\nprint(age >= 18 and has_id)\nprint(age < 18 or has_id)\nprint(not has_id)",
+            "output": "True\nTrue\nFalse",
+            "explanation": "and combines requirements, or accepts either side, and not reverses the truth value."
+          }
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "category": "operators",
+      "question": "What is short-circuit evaluation in Python?",
+      "answer": {
+        "short_answer": "Short-circuit evaluation means Python stops evaluating a Boolean expression as soon as the final result is known. and stops on a falsy operand; or stops on a truthy operand.",
+        "detailed_explanation": "Short-circuiting is useful for efficiency and for safely controlling whether a later expression runs. For example, in x != 0 and 10 / x, the division is skipped when x is zero, preventing a division-by-zero exception. With or, a common pattern is value or default, where default is evaluated only if value is falsy. Remember that and and or return operands, not necessarily True or False.",
+        "code_examples": [
+          {
+            "title": "Safe and",
+            "code": "x = 0\nresult = x != 0 and 10 / x\nprint(result)",
+            "output": "False",
+            "explanation": "The second expression is never evaluated because the first condition is false."
+          },
+          {
+            "title": "Default with or",
+            "code": "name = ''\nprint(name or 'Guest')",
+            "output": "Guest",
+            "explanation": "Because name is falsy, the right side is returned."
+          }
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "category": "sequences",
+      "question": "What is the difference between range() and a list?",
+      "answer": {
+        "short_answer": "range() represents an immutable sequence of integers without materializing all values as a list, while a list stores its elements and can be modified.",
+        "detailed_explanation": "range(start, stop, step) is especially useful for loops and large numeric sequences because it is memory-efficient. It represents the sequence rather than creating a full list of all integers. A list actually stores its elements and supports mutation. Convert range to a list with list(range(...)) when you need a real list object.",
+        "code_examples": [
+          {
+            "title": "range()",
+            "code": "for i in range(3):\n    print(i)",
+            "output": "0\n1\n2",
+            "explanation": "range(3) represents 0, 1, and 2."
+          },
+          {
+            "title": "Convert to List",
+            "code": "numbers = list(range(3))\nprint(numbers)",
+            "output": "[0, 1, 2]",
+            "explanation": "list() materializes the values into a mutable list."
+          }
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "category": "sequences",
+      "question": "What is unpacking in Python?",
+      "answer": {
+        "short_answer": "Unpacking assigns elements from an iterable to multiple variables in one statement. Extended unpacking with * can collect multiple remaining elements.",
+        "detailed_explanation": "Basic unpacking requires a compatible number of values and target variables. Extended unpacking allows one target to collect the remaining values into a list. Unpacking is commonly used with tuples, lists, function return values, and loops. It makes code concise while keeping the structure of the data visible.",
+        "code_examples": [
+          {
+            "title": "Basic Unpacking",
+            "code": "person = ('Abhi', 21)\nname, age = person\nprint(name)\nprint(age)",
+            "output": "Abhi\n21",
+            "explanation": "The two tuple values are assigned to the two variables."
+          },
+          {
+            "title": "Extended Unpacking",
+            "code": "numbers = [1, 2, 3, 4]\nfirst, *middle, last = numbers\nprint(first)\nprint(middle)\nprint(last)",
+            "output": "1\n[2, 3]\n4",
+            "explanation": "The starred target collects the remaining elements into a list."
+          }
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "category": "strings",
+      "question": "What is the difference between split(), join(), and replace()?",
+      "answer": {
+        "short_answer": "split() breaks a string into parts, join() combines an iterable of strings, and replace() substitutes one substring with another.",
+        "detailed_explanation": "split() is commonly used to turn text into a list of pieces using a delimiter. join() performs the opposite kind of operation by combining strings with a separator. replace() creates a new string with matching text replaced. Because strings are immutable, none of these methods changes the original string object in place.",
+        "code_examples": [
+          {
+            "title": "split()",
+            "code": "text = 'Python is easy'\nprint(text.split())",
+            "output": "['Python', 'is', 'easy']",
+            "explanation": "Whitespace is used as the default separator."
+          },
+          {
+            "title": "join()",
+            "code": "words = ['Python', 'is', 'easy']\nprint(' '.join(words))",
+            "output": "Python is easy",
+            "explanation": "The space is used to join the strings."
+          },
+          {
+            "title": "replace()",
+            "code": "text = 'I like Java'\ntext = text.replace('Java', 'Python')\nprint(text)",
+            "output": "I like Python",
+            "explanation": "replace() returns a new string containing the replacement."
+          }
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "category": "strings",
+      "question": "What is the difference between find() and index() in strings?",
+      "answer": {
+        "short_answer": "Both search for a substring and return its starting index. find() returns -1 if it is absent, while index() raises ValueError.",
+        "detailed_explanation": "Use find() when absence is a normal possibility and you want a numeric sentinel result. Use index() when not finding the substring should be treated as an error. Both return the first matching position and support optional start and end boundaries. This difference is a common interview follow-up because the normal successful behavior is the same.",
+        "code_examples": [
+          {
+            "title": "find()",
+            "code": "text = 'Python'\nprint(text.find('th'))\nprint(text.find('xyz'))",
+            "output": "2\n-1",
+            "explanation": "find() returns the position or -1 when there is no match."
+          },
+          {
+            "title": "index()",
+            "code": "text = 'Python'\nprint(text.index('th'))\n# text.index('xyz')  # ValueError",
+            "output": "2",
+            "explanation": "index() returns the position when found and raises ValueError when it is not found."
+          }
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "category": "strings",
+      "question": "What is the difference between %, str.format(), and f-strings?",
+      "answer": {
+        "short_answer": "%, str.format(), and f-strings are different string-formatting styles. f-strings are the modern concise style for embedding expressions, while format() and % formatting are also found in existing Python code.",
+        "detailed_explanation": "Percent formatting is an older style using placeholders such as %s. str.format() uses braces and a format() call. F-strings prefix the string with f and allow expressions directly inside braces. F-strings are generally the most readable modern choice when supported by the project’s Python version. Knowing all three is useful because interviews and real codebases may contain each style.",
+        "code_examples": [
+          {
+            "title": "Percent Formatting",
+            "code": "name = 'Abhi'\nprint('Hello %s' % name)",
+            "output": "Hello Abhi",
+            "explanation": "The %s placeholder is replaced by the supplied value."
+          },
+          {
+            "title": "str.format()",
+            "code": "name = 'Abhi'\nage = 21\nprint('My name is {} and I am {} years old'.format(name, age))",
+            "output": "My name is Abhi and I am 21 years old",
+            "explanation": "format() replaces the braces with the supplied arguments."
+          },
+          {
+            "title": "f-string",
+            "code": "name = 'Abhi'\nage = 21\nprint(f'My name is {name} and I am {age} years old')",
+            "output": "My name is Abhi and I am 21 years old",
+            "explanation": "f-strings embed variables or expressions directly inside braces."
+          }
+        ]
+      }
+    }
+  ]
+}

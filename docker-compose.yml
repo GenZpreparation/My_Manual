@@ -1,0 +1,14 @@
+services:
+  web:
+    # Local build ke liye 'build: .' use hota hai.
+    # Production deploy (GitHub Actions) isi service ko GHCR wali image se
+    # override karta hai -- neeche README/workflow me dekho.
+    build: .
+    image: ${IMAGE:-the-interview-manual:local}
+    container_name: interview-manual
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    environment:
+      - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL:-https://your-domain.com}
+      - NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=${NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION:-}

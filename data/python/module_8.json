@@ -1,0 +1,492 @@
+{
+  "meta": {
+    "module": "Module 8",
+    "title": "Python Modules & Packages - Interview Questions",
+    "language": "English",
+    "level": "Beginner",
+    "question_count": 25,
+    "answer_format": [
+      "Short Answer",
+      "Detailed Explanation",
+      "Code Examples"
+    ]
+  },
+  "categories": [
+    {
+      "id": "modules-basics",
+      "name": "Modules Basics",
+      "question_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "id": "packages-basics",
+      "name": "Packages Basics",
+      "question_ids": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        25
+      ]
+    },
+    {
+      "id": "import-concepts",
+      "name": "Import Concepts",
+      "question_ids": [
+        18,
+        19,
+        20,
+        23,
+        24
+      ]
+    },
+    {
+      "id": "main-guard-and-module-identity",
+      "name": "Module Identity and Main Guard",
+      "question_ids": [
+        21,
+        22
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is a module in Python, and why is it used?",
+      "category": "modules-basics",
+      "answer": {
+        "short_answer": "A module is a Python file containing reusable code such as functions, classes, and variables. Modules help organize code, avoid repetition, and make large programs easier to maintain.",
+        "detailed_explanation": "A Python module is simply a .py file that contains Python code. Instead of keeping an entire application in one large file, we can divide related functionality into separate modules. For example, a calculator module can contain mathematical functions, while a user module can contain user-related functions. We can then import these modules wherever we need them. Python also provides many built-in modules such as math, os, json, and datetime. Modules support code reuse and make projects more structured.",
+        "code_examples": [
+          {
+            "title": "Using a module",
+            "code": "# math_example.py\nimport math\n\nprint(math.sqrt(25))",
+            "output": "5.0",
+            "explanation": "math is a built-in Python module. After importing it, we can use the sqrt() function provided by that module."
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "question": "How do you create your own module in Python?",
+      "category": "modules-basics",
+      "answer": {
+        "short_answer": "Create a .py file containing reusable Python code. That file can then be imported into another Python file as a module.",
+        "detailed_explanation": "Creating a custom module is simple. We create a Python file, define functions, classes, or variables inside it, and then import that file from another Python program. The filename becomes the module name, without the .py extension. This is useful for separating functionality into reusable components. For example, we can create calculator.py and place add() and subtract() functions inside it.",
+        "code_examples": [
+          {
+            "title": "Creating and using a custom module",
+            "code": "# calculator.py\ndef add(a, b):\n    return a + b\n\n# main.py\nimport calculator\n\nprint(calculator.add(10, 20))",
+            "output": "30",
+            "explanation": "calculator.py is the custom module. main.py imports it and accesses the add() function using calculator.add()."
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "question": "How do you import a module in Python?",
+      "category": "modules-basics",
+      "answer": {
+        "short_answer": "Use the import statement followed by the module name, such as import math.",
+        "detailed_explanation": "The import statement makes a module available in the current Python file. After importing a module, we normally access its members using dot notation. For example, import math followed by math.sqrt(25). Python searches for the requested module using its module search path. Modules can be built-in, user-defined, or installed from external packages.",
+        "code_examples": [
+          {
+            "title": "Importing the math module",
+            "code": "import math\n\nprint(math.sqrt(16))\nprint(math.pi)",
+            "output": "4.0\n3.141592653589793",
+            "explanation": "The math module is imported and its sqrt() function and pi constant are accessed using the module name."
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "question": "What is the difference between import module and from module import?",
+      "category": "modules-basics",
+      "answer": {
+        "short_answer": "import module imports the module itself, while from module import name imports a specific member from that module.",
+        "detailed_explanation": "With import math, we access members as math.sqrt(). With from math import sqrt, we can call sqrt() directly. Importing the complete module can make the source of a function clearer, while importing specific names can make code shorter. The choice depends on readability and the needs of the program.",
+        "code_examples": [
+          {
+            "title": "Two import styles",
+            "code": "import math\nprint(math.sqrt(25))\n\nfrom math import sqrt\nprint(sqrt(36))",
+            "output": "5.0\n6.0",
+            "explanation": "The first style keeps the module name visible. The second imports sqrt directly, so the module name is not needed when calling it."
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "question": "What is the difference between import module and import module as alias?",
+      "category": "modules-basics",
+      "answer": {
+        "short_answer": "import module uses the original module name, while import module as alias gives the module a shorter or alternative name in the current file.",
+        "detailed_explanation": "Aliases are useful when a module name is long or when a commonly accepted short name improves readability. The alias exists only in the current importing module. A well-known example is import numpy as np, where np is used as the alias. Aliases can also help avoid naming conflicts.",
+        "code_examples": [
+          {
+            "title": "Using a module alias",
+            "code": "import math as m\n\nprint(m.sqrt(49))",
+            "output": "7.0",
+            "explanation": "math is imported with the alias m. We can then use m.sqrt() instead of math.sqrt()."
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "question": "What is the use of an alias while importing a module?",
+      "category": "modules-basics",
+      "answer": {
+        "short_answer": "An import alias gives a module a different local name, usually to make code shorter, clearer, or to avoid naming conflicts.",
+        "detailed_explanation": "An alias is especially useful for modules with long names or modules that have a commonly recognized short form. For example, import datetime as dt lets us write dt.datetime instead of datetime.datetime. Aliases do not rename the actual module; they only create another reference to it in the current namespace. Using standard, familiar aliases can improve readability.",
+        "code_examples": [
+          {
+            "title": "Alias for datetime",
+            "code": "import datetime as dt\n\ncurrent_date = dt.date.today()\nprint(current_date)",
+            "output": "2026-09-23",
+            "explanation": "The datetime module is imported as dt. The alias makes the code shorter while keeping the same functionality."
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "question": "Can we import multiple modules in Python? How?",
+      "category": "modules-basics",
+      "answer": {
+        "short_answer": "Yes. We can import multiple modules using separate import statements or place multiple module names in one import statement.",
+        "detailed_explanation": "A Python program can use many modules. For readability, separate import statements are often preferred, especially in larger projects. Python also supports importing multiple modules in one statement, such as import math, os. Each imported module gets its own name in the current namespace.",
+        "code_examples": [
+          {
+            "title": "Importing multiple modules",
+            "code": "import math\nimport os\n\nprint(math.sqrt(100))\nprint(os.getcwd())",
+            "output": "10.0\n<current working directory>",
+            "explanation": "Both math and os are imported and used in the same Python program. The exact directory printed by os.getcwd() depends on where the program runs."
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "question": "What happens when Python imports a module?",
+      "category": "modules-basics",
+      "answer": {
+        "short_answer": "Python locates the module, loads it, executes its top-level code, and makes its definitions available through the module namespace. A loaded module is normally cached so repeated imports do not execute it again in the same process.",
+        "detailed_explanation": "When Python encounters an import statement, it first checks whether the module is already available in the import system's cache. If it needs to load the module, Python finds it using the module search path, creates and initializes the module, and executes its top-level statements. Functions and classes defined by the module become available through its namespace. The module is then stored in sys.modules, so a normal repeated import in the same process reuses the loaded module rather than executing its top-level code again.",
+        "code_examples": [
+          {
+            "title": "Module top-level code runs on first import",
+            "code": "# demo.py\nprint(\"Module loaded\")\n\n# main.py\nimport demo\nimport demo",
+            "output": "Module loaded",
+            "explanation": "The module's top-level print runs when demo is first imported. The second normal import uses the already loaded module in the same Python process."
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "question": "What is module namespace in Python?",
+      "category": "modules-basics",
+      "answer": {
+        "short_answer": "A module namespace is the collection of names defined inside a module, such as functions, classes, variables, and imported names.",
+        "detailed_explanation": "Every module has its own namespace. This keeps names from different modules separated. For example, if two modules both define a function called display(), they can still coexist because we access them through their module names. The module namespace can be inspected using the module's __dict__ attribute or functions such as dir().",
+        "code_examples": [
+          {
+            "title": "Accessing a module namespace",
+            "code": "import math\n\nprint(math.sqrt(9))\nprint(\"sqrt\" in math.__dict__)",
+            "output": "3.0\nTrue",
+            "explanation": "sqrt is a name stored in the math module's namespace. The module's __dict__ provides access to that namespace."
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "question": "What is the difference between a built-in module and a user-defined module?",
+      "category": "modules-basics",
+      "answer": {
+        "short_answer": "A built-in or standard-library module is provided by Python, while a user-defined module is created by the programmer for a specific application.",
+        "detailed_explanation": "Python provides a large standard library containing modules such as math, os, json, datetime, and pathlib. These are available with Python and usually do not require separate installation. A user-defined module is a .py file created by the developer. Both can be imported and used in similar ways. The main difference is where the code comes from and what purpose it serves.",
+        "code_examples": [
+          {
+            "title": "Standard library and user-defined module",
+            "code": "import math\nimport calculator\n\nprint(math.sqrt(25))\nprint(calculator.add(10, 5))",
+            "output": "5.0\n15",
+            "explanation": "math is a standard-library module, while calculator is assumed to be a custom module created by the developer."
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "question": "What is a package in Python, and why is it used?",
+      "category": "packages-basics",
+      "answer": {
+        "short_answer": "A package is a way to organize related Python modules into a directory structure. Packages help structure large applications and avoid keeping everything in a single module.",
+        "detailed_explanation": "As a project grows, one module may not be enough to organize all functionality. A package groups related modules into directories and can contain subpackages as well. For example, an ecommerce project might have packages for users, products, and payments. Packages make large codebases easier to navigate and maintain. Modern Python also supports namespace packages, so an __init__.py file is not always required for every package, although it is still commonly used.",
+        "code_examples": [
+          {
+            "title": "Simple package structure",
+            "code": "project/\n    main.py\n    users/\n        __init__.py\n        profile.py\n        authentication.py",
+            "output": "Package: users\nModules: profile.py, authentication.py",
+            "explanation": "The users directory groups modules related to user functionality. main.py can import modules from the users package."
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "question": "What is the difference between a module and a package?",
+      "category": "packages-basics",
+      "answer": {
+        "short_answer": "A module is usually a single Python file, while a package is a directory-based structure used to organize one or more modules and possibly subpackages.",
+        "detailed_explanation": "A module normally corresponds to a .py file. A package provides a higher-level organization mechanism for related modules. For example, calculator.py can be a module, while a payment package can contain card.py, upi.py, and wallet.py. Packages are especially useful in larger applications because they create a clear hierarchy.",
+        "code_examples": [
+          {
+            "title": "Module versus package",
+            "code": "project/\n    calculator.py\n    payments/\n        __init__.py\n        card.py\n        upi.py",
+            "output": "calculator.py -> module\npayments/ -> package\ncard.py and upi.py -> modules inside the package",
+            "explanation": "calculator.py is a single module. payments is a package containing multiple related modules."
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "question": "How do you create a package in Python?",
+      "category": "packages-basics",
+      "answer": {
+        "short_answer": "Create a directory for the package and place related Python modules inside it. An __init__.py file can be added to explicitly initialize the package and is still common in regular packages.",
+        "detailed_explanation": "A basic package can be created by making a directory and adding Python modules to it. Traditionally, an __init__.py file was required to make a directory a regular package. Modern Python also supports namespace packages that can exist without __init__.py, but __init__.py remains useful for package initialization and for making the package structure explicit. After creating the package, modules can be imported using dotted paths.",
+        "code_examples": [
+          {
+            "title": "Creating a package",
+            "code": "project/\n    main.py\n    calculator/\n        __init__.py\n        operations.py\n\n# main.py\nfrom calculator import operations\n\nprint(operations.add(10, 20))",
+            "output": "30",
+            "explanation": "calculator is the package and operations.py is a module inside it. main.py imports the module from the package."
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "question": "What is the purpose of __init__.py?",
+      "category": "packages-basics",
+      "answer": {
+        "short_answer": "__init__.py is used for package initialization and can define package-level names or setup code. In traditional regular packages, its presence identifies the directory as a package.",
+        "detailed_explanation": "The __init__.py file is executed when the package is imported as a regular package. It can be empty, or it can contain package-level variables, functions, imports, or initialization logic. It can also control which names are conveniently exposed at the package level. Since Python supports namespace packages, __init__.py is not mandatory in every possible package structure, but it remains widely used in normal application packages.",
+        "code_examples": [
+          {
+            "title": "Using __init__.py",
+            "code": "# mypackage/__init__.py\nversion = \"1.0\"\n\n# main.py\nimport mypackage\n\nprint(mypackage.version)",
+            "output": "1.0",
+            "explanation": "The version variable is defined at package level in __init__.py and can be accessed through the package name after importing it."
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "question": "Can a package contain multiple modules? Explain with an example.",
+      "category": "packages-basics",
+      "answer": {
+        "short_answer": "Yes. A package can contain many related modules and can also contain subpackages.",
+        "detailed_explanation": "A package is designed to organize related modules. For example, an ecommerce package might contain products.py, orders.py, and payments.py. Each module can focus on one responsibility. This separation makes the project easier to understand, test, and maintain. A package can also contain subdirectories that act as subpackages.",
+        "code_examples": [
+          {
+            "title": "Package with multiple modules",
+            "code": "shop/\n    __init__.py\n    products.py\n    orders.py\n    payments.py",
+            "output": "shop -> package\nproducts.py -> module\norders.py -> module\npayments.py -> module",
+            "explanation": "All three modules belong to the shop package and can contain different parts of the application's functionality."
+          }
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "question": "How do you import a module from a package?",
+      "category": "packages-basics",
+      "answer": {
+        "short_answer": "You can use forms such as from package import module or import package.module.",
+        "detailed_explanation": "When a module is inside a package, its full dotted name includes the package name. For example, if calculator contains operations.py, we can write from calculator import operations or import calculator.operations. Both styles can access the module, but they create different local names and are useful in different situations.",
+        "code_examples": [
+          {
+            "title": "Importing a module from a package",
+            "code": "from calculator import operations\n\nprint(operations.add(5, 7))",
+            "output": "12",
+            "explanation": "operations.py is inside the calculator package. The module is imported and then its add() function is accessed."
+          }
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "question": "What is the difference between from package import module and from package.module import function?",
+      "category": "packages-basics",
+      "answer": {
+        "short_answer": "from package import module imports the module, while from package.module import function imports a specific function directly from that module.",
+        "detailed_explanation": "The first form gives access to the module itself, so we usually write module.function(). The second form imports the function directly, so we can call function() without the module name. Importing a specific function can make code shorter, while keeping the module name can make the source of a function more obvious.",
+        "code_examples": [
+          {
+            "title": "Importing a module versus a function",
+            "code": "from calculator import operations\nprint(operations.add(2, 3))\n\nfrom calculator.operations import add\nprint(add(4, 5))",
+            "output": "5\n9",
+            "explanation": "The first import gives us the operations module. The second import gives us the add function directly."
+          }
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "question": "What is the difference between absolute import and relative import?",
+      "category": "import-concepts",
+      "answer": {
+        "short_answer": "An absolute import specifies the full package path from the project's import root, while a relative import uses dots to refer to the current package or its parent package.",
+        "detailed_explanation": "Absolute imports are usually clearer because they show the full path to the imported module. Relative imports are useful inside packages when modules need to refer to nearby modules. A single dot means the current package, while two dots refer to the parent package. Relative imports are intended to be used inside package contexts, not as a general replacement for absolute imports.",
+        "code_examples": [
+          {
+            "title": "Absolute and relative import",
+            "code": "# Absolute import\nfrom myapp.utils import helper\n\n# Relative import inside a package\nfrom .utils import helper",
+            "output": "Both forms can import helper when used in the appropriate package structure.",
+            "explanation": "The absolute import uses the complete package path. The relative import uses a dot to refer to the current package."
+          }
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "question": "What are sys.path and Python's module search path?",
+      "category": "import-concepts",
+      "answer": {
+        "short_answer": "sys.path is a list of locations that Python searches when looking for modules to import.",
+        "detailed_explanation": "When Python imports a module, it searches locations listed in its import search path. The sys.path list can contain the script directory, configured paths, standard-library locations, installed-package locations, and other entries depending on the environment. Understanding sys.path helps explain ModuleNotFoundError and import behavior. It can be inspected at runtime using the sys module.",
+        "code_examples": [
+          {
+            "title": "Inspecting sys.path",
+            "code": "import sys\n\nfor path in sys.path:\n    print(path)",
+            "output": "<several directories used by the current Python environment>",
+            "explanation": "sys.path shows the locations Python searches when resolving imports. The exact entries depend on the environment and how Python was started."
+          }
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "question": "What is PYTHONPATH and how does it affect imports?",
+      "category": "import-concepts",
+      "answer": {
+        "short_answer": "PYTHONPATH is an environment variable that can add extra directories to Python's module search path.",
+        "detailed_explanation": "Python can use the PYTHONPATH environment variable to find modules stored outside the standard locations. Its entries are incorporated into the import search path. This can be useful in certain development environments, but projects should generally use proper package structures and environments instead of relying heavily on manually configured PYTHONPATH values.",
+        "code_examples": [
+          {
+            "title": "Checking PYTHONPATH",
+            "code": "import os\n\nprint(os.environ.get(\"PYTHONPATH\"))",
+            "output": "<configured PYTHONPATH value or None>",
+            "explanation": "The exact output depends on the environment. os.environ.get() safely checks whether PYTHONPATH is configured."
+          }
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "question": "What is __name__ in Python?",
+      "category": "main-guard-and-module-identity",
+      "answer": {
+        "short_answer": "__name__ is a special variable that tells us the name under which a module is being executed or imported. When a file is run directly, its __name__ is usually \"__main__\".",
+        "detailed_explanation": "Every Python module has a __name__ attribute. If the file is imported, __name__ normally contains the module's import name. If the file is executed directly by Python, __name__ becomes __main__. This behavior allows a file to work both as an importable module and as a directly executable script.",
+        "code_examples": [
+          {
+            "title": "Checking __name__",
+            "code": "print(__name__)",
+            "output": "__main__",
+            "explanation": "If this file is executed directly, Python sets __name__ to __main__. If it is imported by another module, the value will normally be the module's name."
+          }
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "question": "What is the use of if __name__ == \"__main__\":?",
+      "category": "main-guard-and-module-identity",
+      "answer": {
+        "short_answer": "It is used to run specific code only when a Python file is executed directly, not when the file is imported as a module.",
+        "detailed_explanation": "The main guard is a very common Python pattern. Code inside if __name__ == \"__main__\": runs when the file is started directly. If another file imports it, that code does not run automatically. This prevents test code, command-line execution logic, or demo code from running unexpectedly during import.",
+        "code_examples": [
+          {
+            "title": "Using the main guard",
+            "code": "def greet():\n    print(\"Hello from function\")\n\nif __name__ == \"__main__\":\n    greet()",
+            "output": "Hello from function",
+            "explanation": "When this file is executed directly, __name__ is __main__, so greet() runs. If another module imports this file, the guarded call does not execute."
+          }
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "question": "What is circular import in Python, and how can it be avoided?",
+      "category": "import-concepts",
+      "answer": {
+        "short_answer": "A circular import happens when two or more modules depend on each other directly or indirectly during import. It can often be avoided by reorganizing shared code or changing dependencies.",
+        "detailed_explanation": "For example, module A imports module B while module B imports module A. During initialization, Python may encounter partially initialized modules, which can cause import errors or unexpected behavior. The best solution is usually to improve the module design: move shared functionality into a third module, reduce unnecessary dependencies, or restructure responsibilities. In some cases, a local import inside a function can break the import cycle, but it should be used carefully rather than hiding a poor dependency structure.",
+        "code_examples": [
+          {
+            "title": "Simple circular import structure",
+            "code": "# a.py\nfrom b import function_b\n\n# b.py\nfrom a import function_a",
+            "output": "This structure can cause a circular import problem.",
+            "explanation": "a.py depends on b.py while b.py depends on a.py. A common fix is to move shared functions into a separate module such as common.py."
+          }
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "question": "What is the difference between import, from ... import, and from ... import *?",
+      "category": "import-concepts",
+      "answer": {
+        "short_answer": "import module imports the module, from module import name imports selected names, and from module import * attempts to import names into the current namespace. The wildcard form is generally discouraged because it can make code harder to understand.",
+        "detailed_explanation": "With import math, we write math.sqrt(). With from math import sqrt, we can write sqrt(). With from math import *, many names from the module are brought into the current namespace according to Python's import rules. Wildcard imports can cause name conflicts and make it difficult to know where a name came from, so explicit imports are generally clearer and easier to maintain.",
+        "code_examples": [
+          {
+            "title": "Comparing import styles",
+            "code": "import math\nprint(math.sqrt(16))\n\nfrom math import sqrt\nprint(sqrt(25))\n\n# from math import *  # generally avoid this style",
+            "output": "4.0\n5.0",
+            "explanation": "The first style keeps the module namespace visible. The second imports only sqrt. The wildcard form is shown commented because explicit imports are usually preferred."
+          }
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "question": "What is the difference between a Python package and an installable package/library?",
+      "category": "packages-basics",
+      "answer": {
+        "short_answer": "A Python package is an importable code structure, while an installable package is a distributable project that can be installed into an environment using tools such as pip. An installable project may contain one or more importable packages and modules.",
+        "detailed_explanation": "The word package can mean different things in Python discussions. An importable package is a package structure used by Python's import system. An installable package is a distributable project published or provided for installation, commonly through Python packaging tools. For example, an installable project can contain a package directory with modules inside it, plus metadata and configuration files. Understanding this distinction helps avoid confusion between how code is organized for imports and how a project is distributed and installed.",
+        "code_examples": [
+          {
+            "title": "Conceptual project structure",
+            "code": "my_project/\n    pyproject.toml\n    my_package/\n        __init__.py\n        calculator.py",
+            "output": "my_project -> installable/distributable project\nmy_package -> importable Python package\ncalculator.py -> module",
+            "explanation": "The project can contain packaging metadata and an importable package. The package contains modules that provide the actual application functionality."
+          }
+        ]
+      }
+    }
+  ]
+}

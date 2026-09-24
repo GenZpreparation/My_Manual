@@ -1,0 +1,340 @@
+{
+  "meta": {
+    "module": "Module 2",
+    "title": "Python Strings - Interview Questions",
+    "description": "15 mostly asked Python string interview questions with easy, detailed, interview-focused explanations and practical code examples.",
+    "language": "English",
+    "level": "Beginner",
+    "question_count": 15,
+    "answer_format": [
+      "Short Answer",
+      "Detailed Explanation",
+      "Code Examples"
+    ]
+  },
+  "categories": [
+    {
+      "id": "string-basics",
+      "name": "String Basics",
+      "description": "Core concepts such as creating, indexing, slicing, and immutability.",
+      "question_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "string-methods",
+      "name": "String Methods",
+      "description": "Commonly used Python string methods and their differences.",
+      "question_ids": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "id": "string-formatting",
+      "name": "String Operations & Formatting",
+      "description": "String concatenation, join, f-strings, and formatting techniques.",
+      "question_ids": [
+        13,
+        14,
+        15
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "category": "string-basics",
+      "question": "What is a string in Python?",
+      "answer": {
+        "short_answer": "A string is a sequence of characters used to store text in Python. It is an object of the `str` data type.",
+        "detailed_explanation": "A string can contain letters, numbers, spaces, symbols, and special characters. Python lets you create strings with single quotes, double quotes, or triple quotes. Strings are ordered sequences, so characters can be accessed using indexes and ranges can be extracted using slicing. Strings are immutable, which means their existing characters cannot be changed directly.",
+        "code_examples": [
+          {
+            "title": "Creating strings",
+            "code": "name = 'Abhi'\nmessage = \"Hello Python\"\nmultiline = \"\"\"This is\na multi-line\nstring.\"\"\"\n\nprint(name)\nprint(message)\nprint(multiline)",
+            "output": "Abhi\nHello Python\nThis is\na multi-line\nstring.",
+            "explanation": "Single and double quotes are commonly used for normal strings. Triple quotes are useful for multi-line text."
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "category": "string-basics",
+      "question": "Are strings mutable or immutable in Python?",
+      "answer": {
+        "short_answer": "Strings are immutable in Python. Once a string is created, its individual characters cannot be changed directly.",
+        "detailed_explanation": "Immutability means an existing string object cannot be modified in place. For example, `text[0] = 'Y'` raises a `TypeError`. When a string operation appears to modify text, Python actually creates a new string and assigns it if you store the result. This is important in interviews because strings behave differently from mutable objects such as lists.",
+        "code_examples": [
+          {
+            "title": "Creating a new string",
+            "code": "text = \"Hello\"\n\n# text[0] = \"Y\"  # TypeError\ntext = \"Y\" + text[1:]\nprint(text)",
+            "output": "Yello",
+            "explanation": "The original string is not changed. A new string is created and assigned to `text`."
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "category": "string-basics",
+      "question": "How do you create a string in Python?",
+      "answer": {
+        "short_answer": "You can create strings using single quotes, double quotes, or triple quotes.",
+        "detailed_explanation": "Single quotes and double quotes both create normal strings. Triple single quotes or triple double quotes can create multi-line strings. The choice between single and double quotes is mostly a style choice, but using the opposite quote can make strings containing quotation marks easier to write without escaping them.",
+        "code_examples": [
+          {
+            "title": "Different string forms",
+            "code": "a = 'Hello'\nb = \"Python\"\nc = \"\"\"This is a\\nmulti-line string.\"\"\"\n\nprint(a)\nprint(b)\nprint(c)",
+            "output": "Hello\nPython\nThis is a\nmulti-line string.",
+            "explanation": "All three variables contain strings. Triple quotes are useful when the text spans multiple lines."
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "category": "string-basics",
+      "question": "What is string indexing and negative indexing?",
+      "answer": {
+        "short_answer": "Indexing accesses individual characters. Positive indexes start at `0` from the left, while negative indexes start at `-1` from the right.",
+        "detailed_explanation": "For the string `Python`, `P` is at index `0` and `y` is at index `1`. Negative indexing is convenient when accessing characters from the end: `-1` is the last character, `-2` is the second-last, and so on. An invalid index raises `IndexError`.",
+        "code_examples": [
+          {
+            "title": "Positive and negative indexes",
+            "code": "text = \"Python\"\n\nprint(text[0])\nprint(text[2])\nprint(text[-1])\nprint(text[-2])",
+            "output": "P\nt\no\nn",
+            "explanation": "Positive indexing starts from the left at zero. Negative indexing starts from the right at minus one."
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "category": "string-basics",
+      "question": "What is string slicing in Python?",
+      "answer": {
+        "short_answer": "String slicing extracts part of a string using `string[start:stop:step]`.",
+        "detailed_explanation": "The `start` position is included and the `stop` position is excluded. Start and stop can be omitted to slice from the beginning or to the end. The optional `step` controls how many positions are skipped. A negative step reads the string backwards, so `[::-1]` is a common way to reverse a string.",
+        "code_examples": [
+          {
+            "title": "Slicing examples",
+            "code": "text = \"Python\"\n\nprint(text[0:2])\nprint(text[2:6])\nprint(text[:4])\nprint(text[::2])\nprint(text[::-1])",
+            "output": "Py\nthon\nPyth\nPto\nnohtyP",
+            "explanation": "The stop index is excluded. `[::-1]` uses a step of minus one to read the string from right to left."
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "category": "string-basics",
+      "question": "How do you reverse a string in Python?",
+      "answer": {
+        "short_answer": "The simplest way is slicing with `[::-1]`. Another approach is `''.join(reversed(text))`.",
+        "detailed_explanation": "Because strings are immutable, reversing a string creates a new string. The slicing form `[::-1]` is concise and commonly used in interviews. `reversed()` returns characters in reverse order, and `join()` combines those characters into a new string.",
+        "code_examples": [
+          {
+            "title": "Reverse using slicing",
+            "code": "text = \"Python\"\nreversed_text = text[::-1]\nprint(reversed_text)",
+            "output": "nohtyP",
+            "explanation": "A step of `-1` traverses the string from the last character to the first."
+          },
+          {
+            "title": "Reverse using reversed()",
+            "code": "text = \"Python\"\nreversed_text = ''.join(reversed(text))\nprint(reversed_text)",
+            "output": "nohtyP",
+            "explanation": "`reversed()` provides the characters in reverse order and `join()` turns them back into one string."
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "category": "string-methods",
+      "question": "What is the difference between find() and index()?",
+      "answer": {
+        "short_answer": "Both search for a substring, but `find()` returns `-1` when it is absent, while `index()` raises `ValueError`.",
+        "detailed_explanation": "Use `find()` when a missing substring is a normal possibility and you want a numeric result. Use `index()` when the substring is expected to exist and an exception is appropriate if it does not. Both return the position of the first matching occurrence by default.",
+        "code_examples": [
+          {
+            "title": "find() versus index()",
+            "code": "text = \"Python Programming\"\n\nprint(text.find(\"Program\"))\nprint(text.find(\"Java\"))\nprint(text.index(\"Program\"))\n# print(text.index(\"Java\"))  # ValueError",
+            "output": "7\n-1\n7",
+            "explanation": "`find()` uses `-1` for not found. `index()` raises `ValueError` for a missing substring."
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "category": "string-methods",
+      "question": "What is the difference between split() and join()?",
+      "answer": {
+        "short_answer": "`split()` breaks a string into a list, while `join()` combines strings from an iterable into one string.",
+        "detailed_explanation": "`split()` is useful when text needs to be separated into words or fields. With no argument, it splits on whitespace. `join()` works in the opposite direction: the string before `.join()` becomes the separator. The items being joined must be strings.",
+        "code_examples": [
+          {
+            "title": "Using split() and join()",
+            "code": "text = \"Python is easy\"\nwords = text.split()\nprint(words)\n\nresult = \"-\".join(words)\nprint(result)",
+            "output": "['Python', 'is', 'easy']\nPython-is-easy",
+            "explanation": "`split()` creates a list of words. `join()` combines them using `-` as the separator."
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "category": "string-methods",
+      "question": "What is the use of the replace() method?",
+      "answer": {
+        "short_answer": "`replace()` returns a new string where specified occurrences of one substring are replaced with another.",
+        "detailed_explanation": "The basic syntax is `string.replace(old, new, count)`. The `count` argument is optional. If it is omitted, all matching occurrences are replaced; if provided, only that many occurrences are replaced from left to right. Since strings are immutable, `replace()` returns a new string rather than changing the original string in place.",
+        "code_examples": [
+          {
+            "title": "Replacing text",
+            "code": "text = \"I like Java. Java is popular.\"\n\nprint(text.replace(\"Java\", \"Python\"))\nprint(text.replace(\"Java\", \"Python\", 1))",
+            "output": "I like Python. Python is popular.\nI like Python. Java is popular.",
+            "explanation": "Without a count, all matches are replaced. With `count=1`, only the first match is replaced."
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "category": "string-methods",
+      "question": "What is the difference between strip(), lstrip(), and rstrip()?",
+      "answer": {
+        "short_answer": "`strip()` removes whitespace from both ends, `lstrip()` from the left, and `rstrip()` from the right.",
+        "detailed_explanation": "These methods are commonly used to clean input data. By default they remove whitespace such as spaces and newline characters from the selected ends of the string. They do not remove spaces from the middle. They can also accept characters to remove, but that argument represents a set of characters rather than an exact substring.",
+        "code_examples": [
+          {
+            "title": "Using strip methods",
+            "code": "text = \"   Python   \"\n\nprint(text.strip())\nprint(text.lstrip())\nprint(text.rstrip())",
+            "output": "Python\nPython   \n   Python",
+            "explanation": "`strip()` cleans both ends, while `lstrip()` and `rstrip()` clean only one side."
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "category": "string-methods",
+      "question": "What is the difference between upper(), lower(), capitalize(), and title()?",
+      "answer": {
+        "short_answer": "`upper()` makes all letters uppercase, `lower()` makes them lowercase, `capitalize()` uppercases the first character and lowercases the rest, and `title()` capitalizes the first letter of each word.",
+        "detailed_explanation": "These methods are useful for text normalization and display formatting. They all return new strings. `capitalize()` affects the beginning of the complete string, while `title()` applies title casing across words. For user-input comparisons, converting both values to a consistent case can make matching easier.",
+        "code_examples": [
+          {
+            "title": "Case conversion",
+            "code": "text = \"python programming\"\n\nprint(text.upper())\nprint(text.lower())\nprint(text.capitalize())\nprint(text.title())",
+            "output": "PYTHON PROGRAMMING\npython programming\nPython programming\nPython Programming",
+            "explanation": "Each method applies a different case transformation to the original string."
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "category": "string-methods",
+      "question": "How do you check whether a substring exists in a string?",
+      "answer": {
+        "short_answer": "Use the `in` operator. It returns `True` when the substring is present and `False` otherwise.",
+        "detailed_explanation": "The `in` operator is the simplest and most readable membership check for strings. The check is case-sensitive, so `\"Python\" in text` and `\"python\" in text` can produce different results. For case-insensitive checking, normalize both sides, for example with `lower()`, when appropriate.",
+        "code_examples": [
+          {
+            "title": "Substring membership",
+            "code": "text = \"Python is easy to learn\"\n\nprint(\"Python\" in text)\nprint(\"Java\" in text)\nprint(\"python\" in text)",
+            "output": "True\nFalse\nFalse",
+            "explanation": "The membership test is case-sensitive, so lowercase `python` does not match uppercase `Python`."
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "category": "string-formatting",
+      "question": "What is the difference between + and join() for concatenating strings?",
+      "answer": {
+        "short_answer": "`+` is convenient for combining a small number of strings, while `join()` is designed to combine many strings from an iterable using a separator.",
+        "detailed_explanation": "The `+` operator is easy to read when combining a few known strings. `join()` is particularly useful when the strings are already stored in a list or another iterable, such as when creating a sentence or comma-separated value. For many pieces of text, `join()` is generally preferred because it is designed for combining an iterable of strings instead of repeatedly creating intermediate concatenated strings.",
+        "code_examples": [
+          {
+            "title": "Using +",
+            "code": "first = \"Abhi\"\nlast = \"Kumar\"\nfull_name = first + \" \" + last\nprint(full_name)",
+            "output": "Abhi Kumar",
+            "explanation": "The `+` operator is simple and readable for a small number of strings."
+          },
+          {
+            "title": "Using join()",
+            "code": "words = [\"Python\", \"is\", \"easy\"]\nsentence = \" \".join(words)\nprint(sentence)",
+            "output": "Python is easy",
+            "explanation": "`join()` combines all strings in the list and places a space between them."
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "category": "string-formatting",
+      "question": "What are f-strings in Python, and why are they used?",
+      "answer": {
+        "short_answer": "F-strings are formatted string literals that let you place variables and expressions directly inside `{}` in a string prefixed with `f`.",
+        "detailed_explanation": "F-strings were introduced in Python 3.6. They make dynamic strings concise and readable because the values appear next to the text where they are used. Expressions can also be evaluated inside the braces, and formatting options can be added after a colon. They are widely used in modern Python code when the project's Python version supports them.",
+        "code_examples": [
+          {
+            "title": "Basic f-string",
+            "code": "name = \"Abhi\"\nage = 22\nmessage = f\"My name is {name} and I am {age} years old.\"\nprint(message)",
+            "output": "My name is Abhi and I am 22 years old.",
+            "explanation": "The variables are inserted directly into the string using curly braces."
+          },
+          {
+            "title": "Expression in f-string",
+            "code": "price = 100\nquantity = 3\nprint(f\"Total: {price * quantity}\")",
+            "output": "Total: 300",
+            "explanation": "F-strings can evaluate Python expressions inside the curly braces."
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "category": "string-formatting",
+      "question": "What is the difference between %, str.format(), and f-strings?",
+      "answer": {
+        "short_answer": "All three format strings. `%` formatting is older, `str.format()` is flexible, and f-strings are the modern concise approach available from Python 3.6 onward.",
+        "detailed_explanation": "Percent formatting uses placeholders such as `%s` and `%d`. `str.format()` uses `{}` placeholders and supports positional and named arguments. F-strings put variables and expressions directly inside `{}` and are usually easiest to read. You may encounter all three in real projects, especially `%` formatting in older codebases, so understanding the differences is useful for interviews.",
+        "code_examples": [
+          {
+            "title": "Percent formatting",
+            "code": "name = \"Abhi\"\nage = 22\nprint(\"My name is %s and I am %d years old.\" % (name, age))",
+            "output": "My name is Abhi and I am 22 years old.",
+            "explanation": "`%s` and `%d` are placeholders replaced using values supplied after the `%` operator."
+          },
+          {
+            "title": "str.format()",
+            "code": "name = \"Abhi\"\nage = 22\nprint(\"My name is {} and I am {} years old.\".format(name, age))",
+            "output": "My name is Abhi and I am 22 years old.",
+            "explanation": "`format()` replaces `{}` placeholders with the supplied arguments."
+          },
+          {
+            "title": "f-string",
+            "code": "name = \"Abhi\"\nage = 22\nprint(f\"My name is {name} and I am {age} years old.\")",
+            "output": "My name is Abhi and I am 22 years old.",
+            "explanation": "F-strings place variables directly inside `{}` and are concise and readable."
+          }
+        ]
+      }
+    }
+  ]
+}

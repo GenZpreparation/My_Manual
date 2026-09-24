@@ -1,0 +1,314 @@
+{
+  "meta": {
+    "module_number": 13,
+    "module_name": "Iterators & Generators",
+    "description": "An interview-focused module covering Python iterables, iterators, the iterator protocol, custom iterators, generators, yield, generator expressions, memory efficiency, and yield from.",
+    "total_questions": 15,
+    "detail_level": "Detailed and beginner-friendly",
+    "language": "English"
+  },
+  "categories": [
+    {
+      "id": "iterators-basics",
+      "name": "Iterator Basics",
+      "question_count": 2
+    },
+    {
+      "id": "iterator-functions",
+      "name": "iter() and next()",
+      "question_count": 2
+    },
+    {
+      "id": "iteration-internals",
+      "name": "Iteration Internals",
+      "question_count": 2
+    },
+    {
+      "id": "iterator-protocol",
+      "name": "Iterator Protocol",
+      "question_count": 1
+    },
+    {
+      "id": "custom-iterators",
+      "name": "Custom Iterators",
+      "question_count": 1
+    },
+    {
+      "id": "generators",
+      "name": "Generators and yield",
+      "question_count": 4
+    },
+    {
+      "id": "generator-expressions",
+      "name": "Generator Expressions",
+      "question_count": 1
+    },
+    {
+      "id": "generator-performance",
+      "name": "Generator Performance",
+      "question_count": 1
+    },
+    {
+      "id": "advanced-generators",
+      "name": "Advanced Generators",
+      "question_count": 1
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is an iterator in Python?",
+      "category": "iterators-basics",
+      "answer": {
+        "short_answer": "An iterator is an object that lets you access items from a collection one at a time. It keeps track of its current position and provides the next item using next().",
+        "detailed_explanation": "An iterator is an object used to traverse through data one item at a time instead of loading or processing everything at once. An iterator follows Python's iterator protocol, which means it provides __iter__() and __next__() methods. The __iter__() method returns the iterator itself, while __next__() returns the next value. When there are no more values, __next__() raises StopIteration. Iterators are used internally by for loops and are especially useful when working with large or streaming data.",
+        "code_examples": [
+          {
+            "title": "Basic iterator example",
+            "code": "numbers = [10, 20, 30]\niterator = iter(numbers)\n\nprint(next(iterator))\nprint(next(iterator))\nprint(next(iterator))",
+            "output": "10\n20\n30",
+            "explanation": "iter() converts the list into an iterator, and each next() call returns one item."
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "question": "What is the difference between an iterable and an iterator?",
+      "category": "iterators-basics",
+      "answer": {
+        "short_answer": "An iterable is an object that can provide an iterator, while an iterator is the object that actually produces values one at a time using next().",
+        "detailed_explanation": "Objects such as lists, tuples, strings, sets, and dictionaries are commonly iterable. They can be passed to iter() to obtain an iterator. An iterator maintains the current iteration state and implements __next__(). In simple terms, an iterable is something you can loop over, while an iterator is the object that performs the step-by-step traversal. A list can create multiple independent iterators, whereas an iterator itself gets consumed as you call next().",
+        "code_examples": [
+          {
+            "title": "Iterable versus iterator",
+            "code": "numbers = [10, 20, 30]\n\niterator = iter(numbers)\n\nprint(next(iterator))\nprint(next(iterator))\nprint(next(iterator))",
+            "output": "10\n20\n30",
+            "explanation": "The list is the iterable. The object returned by iter(numbers) is the iterator that produces the values one by one."
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "question": "What is the iter() function in Python?",
+      "category": "iterator-functions",
+      "answer": {
+        "short_answer": "iter() returns an iterator for an iterable object.",
+        "detailed_explanation": "The iter() function is used to obtain an iterator from an iterable. For example, iter([1, 2, 3]) returns an iterator over the list. After getting the iterator, you can call next() repeatedly to retrieve values. The iter() function is important because Python's iteration protocol separates the object that contains or provides data from the object that keeps the current iteration state.",
+        "code_examples": [
+          {
+            "title": "Using iter()",
+            "code": "items = ['A', 'B', 'C']\niterator = iter(items)\n\nprint(next(iterator))\nprint(next(iterator))",
+            "output": "A\nB",
+            "explanation": "iter(items) creates an iterator, and next() retrieves values from that iterator."
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "question": "What is the next() function in Python?",
+      "category": "iterator-functions",
+      "answer": {
+        "short_answer": "next() asks an iterator for its next value. If no value remains, it raises StopIteration.",
+        "detailed_explanation": "The next() function is used to retrieve the next item from an iterator. Every call advances the iterator's internal position. Once all items have been returned, the iterator raises StopIteration. You can also provide a default value to next(), which is returned instead of raising StopIteration when the iterator is exhausted. This makes next() useful for manually controlling iteration.",
+        "code_examples": [
+          {
+            "title": "Using next() with a default",
+            "code": "numbers = iter([10, 20])\n\nprint(next(numbers))\nprint(next(numbers))\nprint(next(numbers, 'No more items'))",
+            "output": "10\n20\nNo more items",
+            "explanation": "The third next() call finds the iterator exhausted, so the supplied default value is returned."
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "question": "How does a for loop work internally with an iterator?",
+      "category": "iteration-internals",
+      "answer": {
+        "short_answer": "A for loop gets an iterator using iter() and repeatedly calls next() until StopIteration occurs.",
+        "detailed_explanation": "A Python for loop uses the iterator protocol internally. Conceptually, it first calls iter() on the object to obtain an iterator. It then repeatedly calls next() to get each value. When next() raises StopIteration, the loop ends automatically. This is why a for loop can work with lists, tuples, generators, files, and custom iterator objects as long as they provide the required iteration behavior.",
+        "code_examples": [
+          {
+            "title": "for loop versus manual iteration",
+            "code": "numbers = [10, 20, 30]\n\nfor number in numbers:\n    print(number)\n\n# Conceptually similar to:\niterator = iter(numbers)\nwhile True:\n    try:\n        number = next(iterator)\n        print(number)\n    except StopIteration:\n        break",
+            "output": "10\n20\n30\n10\n20\n30",
+            "explanation": "The for loop hides the iterator and StopIteration handling, making iteration easier to write."
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "question": "What is StopIteration, and when does it occur?",
+      "category": "iteration-internals",
+      "answer": {
+        "short_answer": "StopIteration is an exception that indicates an iterator has no more values to return.",
+        "detailed_explanation": "When an iterator has returned all its available values, its __next__() method raises StopIteration. A for loop catches this condition internally and stops the loop, so you normally do not see the exception when using for. When manually calling next(), you can catch StopIteration yourself or provide a default value to next(). StopIteration is therefore a normal part of Python's iterator protocol rather than necessarily an error in the program.",
+        "code_examples": [
+          {
+            "title": "Handling StopIteration",
+            "code": "numbers = iter([10, 20])\n\ntry:\n    print(next(numbers))\n    print(next(numbers))\n    print(next(numbers))\nexcept StopIteration:\n    print('Iterator is exhausted')",
+            "output": "10\n20\nIterator is exhausted",
+            "explanation": "The third next() call has no value left, so StopIteration is raised and caught."
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "question": "What are __iter__() and __next__() methods?",
+      "category": "iterator-protocol",
+      "answer": {
+        "short_answer": "__iter__() returns an iterator, while __next__() returns the next value and raises StopIteration when iteration is finished.",
+        "detailed_explanation": "These two methods form the core of Python's iterator protocol. An iterator's __iter__() method normally returns self because the iterator is already the object responsible for iteration. Its __next__() method contains the logic for producing the next value. When there are no more values, __next__() must raise StopIteration. Understanding these methods is important when creating custom iterators.",
+        "code_examples": [
+          {
+            "title": "Simple iterator protocol",
+            "code": "class Count:\n    def __init__(self, limit):\n        self.current = 1\n        self.limit = limit\n\n    def __iter__(self):\n        return self\n\n    def __next__(self):\n        if self.current > self.limit:\n            raise StopIteration\n        value = self.current\n        self.current += 1\n        return value\n\ncounter = Count(3)\nprint(next(counter))\nprint(next(counter))\nprint(next(counter))",
+            "output": "1\n2\n3",
+            "explanation": "__iter__() makes the object an iterator and __next__() controls how each value is generated."
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "question": "How do you create a custom iterator in Python?",
+      "category": "custom-iterators",
+      "answer": {
+        "short_answer": "Create a class that implements __iter__() and __next__(), store the iteration state in the object, and raise StopIteration when the data is exhausted.",
+        "detailed_explanation": "A custom iterator is useful when you want to define your own iteration behavior. Usually, the class stores the current position or other state in an instance variable. __iter__() returns self, and __next__() calculates or retrieves the next value. When the stopping condition is reached, __next__() raises StopIteration. This approach gives complete control over how the object is traversed.",
+        "code_examples": [
+          {
+            "title": "Custom iterator for numbers",
+            "code": "class EvenNumbers:\n    def __init__(self, limit):\n        self.current = 0\n        self.limit = limit\n\n    def __iter__(self):\n        return self\n\n    def __next__(self):\n        if self.current > self.limit:\n            raise StopIteration\n        value = self.current\n        self.current += 2\n        return value\n\nfor number in EvenNumbers(6):\n    print(number)",
+            "output": "0\n2\n4\n6",
+            "explanation": "The iterator keeps the current even number as state and stops after reaching the limit."
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "question": "What is a generator in Python?",
+      "category": "generators",
+      "answer": {
+        "short_answer": "A generator is a special iterator created by a generator function or generator expression. It produces values lazily, one at a time.",
+        "detailed_explanation": "A generator is an easy way to create an iterator without manually implementing __iter__() and __next__(). A generator function contains yield and returns a generator object when called. Each time next() is called, the function runs until the next yield, returns that value, and pauses its execution state. When the function finishes, iteration ends. Generators are useful for large data, streams, and situations where values do not need to be stored all at once.",
+        "code_examples": [
+          {
+            "title": "Basic generator",
+            "code": "def numbers():\n    yield 10\n    yield 20\n    yield 30\n\ngenerator = numbers()\n\nprint(next(generator))\nprint(next(generator))\nprint(next(generator))",
+            "output": "10\n20\n30",
+            "explanation": "Calling numbers() creates a generator object. Each next() resumes the function until the next yield."
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "question": "What is the yield keyword, and how does it work?",
+      "category": "generators",
+      "answer": {
+        "short_answer": "yield produces a value from a generator and pauses the function. The function resumes from that point when the generator is requested for another value.",
+        "detailed_explanation": "Unlike return, yield does not permanently end the function. It temporarily pauses the generator function and preserves its local variables and execution state. When next() is called again, execution continues immediately after the previous yield. This makes yield useful for producing a sequence of values lazily without creating the entire sequence in memory at once.",
+        "code_examples": [
+          {
+            "title": "yield pauses and resumes",
+            "code": "def demo():\n    print('Start')\n    yield 1\n    print('Middle')\n    yield 2\n    print('End')\n\ng = demo()\nprint(next(g))\nprint(next(g))",
+            "output": "Start\n1\nMiddle\n2",
+            "explanation": "The function pauses at each yield and resumes from the next line when next() is called again."
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "question": "What is the difference between return and yield?",
+      "category": "generators",
+      "answer": {
+        "short_answer": "return ends a function and sends back one final result, while yield produces a value and pauses a generator so it can continue later.",
+        "detailed_explanation": "A normal function using return finishes its execution when return is reached. Calling the function directly gives the returned value. A function containing yield becomes a generator function. Calling it creates a generator object, and execution happens as values are requested. yield allows multiple values to be produced over time while preserving the function's state between values.",
+        "code_examples": [
+          {
+            "title": "return versus yield",
+            "code": "def normal_function():\n    return [1, 2, 3]\n\ndef generator_function():\n    yield 1\n    yield 2\n    yield 3\n\nprint(normal_function())\nprint(list(generator_function()))",
+            "output": "[1, 2, 3]\n[1, 2, 3]",
+            "explanation": "The normal function creates and returns the whole list, while the generator produces the values one at a time."
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "question": "What is the difference between a normal function and a generator function?",
+      "category": "generators",
+      "answer": {
+        "short_answer": "A normal function executes and returns a result, while a generator function contains yield and returns a generator object that produces values lazily.",
+        "detailed_explanation": "A normal function usually runs when called and returns a value using return. A generator function is identified by the presence of yield. Calling a generator function does not execute its body immediately; it creates a generator object. The body runs when next() or a loop requests values. Generator functions are useful when producing many values because they do not need to create and store the complete result at once.",
+        "code_examples": [
+          {
+            "title": "Normal function and generator function",
+            "code": "def normal():\n    return [1, 2, 3]\n\ndef generate():\n    for i in range(1, 4):\n        yield i\n\nresult = normal()\ngenerator = generate()\n\nprint(result)\nprint(generator)\nprint(list(generator))",
+            "output": "[1, 2, 3]\n<generator object generate at ...>\n[1, 2, 3]",
+            "explanation": "The normal function immediately returns a list. The generator function returns a generator object that produces values when iterated."
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "question": "What is a generator expression, and how is it different from a list comprehension?",
+      "category": "generator-expressions",
+      "answer": {
+        "short_answer": "A generator expression uses parentheses and produces values lazily, while a list comprehension uses brackets and creates the complete list immediately.",
+        "detailed_explanation": "Both generator expressions and list comprehensions can express transformations or filtering in a compact way. The major difference is when the values are created. A list comprehension creates all result values and stores them in a list. A generator expression creates a generator that calculates each value only when requested. Therefore, generator expressions are generally more memory efficient for large sequences when you only need to iterate through the values once.",
+        "code_examples": [
+          {
+            "title": "List comprehension versus generator expression",
+            "code": "numbers = [1, 2, 3, 4]\n\nlist_result = [x * 2 for x in numbers]\ngenerator_result = (x * 2 for x in numbers)\n\nprint(list_result)\nprint(generator_result)\nprint(list(generator_result))",
+            "output": "[2, 4, 6, 8]\n<generator object <genexpr> at ...>\n[2, 4, 6, 8]",
+            "explanation": "The list comprehension creates the values immediately. The generator expression creates a generator that produces them when iterated."
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "question": "Why are generators memory efficient?",
+      "category": "generator-performance",
+      "answer": {
+        "short_answer": "Generators produce values one at a time instead of storing the entire result in memory.",
+        "detailed_explanation": "A list-based approach normally creates all output values and keeps them in memory. A generator keeps its current execution state and produces only the next required value. This is particularly useful when processing large files, large ranges, database results, or streams. Generators do not automatically make every operation faster, but they can significantly reduce memory usage when the complete result does not need to exist at the same time.",
+        "code_examples": [
+          {
+            "title": "Lazy generation of values",
+            "code": "def generate_numbers(n):\n    for i in range(n):\n        yield i\n\ngenerator = generate_numbers(1000000)\n\nprint(next(generator))\nprint(next(generator))",
+            "output": "0\n1",
+            "explanation": "The generator does not need to create a million-item list before producing the first values."
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "question": "What is yield from in Python, and when is it used?",
+      "category": "advanced-generators",
+      "answer": {
+        "short_answer": "yield from delegates iteration to another iterable or generator, allowing its values to be yielded directly by the current generator.",
+        "detailed_explanation": "yield from is used inside a generator when you want to yield all values from another iterable or generator without writing a separate loop. It makes generator composition cleaner and easier to read. The current generator temporarily delegates iteration to the supplied iterable and produces its values one by one. It is especially useful when combining multiple generators or breaking a large generator into smaller reusable generator functions.",
+        "code_examples": [
+          {
+            "title": "Using yield from",
+            "code": "def numbers():\n    yield from [1, 2, 3]\n    yield from [4, 5]\n\nfor number in numbers():\n    print(number)",
+            "output": "1\n2\n3\n4\n5",
+            "explanation": "yield from forwards the values from each iterable directly through the outer generator."
+          }
+        ]
+      }
+    }
+  ]
+}

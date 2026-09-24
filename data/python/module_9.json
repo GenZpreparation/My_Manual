@@ -1,0 +1,492 @@
+{
+  "meta": {
+    "module": "Module 9",
+    "title": "Python File Handling - Interview Questions",
+    "language": "English",
+    "level": "Beginner",
+    "question_count": 26,
+    "answer_format": [
+      "Short Answer",
+      "Detailed Explanation",
+      "Code Examples"
+    ]
+  },
+  "categories": [
+    {
+      "id": "file-basics",
+      "name": "File Handling Basics",
+      "question_count": 8
+    },
+    {
+      "id": "reading-files",
+      "name": "Reading Files",
+      "question_count": 5
+    },
+    {
+      "id": "writing-and-managing-files",
+      "name": "Writing and Managing Files",
+      "question_count": 5
+    },
+    {
+      "id": "file-pointer-and-advanced",
+      "name": "File Pointer and Advanced File Handling",
+      "question_count": 8
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is file handling in Python, and why is it used?",
+      "category": "file-basics",
+      "answer": {
+        "short_answer": "File handling is the process of creating, opening, reading, writing, appending, and managing files using Python. It is used when a program needs to store or retrieve data permanently from files.",
+        "detailed_explanation": "Variables store data temporarily in memory, but that data is usually lost when the program ends. File handling allows a Python program to work with data stored on disk, such as text files, logs, configuration files, CSV files, JSON files, and other documents. Python provides built-in functions such as open(), read(), write(), and close() for basic file operations. A typical file-handling workflow is: open the file, perform the required operation, and close the file. Using a context manager with the with statement is generally preferred because it automatically closes the file.",
+        "code_examples": [
+          {
+            "title": "Basic File Handling",
+            "code": "with open(\"notes.txt\", \"w\") as file:\n    file.write(\"Python file handling\")\n\nwith open(\"notes.txt\", \"r\") as file:\n    content = file.read()\n    print(content)",
+            "output": "Python file handling",
+            "explanation": "The first with block creates or overwrites notes.txt and writes text into it. The second block opens the same file in read mode and reads its contents."
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "question": "How do you open a file in Python?",
+      "category": "file-basics",
+      "answer": {
+        "short_answer": "Use Python's built-in open() function. It returns a file object that can be used to read from or write to the file.",
+        "detailed_explanation": "The basic syntax is open(file, mode). The file argument specifies the file path, while mode specifies what operation you want to perform. For example, open(\"data.txt\", \"r\") opens a file for reading. The returned file object provides methods such as read(), write(), readline(), seek(), tell(), and close(). In modern Python code, it is recommended to use open() inside a with statement so that the file is closed automatically.",
+        "code_examples": [
+          {
+            "title": "Opening a File",
+            "code": "file = open(\"data.txt\", \"r\")\nprint(file.read())\nfile.close()",
+            "output": "Contents of data.txt",
+            "explanation": "The file is opened in read mode, its contents are read, and then the file is explicitly closed."
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "question": "What are the different file modes in Python such as r, w, a, and x?",
+      "category": "file-basics",
+      "answer": {
+        "short_answer": "Common modes are r for reading, w for writing, a for appending, and x for creating a new file. Modes can also be combined with b for binary and + for reading and writing.",
+        "detailed_explanation": "The r mode opens an existing file for reading and raises FileNotFoundError if the file does not exist. The w mode opens a file for writing and creates it if necessary, but truncates the existing contents if the file already exists. The a mode opens a file for appending and writes new data at the end. The x mode creates a new file and raises FileExistsError if the file already exists. The b modifier is used for binary files, such as rb and wb. The t modifier represents text mode and is the default. The + modifier allows both reading and writing, such as r+ or w+.",
+        "code_examples": [
+          {
+            "title": "Common File Modes",
+            "code": "open(\"data.txt\", \"r\")   # read\nopen(\"data.txt\", \"w\")   # write\nopen(\"data.txt\", \"a\")   # append\nopen(\"data.txt\", \"x\")   # create new file",
+            "output": "No output",
+            "explanation": "These examples show the purpose of the four commonly discussed file modes. In real programs, use them with a with statement and close files automatically."
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "question": "What is the difference between r, w, and a file modes?",
+      "category": "file-basics",
+      "answer": {
+        "short_answer": "r reads an existing file, w writes from the beginning and can overwrite existing content, while a adds new content to the end of the file.",
+        "detailed_explanation": "The r mode is used when you only want to read an existing file. It does not create the file if it is missing. The w mode is used for writing and will remove the old contents when the file already exists. If the file does not exist, w creates it. The a mode preserves existing content and places new writes at the end. If the file does not exist, a creates it. Choosing the correct mode is important because using w accidentally can destroy existing file contents.",
+        "code_examples": [
+          {
+            "title": "Comparing r, w, and a",
+            "code": "with open(\"data.txt\", \"w\") as file:\n    file.write(\"First\")\n\nwith open(\"data.txt\", \"a\") as file:\n    file.write(\" Second\")\n\nwith open(\"data.txt\", \"r\") as file:\n    print(file.read())",
+            "output": "First Second",
+            "explanation": "w creates the file and writes First. a keeps First and adds Second. r then reads the complete content."
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "question": "What is the difference between w and x modes?",
+      "category": "file-basics",
+      "answer": {
+        "short_answer": "w creates a file if needed and overwrites it if it already exists, while x creates a new file only and raises FileExistsError if the file already exists.",
+        "detailed_explanation": "The x mode is useful when you want to guarantee that you are creating a new file rather than accidentally replacing an existing one. With w, an existing file is truncated immediately when opened. With x, opening an existing path fails instead. This makes x useful when accidental overwriting must be prevented.",
+        "code_examples": [
+          {
+            "title": "Exclusive File Creation",
+            "code": "with open(\"new_file.txt\", \"x\") as file:\n    file.write(\"Created for the first time\")",
+            "output": "No output if the file did not already exist",
+            "explanation": "The x mode creates the file. If new_file.txt already exists, Python raises FileExistsError instead of overwriting it."
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "question": "What happens if you open a file in w mode and the file already exists?",
+      "category": "file-basics",
+      "answer": {
+        "short_answer": "The existing file is truncated, meaning its previous contents are removed, and the file becomes ready for new data.",
+        "detailed_explanation": "When a text file is opened in w mode, Python creates it if it does not exist. If it already exists, its contents are cleared before writing begins. This is why w mode should be used carefully when existing data must be preserved. If you want to keep the existing content and add new data, use a mode instead.",
+        "code_examples": [
+          {
+            "title": "w Mode Overwrites Existing Content",
+            "code": "with open(\"data.txt\", \"w\") as file:\n    file.write(\"New content\")\n\nwith open(\"data.txt\", \"r\") as file:\n    print(file.read())",
+            "output": "New content",
+            "explanation": "Any old content in data.txt is replaced when the file is opened in w mode."
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "question": "What happens if you open a file in r mode and the file does not exist?",
+      "category": "file-basics",
+      "answer": {
+        "short_answer": "Python raises a FileNotFoundError.",
+        "detailed_explanation": "The r mode expects the file to already exist. If the specified path cannot be found, open() raises FileNotFoundError. You can handle this exception using try and except, or check whether the path exists before opening it.",
+        "code_examples": [
+          {
+            "title": "Handling a Missing File",
+            "code": "try:\n    with open(\"missing.txt\", \"r\") as file:\n        print(file.read())\nexcept FileNotFoundError:\n    print(\"File not found\")",
+            "output": "File not found",
+            "explanation": "The exception is caught so the program can handle the missing file gracefully instead of stopping with an unhandled error."
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "question": "What is the difference between text mode and binary mode?",
+      "category": "file-basics",
+      "answer": {
+        "short_answer": "Text mode works with strings and handles text encoding, while binary mode works with bytes and is used for binary data such as images, audio, and PDFs.",
+        "detailed_explanation": "Text mode is the default mode and is commonly used for files containing human-readable text. Python decodes bytes into strings using an encoding, commonly UTF-8. Binary mode is selected with b, such as rb or wb, and returns or accepts bytes instead of strings. Binary mode is important for files where changing or decoding the raw bytes would be inappropriate, such as images, executable files, audio files, and many PDFs.",
+        "code_examples": [
+          {
+            "title": "Text and Binary Modes",
+            "code": "with open(\"message.txt\", \"r\", encoding=\"utf-8\") as file:\n    text = file.read()\n    print(type(text))\n\nwith open(\"message.txt\", \"rb\") as file:\n    data = file.read()\n    print(type(data))",
+            "output": "<class 'str'>\n<class 'bytes'>",
+            "explanation": "Text mode returns a string, while binary mode returns raw bytes."
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "question": "What is the difference between read(), readline(), and readlines()?",
+      "category": "reading-files",
+      "answer": {
+        "short_answer": "read() reads all or a specified number of characters, readline() reads one line, and readlines() reads all remaining lines into a list.",
+        "detailed_explanation": "read() is useful when you want the entire file content or a specific number of characters. readline() reads one line at a time and moves the file pointer forward. readlines() reads all remaining lines and returns them as a list of strings. For very large files, iterating directly over the file object is often more memory-efficient than loading every line into a list.",
+        "code_examples": [
+          {
+            "title": "Three Reading Methods",
+            "code": "with open(\"data.txt\", \"r\") as file:\n    print(file.read())\n\nwith open(\"data.txt\", \"r\") as file:\n    print(file.readline())\n\nwith open(\"data.txt\", \"r\") as file:\n    print(file.readlines())",
+            "output": "read() -> entire content\nreadline() -> first line\nreadlines() -> list of lines",
+            "explanation": "Each method reads the file differently and returns a different shape of data."
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "question": "How do you read a file line by line in Python?",
+      "category": "reading-files",
+      "answer": {
+        "short_answer": "You can iterate directly over the file object using a for loop.",
+        "detailed_explanation": "A file object is iterable. When you use a for loop on it, Python reads the file line by line rather than requiring you to load the entire file into memory at once. This is a common and efficient approach for processing large text files.",
+        "code_examples": [
+          {
+            "title": "Reading Line by Line",
+            "code": "with open(\"data.txt\", \"r\") as file:\n    for line in file:\n        print(line.strip())",
+            "output": "First line\nSecond line\nThird line",
+            "explanation": "The loop processes one line at a time. strip() removes surrounding whitespace, including the newline character."
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "question": "How do you read only a specific number of characters from a file?",
+      "category": "reading-files",
+      "answer": {
+        "short_answer": "Pass the desired number of characters to read(), such as read(10).",
+        "detailed_explanation": "The size argument of read() limits how much data is returned in that call. In text mode, the value represents characters; in binary mode, it represents bytes. The file pointer moves forward by the amount that was read. If fewer characters remain, Python returns the remaining content.",
+        "code_examples": [
+          {
+            "title": "Reading a Fixed Number of Characters",
+            "code": "with open(\"data.txt\", \"r\") as file:\n    content = file.read(5)\n    print(content)",
+            "output": "Hello",
+            "explanation": "read(5) requests up to five characters from the current file position."
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "question": "What does the with open() statement do?",
+      "category": "reading-files",
+      "answer": {
+        "short_answer": "with open() uses a context manager to handle the file resource and automatically close the file when the block finishes.",
+        "detailed_explanation": "The with statement creates a context in which the file is available. When execution leaves that block, Python performs the required cleanup, including closing the file. This happens even if an exception occurs inside the block. The pattern is safer and cleaner than manually calling close() in every code path.",
+        "code_examples": [
+          {
+            "title": "Using with open()",
+            "code": "with open(\"data.txt\", \"r\") as file:\n    content = file.read()\n    print(content)\n\nprint(file.closed)",
+            "output": "Contents of data.txt\nTrue",
+            "explanation": "After the with block ends, the file is automatically closed, so file.closed becomes True."
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "question": "Why is using with open() recommended for file handling?",
+      "category": "reading-files",
+      "answer": {
+        "short_answer": "It automatically handles cleanup and closes the file, even when an exception occurs.",
+        "detailed_explanation": "If you manually open a file and call close(), you must make sure close() runs on every possible execution path. Exceptions can make that easy to get wrong. The with statement solves this by using the context manager protocol. When the block ends, Python calls the appropriate cleanup method automatically. This reduces resource leaks, makes code shorter, and makes resource management more reliable.",
+        "code_examples": [
+          {
+            "title": "Automatic Cleanup",
+            "code": "try:\n    with open(\"data.txt\", \"r\") as file:\n        print(file.read())\n        raise ValueError(\"Something went wrong\")\nexcept ValueError:\n    print(\"Exception handled\")\n\nprint(file.closed)",
+            "output": "Contents of data.txt\nException handled\nTrue",
+            "explanation": "Even though an exception occurs inside the with block, the file is still closed automatically before control moves to the except block."
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "question": "How do you write data to a file in Python?",
+      "category": "writing-and-managing-files",
+      "answer": {
+        "short_answer": "Open the file in w or a mode and use the write() method to write a string.",
+        "detailed_explanation": "Use w when you want to create or replace the file contents, and a when you want to preserve existing contents and add new data at the end. The write() method accepts a string in text mode and returns the number of characters written. If you need to write multiple lines, include newline characters or use another suitable approach such as writelines().",
+        "code_examples": [
+          {
+            "title": "Writing Text",
+            "code": "with open(\"notes.txt\", \"w\") as file:\n    file.write(\"Python is easy to learn.\")",
+            "output": "No output",
+            "explanation": "The string is written to notes.txt. If the file already exists, its previous contents are replaced because w mode is used."
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "question": "What is the difference between write() and writelines()?",
+      "category": "writing-and-managing-files",
+      "answer": {
+        "short_answer": "write() writes one string, while writelines() writes an iterable of strings. Neither method automatically adds newline characters.",
+        "detailed_explanation": "write() is useful when you want to write a single string. writelines() accepts an iterable such as a list of strings and writes each string sequentially. A common interview point is that writelines() does not insert newlines automatically. If each item should appear on a separate line, include \n in the strings yourself.",
+        "code_examples": [
+          {
+            "title": "write() vs writelines()",
+            "code": "with open(\"data.txt\", \"w\") as file:\n    file.write(\"Hello\\\n\")\n    file.writelines([\"Python\\\n\", \"File Handling\\\n\"])",
+            "output": "File content:\nHello\nPython\nFile Handling",
+            "explanation": "write() writes one string, while writelines() writes each string from the list. The explicit \n characters create separate lines."
+          }
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "question": "How do you append data to an existing file?",
+      "category": "writing-and-managing-files",
+      "answer": {
+        "short_answer": "Open the file in a mode and use write() or writelines() to add data at the end.",
+        "detailed_explanation": "Append mode preserves the existing contents and positions writes at the end of the file. If the file does not exist, a mode creates it. This is commonly used for logs, activity records, and files where new information needs to be added without deleting older information.",
+        "code_examples": [
+          {
+            "title": "Appending to a File",
+            "code": "with open(\"log.txt\", \"a\") as file:\n    file.write(\"New log entry\\\n\")",
+            "output": "No output",
+            "explanation": "The new line is added after the existing contents of log.txt."
+          }
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "question": "How do you check whether a file exists before opening it?",
+      "category": "writing-and-managing-files",
+      "answer": {
+        "short_answer": "You can use pathlib.Path.exists() or os.path.exists() to check whether a path exists.",
+        "detailed_explanation": "pathlib provides a modern object-oriented way to work with paths. os.path.exists() is also widely used and remains valid. Checking existence can be useful when you want to provide a custom response before opening a file, although for some operations it can be better to simply perform the operation and handle the relevant exception.",
+        "code_examples": [
+          {
+            "title": "Checking with pathlib",
+            "code": "from pathlib import Path\n\npath = Path(\"data.txt\")\n\nif path.exists():\n    print(\"File exists\")\nelse:\n    print(\"File does not exist\")",
+            "output": "File exists",
+            "explanation": "Path.exists() returns True when the path exists and False otherwise."
+          }
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "question": "How do you rename and delete a file in Python?",
+      "category": "writing-and-managing-files",
+      "answer": {
+        "short_answer": "You can use pathlib methods such as Path.rename() and Path.unlink(), or functions from the os module such as os.rename() and os.remove().",
+        "detailed_explanation": "pathlib provides an object-oriented interface for file paths. Path.rename() changes the file name or location, while Path.unlink() removes a file. The os module provides equivalent functions through os.rename() and os.remove(). File deletion should be performed carefully because removing a file is destructive.",
+        "code_examples": [
+          {
+            "title": "Rename and Delete Safely in a Temporary Directory",
+            "code": "from pathlib import Path\nimport tempfile\n\nwith tempfile.TemporaryDirectory() as folder:\n    original = Path(folder) / \"old.txt\"\n    renamed = Path(folder) / \"new.txt\"\n\n    original.write_text(\"sample\", encoding=\"utf-8\")\n    original.rename(renamed)\n    print(renamed.exists())\n\n    renamed.unlink()\n    print(renamed.exists())",
+            "output": "True\nFalse",
+            "explanation": "A temporary directory is used so the example does not modify an important user file. The file is created, renamed, checked, deleted, and checked again."
+          }
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "question": "What is a file pointer in Python?",
+      "category": "file-pointer-and-advanced",
+      "answer": {
+        "short_answer": "A file pointer is the current position in a file from where the next read or write operation occurs.",
+        "detailed_explanation": "When a file is opened, Python maintains a current position within that file. Reading or writing generally moves this position forward. Methods such as tell() let you inspect the current position, while seek() lets you move it to another position. Understanding the file pointer is important when performing partial reads, random access, or repeated operations on the same file.",
+        "code_examples": [
+          {
+            "title": "Observing the File Pointer",
+            "code": "with open(\"data.txt\", \"r\") as file:\n    print(file.tell())\n    file.read(5)\n    print(file.tell())",
+            "output": "0\n5",
+            "explanation": "The pointer starts at position 0. After reading five characters, it moves to position 5 for this simple text example."
+          }
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "question": "What are seek() and tell() methods?",
+      "category": "file-pointer-and-advanced",
+      "answer": {
+        "short_answer": "tell() returns the current file position, while seek() changes the file position.",
+        "detailed_explanation": "tell() is used when you need to know where the file pointer currently is. seek() moves the pointer to a specified position and can also use a whence value to specify the reference point. The common default is seek(offset, 0), where the offset is measured from the beginning. These methods are useful when you need to reread data or jump to a specific location.",
+        "code_examples": [
+          {
+            "title": "Using seek() and tell()",
+            "code": "with open(\"data.txt\", \"r\") as file:\n    print(file.tell())\n    print(file.read(5))\n    print(file.tell())\n    file.seek(0)\n    print(file.read(5))",
+            "output": "0\nHello\n5\nHello",
+            "explanation": "tell() shows the current position. seek(0) moves the pointer back to the beginning, allowing the first five characters to be read again."
+          }
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "question": "What is the difference between seek() and tell()?",
+      "category": "file-pointer-and-advanced",
+      "answer": {
+        "short_answer": "tell() tells you the current file position, while seek() changes the current file position.",
+        "detailed_explanation": "The easiest way to remember the difference is: tell() asks where the pointer is, and seek() moves the pointer. tell() returns the current position. seek() accepts an offset and optionally a reference point and changes where the next operation will happen.",
+        "code_examples": [
+          {
+            "title": "Simple Difference",
+            "code": "with open(\"data.txt\", \"r\") as file:\n    file.read(3)\n    print(file.tell())\n    file.seek(0)\n    print(file.tell())",
+            "output": "3\n0",
+            "explanation": "After reading three characters, tell() reports position 3. seek(0) moves the pointer back to position 0."
+          }
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "question": "How do you handle exceptions while working with files?",
+      "category": "file-pointer-and-advanced",
+      "answer": {
+        "short_answer": "Use try and except to handle expected file-related exceptions such as FileNotFoundError, PermissionError, and IsADirectoryError.",
+        "detailed_explanation": "File operations can fail for many reasons: a file may not exist, permissions may be insufficient, a path may point to a directory instead of a file, or another operating-system-level problem may occur. Catch specific exceptions when possible so the program can respond appropriately. Using with inside the try block ensures the file is still managed safely.",
+        "code_examples": [
+          {
+            "title": "Handling File Exceptions",
+            "code": "try:\n    with open(\"data.txt\", \"r\") as file:\n        print(file.read())\nexcept FileNotFoundError:\n    print(\"The file does not exist.\")\nexcept PermissionError:\n    print(\"Permission denied.\")",
+            "output": "The file does not exist.",
+            "explanation": "The program handles two common file-related exceptions separately, making the error message more useful."
+          }
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "question": "How do you work with binary files in Python?",
+      "category": "file-pointer-and-advanced",
+      "answer": {
+        "short_answer": "Use binary modes such as rb and wb and work with bytes instead of text strings.",
+        "detailed_explanation": "Binary mode is used when the file contains raw bytes rather than ordinary text. Common examples include images, audio, videos, compressed files, and other binary formats. When reading in binary mode, Python returns bytes. When writing, you must provide bytes-like data. Using text mode for arbitrary binary data can cause decoding errors or alter the data.",
+        "code_examples": [
+          {
+            "title": "Reading Binary Data",
+            "code": "with open(\"image.bin\", \"rb\") as file:\n    data = file.read(10)\n    print(type(data))\n    print(len(data))",
+            "output": "<class 'bytes'>\n10",
+            "explanation": "rb opens the file for binary reading. The result is a bytes object, and read(10) requests up to ten bytes."
+          }
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "question": "What is the difference between os and pathlib for file handling?",
+      "category": "file-pointer-and-advanced",
+      "answer": {
+        "short_answer": "os provides many operating-system-level functions, while pathlib provides an object-oriented API for working with filesystem paths.",
+        "detailed_explanation": "Both modules can handle paths and filesystem operations. The os module has long-established functions such as os.path.exists(), os.rename(), and os.remove(). pathlib represents paths as Path objects and provides methods such as exists(), rename(), unlink(), mkdir(), and iterdir(). For new code, pathlib is often convenient and readable for path manipulation, while os remains useful for many operating-system interfaces and existing codebases.",
+        "code_examples": [
+          {
+            "title": "os and pathlib",
+            "code": "import os\nfrom pathlib import Path\n\nprint(os.path.exists(\"data.txt\"))\nprint(Path(\"data.txt\").exists())",
+            "output": "True\nTrue",
+            "explanation": "Both approaches can check whether the same path exists. pathlib performs the operation through a Path object."
+          }
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "question": "How do you copy, move, and manage files and directories in Python?",
+      "category": "file-pointer-and-advanced",
+      "answer": {
+        "short_answer": "The shutil module provides high-level operations such as copy(), copy2(), move(), copytree(), and rmtree(), while pathlib and os provide additional directory and path operations.",
+        "detailed_explanation": "shutil is designed for high-level file operations. shutil.copy() copies a file, copy2() copies a file and attempts to preserve metadata, and move() moves a file or directory. copytree() copies a directory tree, while rmtree() recursively removes a directory tree and should be used with great care. pathlib can create directories with mkdir() and inspect directory contents with iterdir().",
+        "code_examples": [
+          {
+            "title": "Copying and Moving in a Temporary Directory",
+            "code": "from pathlib import Path\nimport shutil\nimport tempfile\n\nwith tempfile.TemporaryDirectory() as folder:\n    source = Path(folder) / \"source.txt\"\n    copied = Path(folder) / \"copy.txt\"\n    moved = Path(folder) / \"moved.txt\"\n\n    source.write_text(\"hello\", encoding=\"utf-8\")\n    shutil.copy(source, copied)\n    shutil.move(copied, moved)\n\n    print(source.exists())\n    print(moved.exists())",
+            "output": "True\nTrue",
+            "explanation": "The example uses a temporary directory. shutil.copy() creates a copy, and shutil.move() moves that copy to another path."
+          }
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "question": "What is a context manager in Python?",
+      "category": "file-pointer-and-advanced",
+      "answer": {
+        "short_answer": "A context manager is an object that manages setup and cleanup around a block of code. It is commonly used with the with statement to ensure resources such as files are properly released.",
+        "detailed_explanation": "A context manager defines what should happen when entering and leaving a managed block of code. Python's with statement uses the context manager protocol. An object can implement __enter__() for setup and __exit__() for cleanup. When execution enters the with block, __enter__() is called. When the block finishes, __exit__() is called, even if an exception occurs inside the block. This makes context managers useful for resources that must be cleaned up reliably, such as files, database connections, locks, and network-related resources. The file-handling example with open() is a context manager because the file object supports this protocol. The with statement therefore avoids the need to manually call close() in normal file-handling code. Context managers can also be created using the contextlib module, including contextlib.contextmanager, when you want to build custom resource-management behavior without defining a full class.",
+        "code_examples": [
+          {
+            "title": "File Handling with a Context Manager",
+            "code": "with open(\"data.txt\", \"r\") as file:\n    content = file.read()\n    print(content)\n\nprint(file.closed)",
+            "output": "Contents of data.txt\nTrue",
+            "explanation": "open() returns a file object that acts as a context manager. The with statement handles entering and leaving the context, and the file is automatically closed after the block."
+          },
+          {
+            "title": "Custom Context Manager with a Class",
+            "code": "class DemoContext:\n    def __enter__(self):\n        print(\"Entering context\")\n        return self\n\n    def __exit__(self, exc_type, exc_value, traceback):\n        print(\"Exiting context\")\n\nwith DemoContext():\n    print(\"Inside context\")",
+            "output": "Entering context\nInside context\nExiting context",
+            "explanation": "__enter__() runs when the with block starts, and __exit__() runs when the block ends. This demonstrates the basic context manager protocol. The __exit__() method also receives exception information if an exception occurs inside the block."
+          },
+          {
+            "title": "Context Manager with contextlib",
+            "code": "from contextlib import contextmanager\n\n@contextmanager\ndef demo():\n    print(\"Setup\")\n    try:\n        yield\n    finally:\n        print(\"Cleanup\")\n\nwith demo():\n    print(\"Working\")",
+            "output": "Setup\nWorking\nCleanup",
+            "explanation": "The contextmanager decorator turns a generator function into a context manager. Code before yield performs setup, while code in finally performs cleanup reliably."
+          }
+        ]
+      }
+    }
+  ]
+}

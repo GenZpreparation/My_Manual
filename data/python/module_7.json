@@ -1,0 +1,498 @@
+{
+  "meta": {
+    "module": "Module 7",
+    "title": "Python Functions - Interview Questions",
+    "language": "English",
+    "level": "Beginner",
+    "question_count": 25,
+    "answer_format": [
+      "Short Answer",
+      "Detailed Explanation",
+      "Code Examples"
+    ]
+  },
+  "categories": [
+    {
+      "id": "function-basics",
+      "name": "Function Basics",
+      "question_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "return-and-output",
+      "name": "Return and Function Output",
+      "question_ids": [
+        7,
+        8
+      ]
+    },
+    {
+      "id": "function-arguments",
+      "name": "Function Arguments",
+      "question_ids": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "id": "scope-and-variables",
+      "name": "Scope and Variables",
+      "question_ids": [
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "id": "advanced-functions",
+      "name": "Advanced Function Concepts",
+      "question_ids": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is a function in Python, and why is it used?",
+      "category": "function-basics",
+      "answer": {
+        "short_answer": "A function is a reusable block of code that performs a specific task. Functions help us organize code, avoid repetition, improve readability, and make programs easier to maintain.",
+        "detailed_explanation": "A function lets us group a set of statements that belong to one task and execute them whenever needed. Instead of writing the same code multiple times, we write it once inside a function and call that function whenever required. In Python, functions are created using the def keyword. A function can accept input through parameters and can send a result back using return. Functions are very important in real projects because large programs can be divided into smaller, understandable pieces. For example, instead of writing tax calculation logic at several places, we can create one calculate_tax() function and reuse it.",
+        "code_examples": [
+          {
+            "title": "Creating and using a simple function",
+            "code": "def greet():\n    print(\"Hello, Python!\")\n\ngreet()\ngreet()",
+            "output": "Hello, Python!\nHello, Python!",
+            "explanation": "The greet() function contains one print statement. We call it twice, so the same code runs twice without writing the print statement again."
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "question": "How do you define and call a function in Python?",
+      "category": "function-basics",
+      "answer": {
+        "short_answer": "A function is defined using the def keyword followed by the function name, parentheses, and a colon. We execute it by writing its name followed by parentheses.",
+        "detailed_explanation": "The basic syntax is def function_name(): followed by an indented function body. The code inside the function does not execute when the function is defined. It executes when the function is called. A function name should clearly describe what the function does. Parameters can be placed inside the parentheses when the function needs input. The indentation is important because Python uses indentation to identify the function body.",
+        "code_examples": [
+          {
+            "title": "Define and call a function",
+            "code": "def add_numbers():\n    a = 10\n    b = 20\n    print(a + b)\n\nadd_numbers()",
+            "output": "30",
+            "explanation": "add_numbers() is defined using def. When add_numbers() is called, Python executes the statements inside the function."
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "question": "What is the difference between parameters and arguments?",
+      "category": "function-basics",
+      "answer": {
+        "short_answer": "A parameter is a variable written in a function definition. An argument is the actual value passed to the function when it is called.",
+        "detailed_explanation": "Parameters and arguments are closely related but are used at different points. In def greet(name), name is a parameter because it is defined in the function definition. When we call greet(\"Abhi\"), the value \"Abhi\" is an argument. Think of a parameter as an empty place or variable waiting for a value, while an argument is the actual value supplied to that place.",
+        "code_examples": [
+          {
+            "title": "Parameter and argument example",
+            "code": "def greet(name):\n    print(\"Hello\", name)\n\ngreet(\"Abhi\")",
+            "output": "Hello Abhi",
+            "explanation": "name is the parameter. \"Abhi\" is the argument passed during the function call."
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "question": "What is the difference between positional arguments and keyword arguments?",
+      "category": "function-basics",
+      "answer": {
+        "short_answer": "Positional arguments are matched according to their position. Keyword arguments are passed using parameter names, so the order is not important.",
+        "detailed_explanation": "With positional arguments, Python assigns values to parameters from left to right. Therefore, changing the order can change the meaning of the values. With keyword arguments, we explicitly write the parameter name, such as name=\"Abhi\", so Python knows exactly which parameter should receive the value. Keyword arguments can make function calls more readable and are especially useful when a function has several parameters.",
+        "code_examples": [
+          {
+            "title": "Positional and keyword arguments",
+            "code": "def introduce(name, age):\n    print(name, age)\n\nintroduce(\"Abhi\", 25)\nintroduce(age=25, name=\"Abhi\")",
+            "output": "Abhi 25\nAbhi 25",
+            "explanation": "The first call uses positional arguments. The second call uses keyword arguments, so the values can be supplied in a different order."
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "question": "What are default arguments in Python?",
+      "category": "function-basics",
+      "answer": {
+        "short_answer": "A default argument is a parameter that already has a value in the function definition. If the caller does not provide that argument, Python uses the default value.",
+        "detailed_explanation": "Default arguments make a function flexible because some values can be optional. We assign a default value using the = operator in the function definition. If the caller provides a value, the provided value replaces the default. If no value is provided, the default is used. Default arguments are commonly used for optional settings such as a country, discount rate, or greeting message.",
+        "code_examples": [
+          {
+            "title": "Using a default argument",
+            "code": "def greet(name, message=\"Welcome\"):\n    print(message, name)\n\ngreet(\"Abhi\")\ngreet(\"Abhi\", \"Hello\")",
+            "output": "Welcome Abhi\nHello Abhi",
+            "explanation": "In the first call, message is not provided, so \"Welcome\" is used. In the second call, \"Hello\" replaces the default value."
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "question": "Can a function have both default and non-default arguments?",
+      "category": "function-basics",
+      "answer": {
+        "short_answer": "Yes, but non-default parameters must come before default parameters in a normal function definition.",
+        "detailed_explanation": "Python requires required parameters to be placed before parameters that have default values. This makes the function call unambiguous. For example, def student(name, age=18) is valid because name is required and age has a default value. But def student(age=18, name) is invalid because a non-default parameter follows a default parameter. This is a common interview question because it tests understanding of function parameter rules.",
+        "code_examples": [
+          {
+            "title": "Valid parameter order",
+            "code": "def student(name, age=18):\n    print(name, age)\n\nstudent(\"Abhi\")\nstudent(\"Rahul\", 22)",
+            "output": "Abhi 18\nRahul 22",
+            "explanation": "name is required and age is optional. Since name comes before age, the function definition is valid."
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "question": "What is the difference between return and print() in a function?",
+      "category": "return-and-output",
+      "answer": {
+        "short_answer": "print() displays a value on the screen, while return sends a value back to the caller and can be stored or used in another expression.",
+        "detailed_explanation": "print() is mainly used to show information to the user or for debugging. It does not give the calling code a useful returned result. return ends the function and sends a value back to the place where the function was called. A returned value can be assigned to a variable, passed to another function, or used in calculations. In reusable application code, return is usually more useful when the result needs to be processed further.",
+        "code_examples": [
+          {
+            "title": "print() versus return",
+            "code": "def using_print():\n    print(10 + 20)\n\ndef using_return():\n    return 10 + 20\n\nresult1 = using_print()\nresult2 = using_return()\nprint(\"result1:\", result1)\nprint(\"result2:\", result2)",
+            "output": "30\nresult1: None\nresult2: 30",
+            "explanation": "using_print() displays 30 but does not return a value, so result1 becomes None. using_return() sends 30 back, so result2 stores 30."
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "question": "Can a Python function return multiple values? How?",
+      "category": "return-and-output",
+      "answer": {
+        "short_answer": "Yes. A Python function can return multiple values separated by commas. Python packages them into a tuple, which can then be unpacked into multiple variables.",
+        "detailed_explanation": "When a function uses return value1, value2, Python effectively returns a tuple containing those values. The caller can store the tuple in one variable or unpack the values into separate variables. This is useful when a function needs to calculate or provide several related results, such as a minimum and maximum value, or a user's name and age.",
+        "code_examples": [
+          {
+            "title": "Returning multiple values",
+            "code": "def calculate(a, b):\n    total = a + b\n    difference = a - b\n    return total, difference\n\ntotal, difference = calculate(20, 5)\nprint(total)\nprint(difference)",
+            "output": "25\n15",
+            "explanation": "The function returns two values. Python groups them as a tuple, and the caller unpacks them into total and difference."
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "question": "What are *args in Python?",
+      "category": "function-arguments",
+      "answer": {
+        "short_answer": "*args allows a function to accept any number of positional arguments. Inside the function, args is a tuple containing those arguments.",
+        "detailed_explanation": "Sometimes we do not know in advance how many positional values a function will receive. In that situation, *args is useful. The * tells Python to collect extra positional arguments into a tuple. The name args is only a convention; technically, another name can be used, such as *numbers. We can loop over the tuple or perform calculations with its values.",
+        "code_examples": [
+          {
+            "title": "Using *args",
+            "code": "def add_all(*numbers):\n    total = 0\n    for number in numbers:\n        total += number\n    return total\n\nprint(add_all(10, 20))\nprint(add_all(10, 20, 30, 40))",
+            "output": "30\n100",
+            "explanation": "The function accepts any number of positional arguments. All received values are collected inside the numbers tuple."
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "question": "What are **kwargs in Python?",
+      "category": "function-arguments",
+      "answer": {
+        "short_answer": "**kwargs allows a function to accept any number of keyword arguments. Inside the function, kwargs is a dictionary containing the parameter names and their values.",
+        "detailed_explanation": "When a function needs to accept an unknown number of named arguments, we can use **kwargs. The double asterisk tells Python to collect extra keyword arguments into a dictionary. The name kwargs is a convention, but the important part is the double asterisk. This is useful when a function should support flexible named options.",
+        "code_examples": [
+          {
+            "title": "Using **kwargs",
+            "code": "def show_details(**details):\n    for key, value in details.items():\n        print(key, value)\n\nshow_details(name=\"Abhi\", age=25, city=\"Bengaluru\")",
+            "output": "name Abhi\nage 25\ncity Bengaluru",
+            "explanation": "The keyword arguments are collected into the details dictionary. The function then loops through its key-value pairs."
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "question": "What is the difference between *args and **kwargs?",
+      "category": "function-arguments",
+      "answer": {
+        "short_answer": "*args collects extra positional arguments into a tuple, while **kwargs collects extra keyword arguments into a dictionary.",
+        "detailed_explanation": "The main difference is the type of arguments they collect. *args handles values passed without parameter names, while **kwargs handles values passed with parameter names. They can also be used together when a function needs maximum flexibility. For example, a function can receive several positional values and several named options.",
+        "code_examples": [
+          {
+            "title": "Using *args and **kwargs together",
+            "code": "def demo(*args, **kwargs):\n    print(\"args:\", args)\n    print(\"kwargs:\", kwargs)\n\ndemo(10, 20, name=\"Abhi\", city=\"Bengaluru\")",
+            "output": "args: (10, 20)\nkwargs: {'name': 'Abhi', 'city': 'Bengaluru'}",
+            "explanation": "The positional values 10 and 20 are stored in a tuple. The named values are stored in a dictionary."
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "question": "What is argument unpacking in Python?",
+      "category": "function-arguments",
+      "answer": {
+        "short_answer": "Argument unpacking means taking values from a collection and passing them as separate function arguments using * for sequences and ** for dictionaries.",
+        "detailed_explanation": "Normally, a function call passes individual values. Argument unpacking lets us use an existing list, tuple, or dictionary instead. The * operator unpacks sequence elements into positional arguments. The ** operator unpacks dictionary key-value pairs into keyword arguments. This is especially useful when data is already stored in a collection.",
+        "code_examples": [
+          {
+            "title": "Unpacking a list and dictionary",
+            "code": "def introduce(name, age):\n    print(name, age)\n\nvalues = [\"Abhi\", 25]\ndata = {\"name\": \"Abhi\", \"age\": 25}\n\nintroduce(*values)\nintroduce(**data)",
+            "output": "Abhi 25\nAbhi 25",
+            "explanation": "*values passes the list elements as positional arguments. **data passes dictionary values using matching parameter names."
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "question": "What are keyword-only arguments in Python?",
+      "category": "function-arguments",
+      "answer": {
+        "short_answer": "Keyword-only arguments are parameters that must be passed using their parameter names. They cannot be supplied positionally.",
+        "detailed_explanation": "A parameter placed after * in a function definition becomes keyword-only, unless it is part of a different argument pattern. This can make function calls clearer and reduce mistakes when several optional parameters have similar types. For example, in def create_user(name, *, age, city), age and city must be passed as age=... and city=....",
+        "code_examples": [
+          {
+            "title": "Keyword-only arguments",
+            "code": "def create_user(name, *, age, city):\n    print(name, age, city)\n\ncreate_user(\"Abhi\", age=25, city=\"Bengaluru\")",
+            "output": "Abhi 25 Bengaluru",
+            "explanation": "name can be positional, but age and city are keyword-only because they appear after *."
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "question": "What are positional-only arguments in Python?",
+      "category": "function-arguments",
+      "answer": {
+        "short_answer": "Positional-only arguments are parameters that must be passed by position and cannot be supplied using keyword names. They are defined before /.",
+        "detailed_explanation": "Python allows us to mark parameters as positional-only by placing / in the function definition. This means callers must provide those values according to their position. Positional-only parameters can be useful when a function's parameter names are considered an implementation detail or when an API wants to enforce a particular calling style.",
+        "code_examples": [
+          {
+            "title": "Positional-only arguments",
+            "code": "def add(a, b, /):\n    return a + b\n\nprint(add(10, 20))",
+            "output": "30",
+            "explanation": "a and b are positional-only because they are before /. They must be passed by position."
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "question": "What happens if we pass more or fewer arguments than a function expects?",
+      "category": "function-arguments",
+      "answer": {
+        "short_answer": "Python raises a TypeError when the number of supplied arguments does not match the required parameters, unless the function accepts flexible arguments such as *args or has default values.",
+        "detailed_explanation": "A normal function expects a particular number of required arguments. If a required argument is missing, Python raises a TypeError. If too many positional arguments are supplied, Python also raises a TypeError. Default arguments can make some parameters optional, while *args and **kwargs can allow a variable number of arguments. Understanding this helps diagnose common function-call errors.",
+        "code_examples": [
+          {
+            "title": "Missing required argument",
+            "code": "def add(a, b):\n    return a + b\n\n# add(10)  # This would raise TypeError\nprint(add(10, 20))",
+            "output": "30",
+            "explanation": "The function requires both a and b. The commented call add(10) would fail because b is missing."
+          }
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "question": "What are local and global variables in Python?",
+      "category": "scope-and-variables",
+      "answer": {
+        "short_answer": "A local variable is created inside a function and is normally available only there. A global variable is defined outside functions and can be accessed from functions, subject to Python's scope rules.",
+        "detailed_explanation": "Variable scope determines where a variable can be accessed. A variable created inside a function is local to that function. A variable created at the module level is global to that module. A function can read a global variable if it is accessible through the scope rules, but assigning to a name inside the function normally creates a local variable unless global is used. Keeping variables local when possible makes code easier to understand and reduces unexpected side effects.",
+        "code_examples": [
+          {
+            "title": "Local and global variables",
+            "code": "company = \"ABC\"\n\ndef show_data():\n    name = \"Abhi\"\n    print(name)\n    print(company)\n\nshow_data()",
+            "output": "Abhi\nABC",
+            "explanation": "name is local to show_data(). company is defined outside the function and can be read inside the function."
+          }
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "question": "What is the global keyword in Python?",
+      "category": "scope-and-variables",
+      "answer": {
+        "short_answer": "The global keyword tells Python that a name inside a function refers to a global variable, allowing the function to assign to that global variable.",
+        "detailed_explanation": "Normally, assigning a value to a variable inside a function makes that variable local to the function. If we need to modify a variable defined at the global level, we can use the global keyword before assigning to it. However, using many global variables can make programs harder to maintain because functions can change shared state. In larger applications, returning values or using appropriate objects is often clearer.",
+        "code_examples": [
+          {
+            "title": "Using global",
+            "code": "count = 0\n\ndef increment():\n    global count\n    count += 1\n\nincrement()\nincrement()\nprint(count)",
+            "output": "2",
+            "explanation": "global count tells Python that count refers to the variable defined outside the function. The function can therefore update it."
+          }
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "question": "What is the nonlocal keyword in Python?",
+      "category": "scope-and-variables",
+      "answer": {
+        "short_answer": "The nonlocal keyword allows a nested function to modify a variable belonging to an enclosing function rather than creating a new local variable.",
+        "detailed_explanation": "nonlocal is used with nested functions. Suppose an outer function creates a variable and an inner function needs to update that variable. Without nonlocal, an assignment inside the inner function would create a new local variable. With nonlocal, Python knows that the variable belongs to the nearest enclosing function scope. This concept is commonly connected with closures.",
+        "code_examples": [
+          {
+            "title": "Using nonlocal",
+            "code": "def counter():\n    count = 0\n\n    def increment():\n        nonlocal count\n        count += 1\n        return count\n\n    return increment\n\nc = counter()\nprint(c())\nprint(c())",
+            "output": "1\n2",
+            "explanation": "count belongs to counter(). The inner increment() function uses nonlocal so it can update the same count variable between calls."
+          }
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "question": "What is variable scope in Python? Explain the LEGB rule.",
+      "category": "scope-and-variables",
+      "answer": {
+        "short_answer": "LEGB describes the order Python uses to search for a variable name: Local, Enclosing, Global, and Built-in.",
+        "detailed_explanation": "When Python sees a variable name, it searches for that name in a specific order. L means Local, the current function scope. E means Enclosing, an outer function scope when nested functions are involved. G means Global, the module-level scope. B means Built-in, where names such as len, print, and sum are defined. Understanding LEGB helps explain why Python chooses a particular variable when the same name exists in multiple scopes.",
+        "code_examples": [
+          {
+            "title": "LEGB example",
+            "code": "x = \"global\"\n\ndef outer():\n    x = \"enclosing\"\n\n    def inner():\n        x = \"local\"\n        print(x)\n\n    inner()\n\nouter()\nprint(x)",
+            "output": "local\nglobal",
+            "explanation": "Inside inner(), Python finds the local x first. Outside the function, the module-level x is used. If local x did not exist, Python would continue searching enclosing, global, and built-in scopes."
+          }
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "question": "What is recursion in Python?",
+      "category": "advanced-functions",
+      "answer": {
+        "short_answer": "Recursion is a technique where a function calls itself to solve a problem by breaking it into smaller versions of the same problem.",
+        "detailed_explanation": "A recursive function needs a base case that stops the recursion. It also needs a recursive case where the function calls itself with a smaller or simpler input. Without a proper base case, the function can keep calling itself until Python raises a RecursionError. Recursion is useful for problems that naturally have nested or repetitive structures, such as tree traversal and some mathematical problems. For many simple loops, iteration may be easier to understand.",
+        "code_examples": [
+          {
+            "title": "Factorial using recursion",
+            "code": "def factorial(n):\n    if n == 0:\n        return 1\n    return n * factorial(n - 1)\n\nprint(factorial(5))",
+            "output": "120",
+            "explanation": "The base case is n == 0. For other values, the function calls itself with n - 1 until it reaches the base case."
+          }
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "question": "What is a lambda function in Python?",
+      "category": "advanced-functions",
+      "answer": {
+        "short_answer": "A lambda function is a small anonymous function written using the lambda keyword. It is commonly used when a short function is needed temporarily.",
+        "detailed_explanation": "A lambda function can take any number of arguments but contains one expression whose result is returned automatically. It is often useful with functions such as sorted(), map(), and filter(), where we need a small piece of logic. Lambda functions are best kept simple. If the logic becomes complex, a normal def function is usually easier to read and maintain.",
+        "code_examples": [
+          {
+            "title": "Simple lambda function",
+            "code": "square = lambda x: x * x\nprint(square(5))",
+            "output": "25",
+            "explanation": "The lambda takes x and evaluates x * x. The result is automatically returned, so square(5) produces 25."
+          }
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "question": "What are higher-order functions in Python?",
+      "category": "advanced-functions",
+      "answer": {
+        "short_answer": "A higher-order function is a function that takes another function as an argument, returns a function, or does both.",
+        "detailed_explanation": "Python treats functions as first-class objects, which means functions can be stored in variables, passed to other functions, and returned from functions. A higher-order function uses this ability. This concept is important for functional programming patterns and is commonly seen with map(), filter(), sorted() and custom callback-style functions.",
+        "code_examples": [
+          {
+            "title": "Passing a function to another function",
+            "code": "def square(x):\n    return x * x\n\ndef apply_function(func, value):\n    return func(value)\n\nprint(apply_function(square, 5))",
+            "output": "25",
+            "explanation": "square is passed as an argument to apply_function(). The higher-order function then calls the received function with value 5."
+          }
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "question": "What are map(), filter(), and reduce() in Python?",
+      "category": "advanced-functions",
+      "answer": {
+        "short_answer": "map() transforms each item, filter() keeps items that satisfy a condition, and reduce() combines items into a single result. reduce() is available from the functools module.",
+        "detailed_explanation": "map() applies a function to every item in an iterable and returns an iterator. filter() applies a condition and keeps only items for which the function returns a truthy value. reduce() repeatedly combines items to produce one final value, such as a total or product. These functions are often used with lambda functions, although normal functions can also be supplied. In modern Python, list comprehensions are often a readable alternative for map() and filter() in simple cases.",
+        "code_examples": [
+          {
+            "title": "Using map(), filter(), and reduce()",
+            "code": "from functools import reduce\n\nnumbers = [1, 2, 3, 4, 5]\n\nsquares = list(map(lambda x: x * x, numbers))\neven = list(filter(lambda x: x % 2 == 0, numbers))\ntotal = reduce(lambda a, b: a + b, numbers)\n\nprint(squares)\nprint(even)\nprint(total)",
+            "output": "[1, 4, 9, 16, 25]\n[2, 4]\n15",
+            "explanation": "map() creates squares, filter() keeps even numbers, and reduce() combines all numbers into one sum."
+          }
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "question": "What is a nested function in Python?",
+      "category": "advanced-functions",
+      "answer": {
+        "short_answer": "A nested function is a function defined inside another function.",
+        "detailed_explanation": "A nested function is useful when a helper function is needed only inside one outer function. It keeps the helper logic local and avoids exposing it unnecessarily at the module level. Nested functions are also important for closures and decorators. The inner function can access variables from the enclosing function according to Python's scope rules.",
+        "code_examples": [
+          {
+            "title": "Nested function example",
+            "code": "def outer():\n    def inner():\n        print(\"Inside inner function\")\n\n    inner()\n\nouter()",
+            "output": "Inside inner function",
+            "explanation": "inner() is defined inside outer(). It is called from within outer(), so its purpose is limited to the outer function."
+          }
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "question": "What is a closure in Python?",
+      "category": "advanced-functions",
+      "answer": {
+        "short_answer": "A closure is a nested function that remembers and can access variables from its enclosing function even after the enclosing function has finished executing.",
+        "detailed_explanation": "A closure is created when an inner function uses a variable from an enclosing function and the inner function is returned or otherwise retained. The inner function keeps access to that variable because Python preserves the required enclosing scope. Closures are useful for creating functions with remembered state, customizing behavior, and building decorators. The key idea is that the inner function carries access to the enclosing data with it.",
+        "code_examples": [
+          {
+            "title": "Simple closure example",
+            "code": "def make_multiplier(x):\n    def multiply(number):\n        return number * x\n    return multiply\n\ndouble = make_multiplier(2)\ntriple = make_multiplier(3)\n\nprint(double(5))\nprint(triple(5))",
+            "output": "10\n15",
+            "explanation": "make_multiplier() creates an inner multiply() function. The returned function remembers the value of x, so double remembers 2 and triple remembers 3."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,314 @@
+{
+  "meta": {
+    "module": "Module 10",
+    "title": "Python Exception Handling - Interview Questions",
+    "language": "English",
+    "level": "Beginner to Intermediate",
+    "question_count": 15,
+    "answer_format": [
+      "Short Answer",
+      "Detailed Explanation",
+      "Code Examples"
+    ]
+  },
+  "categories": [
+    {
+      "id": "exception-basics",
+      "name": "Exception Handling Basics",
+      "question_count": 3
+    },
+    {
+      "id": "try-except",
+      "name": "try-except",
+      "question_count": 3
+    },
+    {
+      "id": "else-finally",
+      "name": "else and finally",
+      "question_count": 4
+    },
+    {
+      "id": "raising-exceptions",
+      "name": "Raising and Re-raising Exceptions",
+      "question_count": 2
+    },
+    {
+      "id": "custom-exceptions",
+      "name": "Custom Exceptions",
+      "question_count": 1
+    },
+    {
+      "id": "exception-hierarchy",
+      "name": "Exception Hierarchy",
+      "question_count": 1
+    },
+    {
+      "id": "exception-chaining",
+      "name": "Exception Chaining",
+      "question_count": 1
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is exception handling in Python, and why is it needed?",
+      "category": "exception-basics",
+      "answer": {
+        "short_answer": "Exception handling is a mechanism used to detect and handle runtime problems so that a program can respond gracefully instead of stopping unexpectedly.",
+        "detailed_explanation": "An exception is a runtime event that interrupts the normal flow of a program. For example, trying to divide by zero, opening a file that does not exist, or converting invalid text to an integer can raise exceptions. Python provides try, except, else, and finally blocks to handle such situations. Exception handling is important because real-world programs must deal with unexpected input, missing resources, invalid operations, and other runtime conditions. Good exception handling allows a program to show a meaningful message, recover when possible, clean up resources, or safely stop a particular operation without crashing the entire application.",
+        "code_examples": [
+          {
+            "title": "Basic Exception Handling",
+            "code": "try:\n    number = 10 / 0\nexcept ZeroDivisionError:\n    print(\"Cannot divide by zero.\")",
+            "output": "Cannot divide by zero.",
+            "explanation": "The risky operation is placed inside try. When Python detects division by zero, it raises ZeroDivisionError, which is handled by the except block."
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "question": "What is an exception in Python?",
+      "category": "exception-basics",
+      "answer": {
+        "short_answer": "An exception is an event raised during program execution when Python encounters a condition that prevents the current operation from continuing normally.",
+        "detailed_explanation": "Exceptions are objects that represent runtime problems. Common examples include ZeroDivisionError, ValueError, TypeError, IndexError, KeyError, and FileNotFoundError. When an exception occurs, Python stops normal execution at that point and looks for a matching exception handler. If a matching handler is found, the program can respond to the problem. If no handler is found, the exception propagates upward and may terminate the program.",
+        "code_examples": [
+          {
+            "title": "A Common Exception",
+            "code": "age = int(\"abc\")",
+            "output": "ValueError: invalid literal for int() with base 10: 'abc'",
+            "explanation": "The int() function cannot convert the text 'abc' into an integer, so Python raises ValueError."
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "question": "What is the difference between an error and an exception?",
+      "category": "exception-basics",
+      "answer": {
+        "short_answer": "An error is a broad term for a problem in a program, while an exception is a runtime event that Python can detect and potentially handle using exception-handling mechanisms.",
+        "detailed_explanation": "In Python discussions, the terms error and exception are sometimes used interchangeably, but they are useful to distinguish conceptually. Syntax errors occur when Python cannot parse the source code correctly, so the program cannot start that code normally. Exceptions generally occur during execution after the code has been parsed, such as when a file is missing or a division by zero is attempted. Runtime exceptions can often be handled with try and except. Not every problem should be hidden with exception handling; programming mistakes should usually be fixed rather than silently caught.",
+        "code_examples": [
+          {
+            "title": "Syntax Error vs Runtime Exception",
+            "code": "# Syntax error example:\n# if True print(\"Hello\")\n\n# Runtime exception:\nnumber = 10 / 0",
+            "output": "The first example has invalid Python syntax. The second raises ZeroDivisionError at runtime.",
+            "explanation": "A syntax error prevents Python from correctly parsing the code. ZeroDivisionError occurs while valid code is executing."
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "question": "How does try-except work in Python?",
+      "category": "try-except",
+      "answer": {
+        "short_answer": "Code that may raise an exception is placed inside try, and an except block handles a matching exception.",
+        "detailed_explanation": "Python first executes the code inside the try block. If no exception occurs, the except block is skipped. If an exception occurs, Python immediately stops executing the remaining statements in that try block and searches for a matching except block. If a matching handler is found, its code runs and execution continues after the exception-handling structure. It is best practice to keep the try block as small as practical and catch specific exceptions instead of hiding unrelated programming errors.",
+        "code_examples": [
+          {
+            "title": "try-except Flow",
+            "code": "try:\n    value = int(input(\"Enter a number: \"))\n    print(10 / value)\nexcept ValueError:\n    print(\"Please enter a valid integer.\")\nexcept ZeroDivisionError:\n    print(\"Number cannot be zero.\")",
+            "output": "If input is 0: Number cannot be zero.",
+            "explanation": "Different problems are handled separately. Invalid conversion raises ValueError, while division by zero raises ZeroDivisionError."
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "question": "Can we have multiple except blocks for one try block?",
+      "category": "try-except",
+      "answer": {
+        "short_answer": "Yes. A single try block can have multiple except blocks so different exception types can be handled differently.",
+        "detailed_explanation": "Multiple except blocks are useful when different exceptions require different responses. Python checks the except handlers in order and uses the first compatible handler. More specific exception types should generally be placed before broader exception types. For example, ValueError can be handled separately from ZeroDivisionError, while a broad Exception handler should normally come later if it is needed.",
+        "code_examples": [
+          {
+            "title": "Multiple except Blocks",
+            "code": "try:\n    number = int(input(\"Enter a number: \"))\n    result = 100 / number\n    print(result)\nexcept ValueError:\n    print(\"Invalid number.\")\nexcept ZeroDivisionError:\n    print(\"Cannot divide by zero.\")",
+            "output": "If input is abc: Invalid number.\nIf input is 0: Cannot divide by zero.",
+            "explanation": "The same try block can produce different exception types, and each exception has its own handler."
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "question": "What is the difference between catching a specific exception and catching Exception?",
+      "category": "try-except",
+      "answer": {
+        "short_answer": "Catching a specific exception handles only the expected problem, while catching Exception can handle most ordinary Python exceptions and is therefore broader.",
+        "detailed_explanation": "Specific exception handling is usually preferable because it makes the program's behavior clear and avoids accidentally hiding unrelated bugs. For example, if a file is expected to be missing, catch FileNotFoundError rather than Exception. Catching Exception can be useful at application boundaries such as logging an unexpected failure, but it should be used carefully. A broad handler should not silently ignore the problem. Also, Exception does not include every object derived from BaseException, such as SystemExit and KeyboardInterrupt.",
+        "code_examples": [
+          {
+            "title": "Specific vs Broad Exception",
+            "code": "try:\n    number = int(\"abc\")\nexcept ValueError:\n    print(\"Invalid integer input.\")\n\ntry:\n    number = int(\"abc\")\nexcept Exception as error:\n    print(type(error).__name__)",
+            "output": "Invalid integer input.\nValueError",
+            "explanation": "The first handler specifically targets ValueError. The second catches the broader Exception hierarchy and inspects the actual exception type."
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "question": "What is the use of the else block in exception handling?",
+      "category": "else-finally",
+      "answer": {
+        "short_answer": "The else block runs only when the try block completes without raising an exception.",
+        "detailed_explanation": "The else block is useful for code that should execute only when the protected operation succeeds. This keeps the try block focused on the statements that can actually raise the expected exception. If an exception occurs in try, Python skips else and moves to the appropriate exception handler. If try succeeds, else runs before finally, if a finally block is present.",
+        "code_examples": [
+          {
+            "title": "Using else",
+            "code": "try:\n    number = int(\"25\")\nexcept ValueError:\n    print(\"Invalid input\")\nelse:\n    print(\"Conversion successful\")",
+            "output": "Conversion successful",
+            "explanation": "Because int(\"25\") succeeds, the else block executes."
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "question": "What is the use of the finally block in Python?",
+      "category": "else-finally",
+      "answer": {
+        "short_answer": "The finally block is used for cleanup code that should run whether an exception occurs or not.",
+        "detailed_explanation": "The finally block is commonly used for cleanup operations such as closing resources, releasing locks, or restoring state. It runs after the try and any applicable except or else block. This makes it useful when cleanup must happen regardless of whether the operation succeeded or failed. In modern Python, context managers are often preferred for resource management because they provide structured automatic cleanup.",
+        "code_examples": [
+          {
+            "title": "Using finally",
+            "code": "try:\n    number = 10 / 2\n    print(number)\nexcept ZeroDivisionError:\n    print(\"Cannot divide by zero\")\nfinally:\n    print(\"Cleanup code executed\")",
+            "output": "5.0\nCleanup code executed",
+            "explanation": "The finally block runs after the successful try block. It would also run if the try block raised an exception."
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "question": "What is the difference between else and finally in exception handling?",
+      "category": "else-finally",
+      "answer": {
+        "short_answer": "else runs only when no exception occurs, while finally is used for cleanup and runs when control leaves the try structure, including when an exception occurs.",
+        "detailed_explanation": "The else block is success-specific: it runs only if the try block finishes without an exception. The finally block is cleanup-oriented: it runs regardless of whether an exception was handled, provided execution reaches the finally stage. A common structure is try for risky code, except for handling expected exceptions, else for successful follow-up work, and finally for cleanup.",
+        "code_examples": [
+          {
+            "title": "else and finally Together",
+            "code": "try:\n    result = 10 / 2\nexcept ZeroDivisionError:\n    print(\"Error\")\nelse:\n    print(\"Success:\", result)\nfinally:\n    print(\"Always perform cleanup\")",
+            "output": "Success: 5.0\nAlways perform cleanup",
+            "explanation": "Because try succeeds, else runs. Finally then runs for cleanup."
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "question": "Does the finally block always execute?",
+      "category": "else-finally",
+      "answer": {
+        "short_answer": "Normally, yes. finally is designed to execute when control leaves the try statement, including when an exception is raised or handled.",
+        "detailed_explanation": "The finally block is specifically intended for cleanup that must happen when leaving the try statement. It normally executes whether the try block succeeds, an exception is handled, or an exception propagates. There are unusual situations, such as abrupt process termination by the operating system or certain forced termination scenarios, where Python may not get an opportunity to execute finally. Therefore, 'always' is a useful interview shorthand for normal Python control flow, but not an absolute guarantee under process termination.",
+        "code_examples": [
+          {
+            "title": "finally Runs After an Exception",
+            "code": "try:\n    print(\"Starting\")\n    raise ValueError(\"Problem\")\nexcept ValueError:\n    print(\"Exception handled\")\nfinally:\n    print(\"Finally executed\")",
+            "output": "Starting\nException handled\nFinally executed",
+            "explanation": "The exception is handled, and finally still executes afterward."
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "question": "What is the raise statement in Python, and how do you use it?",
+      "category": "raising-exceptions",
+      "answer": {
+        "short_answer": "The raise statement manually triggers an exception when a program detects an invalid or unacceptable condition.",
+        "detailed_explanation": "raise allows you to signal an exceptional condition yourself instead of waiting for Python to raise one automatically. It is commonly used for validating function arguments, enforcing business rules, or converting an invalid state into a clear exception. You can raise built-in exceptions such as ValueError or TypeError, or raise a custom exception class. The exception can then be handled by a suitable try-except block higher in the call chain.",
+        "code_examples": [
+          {
+            "title": "Manually Raising an Exception",
+            "code": "def set_age(age):\n    if age < 0:\n        raise ValueError(\"Age cannot be negative\")\n    return age\n\ntry:\n    print(set_age(-5))\nexcept ValueError as error:\n    print(error)",
+            "output": "Age cannot be negative",
+            "explanation": "The function validates its input and explicitly raises ValueError when the business rule is violated."
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "question": "How do you re-raise an exception in Python?",
+      "category": "raising-exceptions",
+      "answer": {
+        "short_answer": "Inside an except block, use raise without an argument to re-raise the currently handled exception.",
+        "detailed_explanation": "Sometimes a lower-level function needs to log or perform local cleanup but should not completely handle the exception. In that situation, raise without an argument re-raises the current exception so a higher-level caller can handle it. This is useful for preserving the original exception and traceback while still allowing local actions such as logging.",
+        "code_examples": [
+          {
+            "title": "Re-raising an Exception",
+            "code": "try:\n    number = 10 / 0\nexcept ZeroDivisionError:\n    print(\"Logging the error\")\n    raise",
+            "output": "Logging the error\nZeroDivisionError: division by zero",
+            "explanation": "The except block performs local work and then raise sends the same exception onward instead of silently consuming it."
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "question": "What is a custom exception in Python, and how do you create one?",
+      "category": "custom-exceptions",
+      "answer": {
+        "short_answer": "A custom exception is a user-defined exception class created for application-specific error conditions. It is usually derived from Exception.",
+        "detailed_explanation": "Built-in exceptions cover many common problems, but applications sometimes need meaningful domain-specific exceptions. You can create one by defining a class that inherits from Exception or one of its subclasses. Custom exceptions make code easier to understand because callers can catch a specific condition rather than interpreting a generic exception message. They are especially useful in larger applications and reusable libraries.",
+        "code_examples": [
+          {
+            "title": "Creating a Custom Exception",
+            "code": "class InsufficientBalanceError(Exception):\n    pass\n\nbalance = 500\nwithdraw = 800\n\ntry:\n    if withdraw > balance:\n        raise InsufficientBalanceError(\"Insufficient balance\")\nexcept InsufficientBalanceError as error:\n    print(error)",
+            "output": "Insufficient balance",
+            "explanation": "InsufficientBalanceError represents a specific application-level condition and can be caught independently."
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "question": "What is exception hierarchy in Python? Explain BaseException and Exception.",
+      "category": "exception-hierarchy",
+      "answer": {
+        "short_answer": "Python exceptions are organized in an inheritance hierarchy. BaseException is the top-level base class, while Exception is the base class for most ordinary application exceptions.",
+        "detailed_explanation": "Python organizes exception classes through inheritance. BaseException is the root class for all built-in exceptions. Exception inherits from BaseException and is the parent of most exceptions that normal application code should handle, including ValueError, TypeError, KeyError, and many others. Some control-flow-related exceptions such as SystemExit, KeyboardInterrupt, and GeneratorExit inherit directly from BaseException rather than Exception. This is one reason broad handlers should normally catch Exception rather than BaseException. Understanding the hierarchy also explains why catching a parent exception can catch instances of its child exceptions.",
+        "code_examples": [
+          {
+            "title": "Checking the Exception Hierarchy",
+            "code": "print(issubclass(ValueError, Exception))\nprint(issubclass(Exception, BaseException))\nprint(issubclass(KeyboardInterrupt, Exception))",
+            "output": "True\nTrue\nFalse",
+            "explanation": "ValueError is an Exception, Exception itself inherits from BaseException, while KeyboardInterrupt is a direct BaseException branch rather than an Exception subclass."
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "question": "What is exception chaining in Python, and what is the difference between raise and raise ... from?",
+      "category": "exception-chaining",
+      "answer": {
+        "short_answer": "Exception chaining preserves the relationship between an original exception and a new exception. raise ... from explicitly sets the original exception as the cause of the new exception.",
+        "detailed_explanation": "Exception chaining is useful when a lower-level technical exception needs to be converted into a more meaningful higher-level exception. With plain raise inside an except block, you can re-raise the current exception. With raise NewError(...) from original_error, you explicitly tell Python that the new exception was caused by the original one. This produces a traceback that shows both the original cause and the higher-level exception. The pattern is useful when building clean application or library boundaries: low-level details can be translated into domain-specific exceptions while preserving the underlying cause for debugging.",
+        "code_examples": [
+          {
+            "title": "Exception Chaining with raise from",
+            "code": "def read_number():\n    try:\n        return int(\"abc\")\n    except ValueError as error:\n        raise RuntimeError(\"Could not read a valid number\") from error\n\ntry:\n    read_number()\nexcept RuntimeError as error:\n    print(error)\n    print(type(error.__cause__).__name__)",
+            "output": "Could not read a valid number\nValueError",
+            "explanation": "The original ValueError is stored as the cause of RuntimeError. This lets the caller see a meaningful high-level error while retaining the original cause for debugging."
+          },
+          {
+            "title": "Re-raising with raise",
+            "code": "try:\n    int(\"abc\")\nexcept ValueError:\n    print(\"Logging error\")\n    raise",
+            "output": "Logging error\nValueError: invalid literal for int() with base 10: 'abc'",
+            "explanation": "raise without an argument re-raises the current exception. It does not create a new exception."
+          }
+        ]
+      }
+    }
+  ]
+}

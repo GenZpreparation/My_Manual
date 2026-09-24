@@ -1,0 +1,290 @@
+{
+  "meta": {
+    "module_number": 14,
+    "module_name": "Decorators, Context Managers & Enum",
+    "description": "Python interview questions covering decorators, context managers, and Enum with easy but detailed explanations and practical code examples.",
+    "total_questions": 15,
+    "detail_level": "Detailed and beginner-friendly",
+    "language": "English"
+  },
+  "categories": [
+    {
+      "id": "decorators",
+      "name": "Decorators",
+      "question_count": 6
+    },
+    {
+      "id": "context-managers",
+      "name": "Context Managers",
+      "question_count": 5
+    },
+    {
+      "id": "enum",
+      "name": "Enum",
+      "question_count": 4
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is a decorator in Python, and why is it used?",
+      "category": "decorators",
+      "answer": {
+        "short_answer": "A decorator is a function that adds or changes the behavior of another function without modifying its original code. It is commonly used for logging, authentication, authorization, timing, validation, caching, and other reusable tasks.",
+        "detailed_explanation": "Python functions are first-class objects, so a function can be passed to another function and returned from it. A decorator uses this feature to wrap an existing function with additional behavior. The original function remains unchanged, while the decorator controls what happens before, after, or around the function call. Decorators help keep common cross-cutting logic reusable instead of writing the same code inside many functions.",
+        "code_examples": [
+          {
+            "title": "Simple decorator idea",
+            "code": "def logger(func):\n    def wrapper():\n        print(\"Function is starting\")\n        func()\n        print(\"Function is finished\")\n    return wrapper\n\n@logger\ndef greet():\n    print(\"Hello\")\n\ngreet()",
+            "output": "Function is starting\nHello\nFunction is finished",
+            "explanation": "The @logger syntax tells Python to pass greet to logger. The decorator returns wrapper, so calling greet() actually executes wrapper(). The wrapper runs extra code before and after the original greet function."
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "question": "How do decorators work internally in Python?",
+      "category": "decorators",
+      "answer": {
+        "short_answer": "Internally, @decorator syntax replaces the original function with the value returned by the decorator. For @decorator, Python essentially performs function = decorator(function).",
+        "detailed_explanation": "A decorator is applied when Python defines the decorated function. For example, @my_decorator above def hello(): ... is equivalent to def hello(): ... followed by hello = my_decorator(hello). Usually, my_decorator returns a wrapper function. That wrapper keeps a reference to the original function and can execute additional code before or after calling it. Because the name now refers to the wrapper, calling the decorated function runs the wrapper.",
+        "code_examples": [
+          {
+            "title": "Understanding @ syntax",
+            "code": "def decorator(func):\n    def wrapper():\n        print(\"Before\")\n        func()\n        print(\"After\")\n    return wrapper\n\ndef hello():\n    print(\"Hello\")\n\nhello = decorator(hello)\nhello()",
+            "output": "Before\nHello\nAfter",
+            "explanation": "The assignment hello = decorator(hello) is what the @decorator syntax represents. The original hello function is passed into decorator, and the returned wrapper replaces the name hello."
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "question": "How do you create a simple custom decorator in Python?",
+      "category": "decorators",
+      "answer": {
+        "short_answer": "Create a decorator function that accepts another function, define a wrapper inside it, add the required behavior in the wrapper, call the original function, and return the wrapper.",
+        "detailed_explanation": "A basic custom decorator normally has three levels: the outer decorator receives the original function, the inner wrapper executes extra behavior and calls the original function, and the decorator returns the wrapper. The @decorator syntax can then be placed above the target function. This pattern can be extended with *args and **kwargs so the decorator works with functions having different parameters.",
+        "code_examples": [
+          {
+            "title": "Custom execution-time decorator",
+            "code": "import time\n\ndef measure_time(func):\n    def wrapper(*args, **kwargs):\n        start = time.time()\n        result = func(*args, **kwargs)\n        end = time.time()\n        print(f\"Execution time: {end - start:.6f} seconds\")\n        return result\n    return wrapper\n\n@measure_time\ndef add(a, b):\n    return a + b\n\nresult = add(10, 20)\nprint(result)",
+            "output": "Execution time: <time value> seconds\n30",
+            "explanation": "The decorator measures the time before and after add() runs. It also returns the original function's result so the decorated function behaves like the original one."
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "question": "Why are *args and **kwargs commonly used in decorators?",
+      "category": "decorators",
+      "answer": {
+        "short_answer": "*args and **kwargs allow a decorator's wrapper to accept any number of positional and keyword arguments, making the decorator reusable with functions having different signatures.",
+        "detailed_explanation": "A decorator should generally not assume that the decorated function takes zero arguments or a specific number of arguments. *args collects positional arguments into a tuple, while **kwargs collects keyword arguments into a dictionary. The wrapper can then forward them to the original function using func(*args, **kwargs). This makes one decorator compatible with many functions.",
+        "code_examples": [
+          {
+            "title": "Decorator working with different arguments",
+            "code": "def log_call(func):\n    def wrapper(*args, **kwargs):\n        print(\"Calling function...\")\n        result = func(*args, **kwargs)\n        return result\n    return wrapper\n\n@log_call\ndef add(a, b):\n    return a + b\n\n@log_call\ndef greet(name, message=\"Hello\"):\n    return f\"{message}, {name}!\"\n\nprint(add(2, 3))\nprint(greet(\"Abhishek\", message=\"Hi\"))",
+            "output": "Calling function...\n5\nCalling function...\nHi, Abhishek!",
+            "explanation": "The same wrapper handles add(a, b) and greet(name, message=...) because it accepts both positional and keyword arguments and forwards them to the original functions."
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "question": "What is functools.wraps, and why should it be used?",
+      "category": "decorators",
+      "answer": {
+        "short_answer": "functools.wraps is a helper used inside decorators to preserve important metadata of the original function, such as __name__, __doc__, and related attributes.",
+        "detailed_explanation": "Without functools.wraps, the decorated function's name and documentation can become the wrapper's metadata. This can make debugging, documentation, introspection, and framework behavior less clear. Using @wraps(func) above the wrapper copies important metadata from the original function to the wrapper. It is considered a best practice when writing decorators.",
+        "code_examples": [
+          {
+            "title": "Using functools.wraps",
+            "code": "from functools import wraps\n\ndef logger(func):\n    @wraps(func)\n    def wrapper(*args, **kwargs):\n        print(\"Calling function\")\n        return func(*args, **kwargs)\n    return wrapper\n\n@logger\ndef greet(name):\n    \"\"\"Greets a person.\"\"\"\n    return f\"Hello, {name}\"\n\nprint(greet.__name__)\nprint(greet.__doc__)",
+            "output": "greet\nGreets a person.",
+            "explanation": "Because @wraps(func) is used, greet keeps its original name and docstring instead of appearing as wrapper."
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "question": "Can we apply multiple decorators to a single function? How does the order work?",
+      "category": "decorators",
+      "answer": {
+        "short_answer": "Yes. Multiple decorators can be applied to one function. They are applied from the bottom upward: the decorator closest to the function is applied first, and the outer decorator is applied around its result.",
+        "detailed_explanation": "For @A above @B above a function, Python evaluates the decoration conceptually as function = A(B(function)). Therefore B is applied to the original function first, and A wraps the result of B. At call time, A's wrapper normally runs first because it is the outermost wrapper. Understanding this order is important when decorators perform logging, authentication, caching, transactions, or other operations where order can affect behavior.",
+        "code_examples": [
+          {
+            "title": "Multiple decorators and order",
+            "code": "def first(func):\n    def wrapper():\n        print(\"First - before\")\n        func()\n        print(\"First - after\")\n    return wrapper\n\ndef second(func):\n    def wrapper():\n        print(\"Second - before\")\n        func()\n        print(\"Second - after\")\n    return wrapper\n\n@first\n@second\ndef hello():\n    print(\"Hello\")\n\nhello()",
+            "output": "First - before\nSecond - before\nHello\nSecond - after\nFirst - after",
+            "explanation": "The function is first wrapped by second, then that result is wrapped by first. Therefore first is the outer layer and its wrapper starts execution first."
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "question": "What is a context manager in Python, and why is it used?",
+      "category": "context-managers",
+      "answer": {
+        "short_answer": "A context manager manages setup and cleanup around a block of code. It is commonly used for files, database connections, locks, and other resources that must be cleaned up reliably.",
+        "detailed_explanation": "A context manager defines what should happen when entering and leaving a controlled block of code. The with statement is the common way to use one. For example, when opening a file with with open(...), Python ensures that the file is closed after the block, even if an exception occurs. Context managers make resource management safer, cleaner, and less repetitive.",
+        "code_examples": [
+          {
+            "title": "File handling with a context manager",
+            "code": "with open(\"example.txt\", \"w\") as file:\n    file.write(\"Hello Python\")\n\nprint(\"File block completed\")",
+            "output": "File block completed",
+            "explanation": "The file is opened when entering the with block and automatically closed when leaving it. You do not need to call file.close() manually."
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "question": "What is the with statement, and how does it work internally?",
+      "category": "context-managers",
+      "answer": {
+        "short_answer": "The with statement executes a block using a context manager and guarantees that cleanup logic is called when the block ends, including when an exception occurs.",
+        "detailed_explanation": "The with statement works with an object that follows the context manager protocol. Conceptually, Python obtains the context manager, calls __enter__() before the block, executes the block, and then calls __exit__() when leaving the block. If an exception occurs inside the block, information about the exception is passed to __exit__(). This is why with is useful for reliable cleanup.",
+        "code_examples": [
+          {
+            "title": "Basic custom context manager flow",
+            "code": "class Demo:\n    def __enter__(self):\n        print(\"Entering\")\n        return self\n\n    def __exit__(self, exc_type, exc_value, traceback):\n        print(\"Exiting\")\n\nwith Demo():\n    print(\"Inside block\")",
+            "output": "Entering\nInside block\nExiting",
+            "explanation": "When execution enters the with block, __enter__() runs. After the block finishes, __exit__() runs and performs cleanup."
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "question": "What are __enter__() and __exit__() methods?",
+      "category": "context-managers",
+      "answer": {
+        "short_answer": "__enter__() performs setup and returns the value assigned after as, while __exit__() performs cleanup and receives exception information if an exception occurs inside the with block.",
+        "detailed_explanation": "__enter__() is called when the with statement starts. Its return value is assigned to the variable after as, if as is used. __exit__(exc_type, exc_value, traceback) is called when the with block is left. If there is no exception, those exception arguments are None. If an exception occurs, they contain information about it. Returning False or None allows the exception to continue; returning True tells Python that the exception has been handled and suppresses it.",
+        "code_examples": [
+          {
+            "title": "Using as with __enter__",
+            "code": "class Resource:\n    def __enter__(self):\n        print(\"Resource acquired\")\n        return \"My Resource\"\n\n    def __exit__(self, exc_type, exc_value, traceback):\n        print(\"Resource released\")\n\nwith Resource() as value:\n    print(value)",
+            "output": "Resource acquired\nMy Resource\nResource released",
+            "explanation": "The value returned by __enter__() becomes the value of the variable after as. __exit__() then performs cleanup after the block."
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "question": "How do you create a custom context manager using a class and contextlib.contextmanager?",
+      "category": "context-managers",
+      "answer": {
+        "short_answer": "You can create a context manager either by defining __enter__() and __exit__() in a class or by using the @contextmanager decorator from contextlib around a generator function with setup before yield and cleanup after yield.",
+        "detailed_explanation": "The class approach is useful when the context manager has more complex state or behavior. The contextlib.contextmanager approach is often shorter and easier for simple setup-and-cleanup patterns. In a contextmanager function, code before yield acts like entry/setup logic, the yielded value is exposed to the with block, and code after yield acts like exit/cleanup logic. If an exception occurs in the with block, it can be handled around the yield using try/except/finally.",
+        "code_examples": [
+          {
+            "title": "Class-based context manager",
+            "code": "class DatabaseConnection:\n    def __enter__(self):\n        print(\"Connecting to database\")\n        return self\n\n    def __exit__(self, exc_type, exc_value, traceback):\n        print(\"Closing database connection\")\n\nwith DatabaseConnection():\n    print(\"Running query\")",
+            "output": "Connecting to database\nRunning query\nClosing database connection",
+            "explanation": "The class follows the context manager protocol using __enter__() and __exit__()."
+          },
+          {
+            "title": "Using contextlib.contextmanager",
+            "code": "from contextlib import contextmanager\n\n@contextmanager\ndef database_connection():\n    print(\"Connecting to database\")\n    try:\n        yield \"Database connection\"\n    finally:\n        print(\"Closing database connection\")\n\nwith database_connection() as connection:\n    print(connection)\n    print(\"Running query\")",
+            "output": "Connecting to database\nDatabase connection\nRunning query\nClosing database connection",
+            "explanation": "The code before yield runs when entering the context. The yielded value is assigned to connection. The finally block runs during cleanup when the with block ends."
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "question": "How does a context manager handle exceptions, and what happens when __exit__() returns True?",
+      "category": "context-managers",
+      "answer": {
+        "short_answer": "If an exception occurs inside a with block, Python calls __exit__() with exception details. If __exit__() returns True, the exception is considered handled and is suppressed; if it returns False or None, the exception continues normally.",
+        "detailed_explanation": "The three exception-related arguments are exc_type, exc_value, and traceback. They let the context manager inspect what happened. A context manager can perform cleanup regardless of whether the block succeeds or fails. Returning True from __exit__ explicitly tells Python that the context manager handled the exception. Returning False or None means the exception should propagate to the caller. Suppressing exceptions should be done intentionally because it can hide errors.",
+        "code_examples": [
+          {
+            "title": "Suppressing an exception with __exit__",
+            "code": "class IgnoreError:\n    def __enter__(self):\n        print(\"Start\")\n\n    def __exit__(self, exc_type, exc_value, traceback):\n        print(\"Cleanup\")\n        if exc_type is ValueError:\n            print(\"ValueError handled\")\n            return True\n        return False\n\nwith IgnoreError():\n    print(\"Inside\")\n    raise ValueError(\"Something went wrong\")\n\nprint(\"Program continues\")",
+            "output": "Start\nInside\nCleanup\nValueError handled\nProgram continues",
+            "explanation": "The ValueError is passed to __exit__(). Because __exit__() returns True for ValueError, Python suppresses that exception and execution continues after the with block."
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "question": "What is Enum in Python, and why is it used?",
+      "category": "enum",
+      "answer": {
+        "short_answer": "Enum is a Python class used to define a fixed set of named constant values. It improves readability, prevents arbitrary values from being used where only specific choices are valid, and makes code easier to maintain.",
+        "detailed_explanation": "The enum module provides Enum and related classes. Instead of scattering strings or numbers such as 'pending', 'approved', and 'rejected' throughout a program, you can define them once as named members. Enum members are unique symbolic values, making code more expressive. Enums are useful when a variable should represent one value from a predefined set, such as status, role, direction, priority, or environment.",
+        "code_examples": [
+          {
+            "title": "Basic Enum",
+            "code": "from enum import Enum\n\nclass Status(Enum):\n    PENDING = \"pending\"\n    APPROVED = \"approved\"\n    REJECTED = \"rejected\"\n\nstatus = Status.APPROVED\nprint(status)\nprint(status.value)",
+            "output": "Status.APPROVED\napproved",
+            "explanation": "Status.APPROVED is the Enum member, while status.value gives the underlying value assigned to that member."
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "question": "How do you create and access Enum members and their values?",
+      "category": "enum",
+      "answer": {
+        "short_answer": "Create an Enum by subclassing Enum and defining members. Access members with Class.member, get their values with .value, get their names with .name, and create a member from a value using Class(value).",
+        "detailed_explanation": "Each Enum member has a name and a value. For example, Color.RED has the name RED and the assigned value such as 'red'. You can compare Enum members by identity, iterate over all members, access .name and .value, and construct a member from a known value. By default, two members in the same Enum cannot normally have the same name, while duplicate values can be treated as aliases unless configuration such as unique is used.",
+        "code_examples": [
+          {
+            "title": "Accessing Enum members",
+            "code": "from enum import Enum\n\nclass Color(Enum):\n    RED = \"red\"\n    GREEN = \"green\"\n    BLUE = \"blue\"\n\nprint(Color.RED)\nprint(Color.RED.name)\nprint(Color.RED.value)\nprint(Color(\"green\"))\n\nfor color in Color:\n    print(color.name, color.value)",
+            "output": "Color.RED\nRED\nred\nColor.GREEN\nRED red\nGREEN green\nBLUE blue",
+            "explanation": "Class.member accesses a member, .name returns its symbolic name, .value returns the assigned value, and Color(\"green\") looks up the member whose value is 'green'."
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "question": "What is the difference between Enum, IntEnum, and StrEnum?",
+      "category": "enum",
+      "answer": {
+        "short_answer": "Enum creates general symbolic members, IntEnum creates members that also behave like integers, and StrEnum creates members that are also strings. StrEnum was added in Python 3.11.",
+        "detailed_explanation": "Use Enum when you primarily need named symbolic constants. IntEnum is useful when enum members need integer behavior and compatibility with APIs expecting integers. StrEnum is useful when members should behave like strings, such as values passed to text-based APIs. In modern Python, StrEnum is available from Python 3.11 onward. Be careful with comparisons and serialization because enum type behavior is part of the design choice.",
+        "code_examples": [
+          {
+            "title": "Enum vs IntEnum vs StrEnum",
+            "code": "from enum import Enum, IntEnum, StrEnum\n\nclass Color(Enum):\n    RED = 1\n\nclass Priority(IntEnum):\n    LOW = 1\n    HIGH = 2\n\nclass Status(StrEnum):\n    ACTIVE = \"active\"\n    INACTIVE = \"inactive\"\n\nprint(Color.RED)\nprint(Priority.HIGH + 1)\nprint(Status.ACTIVE.value)",
+            "output": "Color.RED\n3\nactive",
+            "explanation": "Color.RED is a regular Enum member. Priority.HIGH participates in integer operations because it is an IntEnum. Status.ACTIVE behaves as a string-like enum member and has the string value 'active'."
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "question": "What are the real-world use cases of Enum in Python?",
+      "category": "enum",
+      "answer": {
+        "short_answer": "Enums are useful for fixed choices such as order status, user roles, payment states, directions, priorities, environments, permissions, and other values that should come from a predefined set.",
+        "detailed_explanation": "Enums make business rules clearer by replacing repeated magic strings or numbers with named members. They are especially useful in backend applications and APIs where a field has a limited set of valid states. For example, an order may be pending, shipped, delivered, or cancelled. A user role may be admin, recruiter, or candidate. An API can validate that only defined values are accepted. Enums also make code easier to refactor because the allowed choices are defined in one place.",
+        "code_examples": [
+          {
+            "title": "Order status in a backend application",
+            "code": "from enum import StrEnum\n\nclass OrderStatus(StrEnum):\n    PENDING = \"pending\"\n    SHIPPED = \"shipped\"\n    DELIVERED = \"delivered\"\n    CANCELLED = \"cancelled\"\n\ndef update_order(status: OrderStatus):\n    if status == OrderStatus.SHIPPED:\n        print(\"Order is on the way\")\n    elif status == OrderStatus.DELIVERED:\n        print(\"Order delivered\")\n\nupdate_order(OrderStatus.SHIPPED)",
+            "output": "Order is on the way",
+            "explanation": "Instead of passing arbitrary strings everywhere, the application can use a fixed set of OrderStatus members. This improves readability and keeps allowed states centralized."
+          }
+        ]
+      }
+    }
+  ]
+}

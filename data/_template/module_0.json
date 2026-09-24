@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "module": "Module 0",
+    "title": "Language - Basics Interview Questions",
+    "description": "One or two lines about what this module covers.",
+    "level": "Beginner"
+  },
+  "categories": [
+    {
+      "id": "basics",
+      "name": "Basics"
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "category": "basics",
+      "question": "What is <language>?",
+      "answer": {
+        "short_answer": "Interview me bolne wala chhota, seedha answer.",
+        "detailed_explanation": "Concept ka poora explanation.",
+        "code_examples": [
+          {
+            "title": "Example title",
+            "code": "print('hello')",
+            "output": "hello",
+            "explanation": "Code kya karta hai."
+          }
+        ]
+      }
+    }
+  ]
+}

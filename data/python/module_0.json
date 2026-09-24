@@ -1,0 +1,435 @@
+{
+  "meta": {
+    "module": "Module 0",
+    "title": "Python Programming Basics - Interview Questions",
+    "description": "A beginner-friendly collection of 20 commonly asked Python fundamentals interview questions with concise interview answers, detailed explanations, and practical code examples.",
+    "language": "English",
+    "level": "Beginner",
+    "question_count": 20,
+    "answer_format": [
+      "Short Answer",
+      "Detailed Explanation",
+      "Code Examples"
+    ]
+  },
+  "categories": [
+    {
+      "id": "basics",
+      "name": "Python Basics"
+    },
+    {
+      "id": "execution",
+      "name": "Python Execution"
+    },
+    {
+      "id": "language",
+      "name": "Python Language Concepts"
+    },
+    {
+      "id": "variables",
+      "name": "Variables and Identifiers"
+    },
+    {
+      "id": "data-types",
+      "name": "Data Types"
+    },
+    {
+      "id": "operators",
+      "name": "Operators"
+    },
+    {
+      "id": "syntax",
+      "name": "Syntax and Indentation"
+    },
+    {
+      "id": "tools",
+      "name": "Development Tools"
+    },
+    {
+      "id": "input-output",
+      "name": "Input and Type Conversion"
+    },
+    {
+      "id": "errors",
+      "name": "Errors"
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "category": "basics",
+      "question": "What is Python?",
+      "answer": {
+        "short_answer": "Python is a high-level, general-purpose programming language known for its simple and readable syntax. It is dynamically typed and supports object-oriented, procedural, and functional programming.",
+        "detailed_explanation": "Python is a popular programming language used to build many types of software, including web applications, automation scripts, APIs, data-analysis programs, and machine-learning applications. It is called high-level because its syntax is designed to be easier for humans to read and write than low-level machine-oriented languages. Python uses indentation to define code blocks, which makes code structure visually clear. Python is dynamically typed, meaning you do not normally have to declare a variable's type before assigning a value. For example, x = 10 creates a reference to an integer object, while x = 'Hello' can later make x refer to a string object. Python also provides a large standard library and a huge ecosystem of third-party packages.",
+        "code_examples": [
+          {
+            "title": "Simple Python Program",
+            "code": "name = 'Abhi'\nprint('Hello', name)",
+            "output": "Hello Abhi",
+            "explanation": "A variable stores a string value and print() displays it on the screen."
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "category": "basics",
+      "question": "What are the main features of Python?",
+      "answer": {
+        "short_answer": "Important features of Python include simple and readable syntax, dynamic typing, automatic memory management, a large standard library, support for multiple programming paradigms, portability, and a large ecosystem of third-party packages.",
+        "detailed_explanation": "Python is designed to make software development productive and readable. Its syntax is relatively concise, and indentation is used to define blocks. Python is dynamically typed, so variable names do not require explicit type declarations. It provides automatic memory management through mechanisms such as reference counting and garbage collection in CPython. Python supports object-oriented, procedural, and functional programming styles. It runs on major operating systems, and its standard library provides many ready-to-use modules. The Python Package Index, commonly called PyPI, also provides a very large collection of third-party packages. These features make Python useful across web development, automation, scripting, data work, testing, and many other areas.",
+        "code_examples": [
+          {
+            "title": "Readable Python Syntax",
+            "code": "age = 20\nif age >= 18:\n    print('Adult')",
+            "output": "Adult",
+            "explanation": "The indented line belongs to the if block, showing Python's emphasis on readable structure."
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "category": "execution",
+      "question": "Why is Python called an interpreted language?",
+      "answer": {
+        "short_answer": "Python is commonly called interpreted because Python programs are executed by a runtime rather than being turned directly into native machine code as a single executable before execution. In CPython, source code is first compiled to bytecode, which is then executed by the Python runtime.",
+        "detailed_explanation": "The statement that Python is 'interpreted' is a useful high-level description, but it is not the whole story. In the standard CPython implementation, a .py source file is compiled into bytecode, and that bytecode is executed by the Python runtime. This differs from the common model of a language such as C, where source code is compiled ahead of time into native machine code for the target platform. Python's execution process therefore has both a compilation step and a runtime execution step. The exact implementation can differ because Python is a language and CPython is one implementation of that language.",
+        "code_examples": [
+          {
+            "title": "Running a Python File",
+            "code": "# hello.py\nprint('Hello Python')\n\n# Run from terminal\npython hello.py",
+            "output": "Hello Python",
+            "explanation": "When the Python command runs the file, the Python implementation handles compilation to bytecode and execution through its runtime."
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "category": "execution",
+      "question": "Is Python compiled or interpreted?",
+      "answer": {
+        "short_answer": "Python is commonly described as an interpreted language, but the precise answer depends on the implementation. In CPython, source code is compiled to bytecode first and the bytecode is then executed by the Python runtime.",
+        "detailed_explanation": "It is better to avoid saying that Python is purely interpreted. In CPython, the usual implementation shipped with Python, source code is parsed and compiled into bytecode. The bytecode is then executed by the Python virtual machine/runtime. This is why an interview answer such as 'Python is interpreted' is acceptable as a simplified description, but a stronger answer adds that CPython first compiles source code to bytecode. Also remember that Python refers to a language specification and ecosystem, while CPython, PyPy, and other implementations can have different execution strategies.",
+        "code_examples": [
+          {
+            "title": "Source Code to Execution",
+            "code": "x = 10\nprint(x)",
+            "output": "10",
+            "explanation": "The source is processed by the Python implementation, converted into an executable form such as bytecode in CPython, and then run by the runtime."
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "category": "execution",
+      "question": "What is the difference between a compiler and an interpreter?",
+      "answer": {
+        "short_answer": "A compiler generally translates source code into another executable form before the program runs, while an interpreter/runtime executes program instructions during program execution. Modern language implementations can combine both approaches.",
+        "detailed_explanation": "A traditional compiler translates source code into machine code or another lower-level representation before execution. This can produce a standalone executable, depending on the language and toolchain. An interpreter generally reads and executes program instructions through a runtime. In practice, the distinction is not always absolute. CPython, for example, compiles Python source into bytecode and then executes that bytecode in its runtime. The important interview point is to understand the difference between translation/compilation and runtime execution rather than memorizing that one language is always only compiled or only interpreted.",
+        "code_examples": [
+          {
+            "title": "Python Runtime Execution",
+            "code": "print(2 + 3)",
+            "output": "5",
+            "explanation": "Python's implementation processes the source and executes the resulting instructions through its runtime."
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "category": "execution",
+      "question": "What is PVM (Python Virtual Machine)?",
+      "answer": {
+        "short_answer": "PVM stands for Python Virtual Machine. In CPython, it is the runtime mechanism that executes Python bytecode and manages the execution of Python instructions.",
+        "detailed_explanation": "When Python source code is compiled to bytecode in CPython, that bytecode needs a runtime environment that can execute it. The Python Virtual Machine is the conceptual name commonly used for this bytecode execution mechanism. It is not a physical machine or a separate computer. It is part of the Python runtime. A simplified execution flow is: Python source code -> bytecode -> Python runtime/PVM -> program execution. The exact internals are implementation-specific, so in advanced discussions it is better to say that the PVM is a conceptual description of bytecode execution in CPython.",
+        "code_examples": [
+          {
+            "title": "Bytecode Example",
+            "code": "import dis\n\ndef add(a, b):\n    return a + b\n\ndis.dis(add)",
+            "output": "Bytecode instructions for the add() function",
+            "explanation": "The dis module lets you inspect Python bytecode instructions. The runtime executes such instructions when the function runs."
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "category": "execution",
+      "question": "What happens when you execute a Python program?",
+      "answer": {
+        "short_answer": "In a typical CPython execution, Python reads the source code, parses and compiles it to bytecode, and then the Python runtime executes that bytecode. During execution, objects are created, names are bound to objects, and statements are evaluated.",
+        "detailed_explanation": "A simplified CPython flow is: source code is read and parsed, syntax is checked, bytecode is generated, and the bytecode is executed by the Python runtime. Depending on the situation, compiled bytecode may be cached in __pycache__.pyc files. During execution, Python creates and manipulates runtime objects, manages namespaces, handles function calls, and manages memory. If the source contains invalid syntax, execution stops with a syntax error before normal execution of the program can continue. Runtime problems such as dividing by zero can occur after execution has started.",
+        "code_examples": [
+          {
+            "title": "Execution Flow Example",
+            "code": "x = 10\ny = 20\nresult = x + y\nprint(result)",
+            "output": "30",
+            "explanation": "Python processes the program and executes each statement, creating objects and binding the names x, y, and result."
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "category": "language",
+      "question": "What is the difference between Python 2 and Python 3?",
+      "answer": {
+        "short_answer": "Python 3 is the modern Python language line, while Python 2 is an older, discontinued line. Important differences include print syntax, division behavior, text/string handling, and several library and language changes.",
+        "detailed_explanation": "Python 2 reached its official end of life on January 1, 2020, so new Python development should use Python 3. One visible difference is that Python 3 uses print() as a function, while Python 2 commonly used the print statement. Integer division also differs: in Python 3, / performs true division, while // performs floor division. Python 3 has a clearer text model in which str represents Unicode text and bytes represents binary data. Many standard-library modules and APIs were also changed between the two versions. For modern projects and interviews, focus on Python 3 behavior.",
+        "code_examples": [
+          {
+            "title": "Print and Division in Python 3",
+            "code": "print(5 / 2)\nprint(5 // 2)",
+            "output": "2.5\n2",
+            "explanation": "In Python 3, / performs true division and // performs floor division."
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "category": "language",
+      "question": "What is dynamic typing in Python?",
+      "answer": {
+        "short_answer": "Dynamic typing means Python determines and associates types with objects at runtime rather than requiring a variable declaration with a fixed type. A name can be rebound to objects of different types during execution.",
+        "detailed_explanation": "In Python, a variable name is a reference to an object. The object has a type, and the same name can later refer to a different object of another type. For example, x can first refer to an integer and later refer to a string. This makes Python flexible, but it also means type-related problems can appear during execution if an operation is not valid for the current objects. Dynamic typing should not be confused with no types: Python is strongly typed, so incompatible operations are not silently converted in many situations.",
+        "code_examples": [
+          {
+            "title": "Same Name, Different Object Types",
+            "code": "x = 10\nprint(type(x))\n\nx = 'Python'\nprint(type(x))",
+            "output": "<class 'int'>\n<class 'str'>",
+            "explanation": "The name x is first bound to an integer object and later rebound to a string object."
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "category": "variables",
+      "question": "What are variables in Python?",
+      "answer": {
+        "short_answer": "A variable in Python is a name that refers to an object. Python variables do not need an explicit type declaration; the type belongs to the object that the name refers to.",
+        "detailed_explanation": "When you write x = 10, Python creates or uses an integer object and binds the name x to that object. The name can later be rebound to another object. This is why it is more technically accurate to say that Python names reference objects rather than saying that variables are fixed memory boxes containing values. Assignment uses the = operator to bind a name to an object. Multiple names can also refer to the same object.",
+        "code_examples": [
+          {
+            "title": "Variable Assignment",
+            "code": "name = 'Abhi'\nage = 21\nprint(name)\nprint(age)",
+            "output": "Abhi\n21",
+            "explanation": "name refers to a string object and age refers to an integer object."
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "category": "variables",
+      "question": "What are the rules for naming variables in Python?",
+      "answer": {
+        "short_answer": "A Python identifier can contain letters, digits, and underscores, but it cannot start with a digit. It is case-sensitive, cannot be a Python keyword, and should use meaningful names following common naming conventions.",
+        "detailed_explanation": "Valid identifiers can contain A-Z, a-z, digits, underscores, and many Unicode characters allowed by Python's identifier rules. An identifier cannot begin with a digit, so 2name is invalid. Names are case-sensitive, meaning age and Age are different identifiers. Python keywords such as if, class, and for cannot be used as ordinary variable names. By convention, normal variable and function names use snake_case, such as student_name or total_marks. Meaningful names make code easier to read and maintain.",
+        "code_examples": [
+          {
+            "title": "Valid and Invalid Names",
+            "code": "student_name = 'Abhi'\nage2 = 21\n_total = 100\n\n# Invalid examples:\n# 2age = 21\n# class = 'Python'",
+            "output": "No output for the valid assignments",
+            "explanation": "student_name, age2, and _total are valid identifiers. 2age starts with a digit and class is a keyword, so those examples are invalid."
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "category": "data-types",
+      "question": "What are Python's basic built-in data types?",
+      "answer": {
+        "short_answer": "Common built-in Python data types include int, float, complex, bool, str, list, tuple, set, dict, bytes, bytearray, and NoneType. Python also provides other built-in types and many user-defined types.",
+        "detailed_explanation": "Python provides different built-in types for different kinds of data. int represents integers, float represents floating-point numbers, complex represents complex numbers, bool represents True or False, and str represents text. list is an ordered mutable collection, tuple is an ordered immutable collection, set stores unique elements, and dict stores key-value pairs. bytes and bytearray are useful for binary data. None is represented by the singleton None and has the type NoneType. Understanding mutability and the purpose of each collection type is especially important in interviews.",
+        "code_examples": [
+          {
+            "title": "Checking Basic Types",
+            "code": "age = 21\nprice = 99.5\nname = 'Python'\nitems = [1, 2, 3]\nstudent = {'name': 'Abhi'}\n\nprint(type(age))\nprint(type(price))\nprint(type(name))\nprint(type(items))\nprint(type(student))",
+            "output": "<class 'int'>\n<class 'float'>\n<class 'str'>\n<class 'list'>\n<class 'dict'>",
+            "explanation": "The type() function returns the type of the object referenced by each variable."
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "category": "operators",
+      "question": "What is the difference between == and is?",
+      "answer": {
+        "short_answer": "== compares whether two objects have equal values, while is checks whether two references point to the same object in memory. Use == for value comparison and is when object identity matters.",
+        "detailed_explanation": "The == operator uses equality comparison and asks whether two objects are considered equal. The is operator checks identity, meaning whether both references refer to the exact same object. Two separate objects can contain the same value and therefore be equal with == while still being different objects for is. A common and important use of is is checking against None, such as if value is None. Avoid relying on implementation-specific object interning behavior when explaining or writing general code.",
+        "code_examples": [
+          {
+            "title": "Equality vs Identity",
+            "code": "a = [1, 2, 3]\nb = [1, 2, 3]\nc = a\n\nprint(a == b)\nprint(a is b)\nprint(a is c)",
+            "output": "True\nFalse\nTrue",
+            "explanation": "a and b have equal contents but are different list objects. c refers to the same object as a."
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "category": "errors",
+      "question": "What is the difference between a syntax error, runtime error, and logical error?",
+      "answer": {
+        "short_answer": "A syntax error means Python cannot correctly parse the code, a runtime error occurs while the program is running, and a logical error means the program runs but produces an incorrect result because the logic is wrong.",
+        "detailed_explanation": "A syntax error occurs when code violates Python's grammar, such as a missing colon after an if statement. A runtime error, usually represented by an exception, occurs during execution, such as ZeroDivisionError or NameError. A logical error is different because Python can execute the code successfully, but the program does not produce the intended result. For debugging, first identify whether the problem is syntax, runtime behavior, or incorrect logic, then use the appropriate debugging approach.",
+        "code_examples": [
+          {
+            "title": "Syntax Error",
+            "code": "if 10 > 5\n    print('Yes')",
+            "output": "SyntaxError",
+            "explanation": "The if statement is missing the required colon."
+          },
+          {
+            "title": "Runtime Error",
+            "code": "result = 10 / 0",
+            "output": "ZeroDivisionError",
+            "explanation": "The syntax is valid, but division by zero causes an exception while the program runs."
+          },
+          {
+            "title": "Logical Error",
+            "code": "length = 10\nwidth = 5\narea = length + width\nprint(area)",
+            "output": "15",
+            "explanation": "The program runs, but the rectangle area should be length * width, so the calculation contains a logical mistake."
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "category": "syntax",
+      "question": "Why is indentation important in Python?",
+      "answer": {
+        "short_answer": "Indentation is part of Python's syntax and is used to define code blocks. Unlike languages that commonly use braces for blocks, Python uses consistent indentation to show which statements belong together.",
+        "detailed_explanation": "Python requires indentation after statements such as if, for, while, def, and class. Statements with the same indentation level generally belong to the same block. Inconsistent indentation can cause an IndentationError or TabError. PEP 8 recommends using four spaces per indentation level. Using indentation consistently is important not only because Python requires it, but also because it makes program structure easy to read.",
+        "code_examples": [
+          {
+            "title": "Indentation in an If Block",
+            "code": "age = 20\n\nif age >= 18:\n    print('You are an adult')\n\nprint('Program finished')",
+            "output": "You are an adult\nProgram finished",
+            "explanation": "The indented print statement belongs to the if block. The final print statement is outside the block."
+          }
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "category": "tools",
+      "question": "What is the difference between an IDE and a code editor?",
+      "answer": {
+        "short_answer": "A code editor mainly provides tools for writing and editing code, while an IDE usually combines code editing with features such as debugging, project management, testing, code navigation, and integrated development tools.",
+        "detailed_explanation": "A code editor focuses primarily on editing source files and may provide features such as syntax highlighting, autocomplete, and extensions. An Integrated Development Environment, or IDE, generally brings multiple development tools together in one application, including an editor, debugger, project navigation, testing support, and other integrations. The exact boundary is not strict because modern editors can gain IDE-like features through extensions. Examples commonly used for Python development include Visual Studio Code and PyCharm.",
+        "code_examples": [
+          {
+            "title": "Using Python from a Terminal",
+            "code": "python --version\npython app.py",
+            "output": "Python version information\nProgram output",
+            "explanation": "A Python project can be developed with an editor and executed from the terminal; an IDE may integrate these actions into one interface."
+          }
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "category": "input-output",
+      "question": "What is the use of input() and print()?",
+      "answer": {
+        "short_answer": "input() reads text entered by the user from standard input, while print() displays values or text on standard output. The value returned by input() is a string unless you explicitly convert it.",
+        "detailed_explanation": "The input() function pauses program execution and waits for the user to enter text. After the user presses Enter, input() returns that text as a str. If you need a number, you can explicitly convert it using int() or float(). The print() function writes values to standard output and can accept multiple arguments. It also supports options such as sep and end for controlling formatting.",
+        "code_examples": [
+          {
+            "title": "Taking User Input",
+            "code": "name = input('Enter your name: ')\nprint('Hello', name)",
+            "output": "Enter your name: Abhi\nHello Abhi",
+            "explanation": "input() returns the entered name as a string, and print() displays a greeting."
+          },
+          {
+            "title": "Converting Input to Integer",
+            "code": "age = int(input('Enter your age: '))\nprint(age + 1)",
+            "output": "Enter your age: 21\n22",
+            "explanation": "input() returns '21' as a string, and int() explicitly converts it to the integer 21."
+          }
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "category": "input-output",
+      "question": "What is type casting/type conversion in Python?",
+      "answer": {
+        "short_answer": "Type conversion means changing a value from one data type to another. Common conversion functions include int(), float(), str(), bool(), list(), tuple(), and set().",
+        "detailed_explanation": "Python provides built-in functions that can create values of different types from compatible objects. For example, int('10') converts a numeric string into an integer, float('10.5') creates a floating-point value, and str(100) converts an integer to text. Some conversions can fail when the input is incompatible, such as int('hello'), which raises ValueError. Converting collections can also change their characteristics, such as list(tuple_value) creating a mutable list from a tuple.",
+        "code_examples": [
+          {
+            "title": "String to Integer",
+            "code": "age_text = '21'\nage = int(age_text)\nprint(age + 1)",
+            "output": "22",
+            "explanation": "The string '21' is explicitly converted into the integer 21 before arithmetic is performed."
+          },
+          {
+            "title": "Integer to String",
+            "code": "age = 21\nmessage = 'Age: ' + str(age)\nprint(message)",
+            "output": "Age: 21",
+            "explanation": "str() converts the integer into text so it can be concatenated with another string."
+          }
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "category": "input-output",
+      "question": "What is the difference between implicit and explicit type conversion?",
+      "answer": {
+        "short_answer": "Implicit conversion is performed automatically by Python in situations where a compatible conversion is needed, while explicit conversion is requested by the programmer using functions such as int(), float(), or str().",
+        "detailed_explanation": "Python sometimes performs implicit numeric conversion when it can do so safely within an operation. For example, adding an integer and a float produces a float. Explicit conversion happens when the programmer directly calls a conversion function. Explicit conversion is especially common with user input because input() returns a string. Python does not automatically convert unrelated types in many cases; for example, adding a string and an integer raises a TypeError rather than silently converting the integer.",
+        "code_examples": [
+          {
+            "title": "Implicit Numeric Conversion",
+            "code": "result = 10 + 2.5\nprint(result)\nprint(type(result))",
+            "output": "12.5\n<class 'float'>",
+            "explanation": "Python promotes the integer to a compatible numeric representation for the addition, producing a float."
+          },
+          {
+            "title": "Explicit Conversion",
+            "code": "number = int('10')\nprint(number + 5)",
+            "output": "15",
+            "explanation": "The programmer explicitly converts the string '10' into an integer using int()."
+          }
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "category": "operators",
+      "question": "What is the difference between = and ==?",
+      "answer": {
+        "short_answer": "The = operator is used for assignment, meaning it binds a name to a value or object. The == operator is used for equality comparison and checks whether two values are equal.",
+        "detailed_explanation": "Assignment and comparison have completely different purposes. In x = 10, the = operator assigns or binds the name x to the value 10. In x == 10, the == operator compares x with 10 and produces a Boolean result, True or False. A common beginner mistake is using = when a comparison is required inside a condition. Remember: one equals sign means assignment, while two equals signs mean equality comparison.",
+        "code_examples": [
+          {
+            "title": "Assignment",
+            "code": "x = 10\nprint(x)",
+            "output": "10",
+            "explanation": "The = operator assigns the value 10 to the name x."
+          },
+          {
+            "title": "Equality Comparison",
+            "code": "x = 10\nprint(x == 10)\nprint(x == 20)",
+            "output": "True\nFalse",
+            "explanation": "The == operator compares x with another value and returns a Boolean result."
+          }
+        ]
+      }
+    }
+  ]
+}
