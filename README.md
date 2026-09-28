@@ -1,14 +1,119 @@
-# The Interview Manual — Frontend (Next.js)
+# The Interview Manual
 
-Free, no-login interview-question manual (Java, Python, SQL, DSA, JavaScript, System Design...) built with Next.js 14 (App Router). Fully responsive (mobile → desktop), Dockerized, with CI/CD via GitHub Actions.
+**A free, no-login interview prep manual — organised the way a good study manual would be.**
 
-## Structure
-- `app/layout.js` — fonts (Newsreader + Inter + Space Grotesk via `next/font`) and metadata
+Most interview-prep sites are either a wall of copy-pasted blog spam, a paywall that opens halfway
+through topic three, or a 400-page PDF nobody ever finishes. This is the opposite: open any track,
+pick a topic, read an answer that sounds like a person actually saying it out loud in an interview
+room, and move on. No account, no email, no paywall — ever.
+
+Built with Next.js 14 (App Router), fully responsive, Dockerized, and shipped with CI/CD.
+
+---
+
+## Purpose
+
+The goal is dead simple: **make interview prep something you actually finish.**
+
+That drove every decision in this project:
+
+- **Answers written to be spoken, not skimmed.** Each model answer is structured the way you'd
+  actually explain it — short answer first, then the reasoning, then code with real output, then the
+  common mistakes and a tip. Read one, close the tab, reproduce it.
+- **Topic by topic, not a dump.** Questions are grouped into modules, modules are grouped into
+  tracks. Walk the syllabus in order, or jump straight to whatever you're weak at.
+- **Zero friction to start.** No login. The moment the page loads you can read. Friction is where
+  most prep plans quietly die.
+- **Open by default.** Questions live in plain JSON in the repo. Add a module and the site, navbar,
+  footer, sitemap and search index all update themselves. No CMS, no database, no admin panel.
+- **Fast on a bad phone connection.** Most people will read this on mobile, often on mobile data.
+  So: static generation, lazy-loaded modules, memoized rows, and motion that disables itself when
+  the device can't afford it.
+
+### Current content
+
+| Track | Status |
+|---|---|
+| **Python** | 🟢 Live — 15 modules, 331 questions |
+| Java | 🔜 Coming soon |
+| JavaScript | 🔜 Coming soon |
+| SQL | 🔜 Coming soon |
+| Data Structures & Algorithms | 🔜 Coming soon |
+| System Design | 🔜 Coming soon |
+
+Counts are never hardcoded — the hero stats, track cards, footer and search index all read from
+`data/`, so adding a module updates the entire site automatically.
+
+---
+
+## Features
+
+### Reading & studying
+- **Accordion Q&A** — click a question to expand its model answer, so you can scan a whole module
+  before committing to reading one answer in depth.
+- **Structured answers** — short answer, detailed explanation, key points, code examples with real
+  output, common mistakes, real-world usage, and an interview tip, depending on what the question
+  needs. Two answer schemas are supported side by side so older content never breaks.
+- **Copy button on every code block** — one click to copy a snippet, with a "Copied" confirmation.
+- **Wrap toggle** — long code lines scroll horizontally by default; on a phone you can flip to
+  soft-wrap with one tap.
+- **Instant search** — type two characters in the navbar and get matching questions across every
+  track. The index is downloaded lazily on first focus, not on page load. Full keyboard support
+  (`↑` `↓` `Enter` `Esc`). Clicking a result jumps straight to that question with it opened.
+- **Every question is a real URL** — answers are server-rendered, so refreshing, sharing a link, or
+  hitting Back all land you on exactly where you were.
+
+### Interface
+- **Light & dark theme** — follows your system preference by default, remembers your choice, and an
+  inline script applies it *before* first paint so there's no white flash on a dark-mode load.
+- **Sticky module navigation** — on desktop a sidebar highlights the active module and expands to
+  show its topics. On mobile it becomes a chip rail that sticks under the navbar, so switching
+  modules is always one thumb-reach away.
+- **Mobile-first touch targets** — 44px minimum on interactive elements, safe-area padding for
+  notched phones, and no blue Android tap-flash.
+- **Motion with manners** — 3D card tilt, cursor spotlight, magnetic buttons, scroll progress bar.
+  All rAF-throttled, and all of it switches itself off on touch devices, low-memory devices, and
+  anyone with `prefers-reduced-motion` set.
+
+### Performance
+- **Static generation** — every track page is prerendered at build time.
+- **Lazy module loading** — the first module ships with the page, the rest are fetched on hover/tap
+  and cached. Opening a module feels instant without paying for 15 of them upfront.
+- **Memoized question rows** — opening a question re-renders two rows instead of sixty.
+- **`content-visibility`** — questions outside the viewport skip layout and paint entirely.
+- **Stale-request guard** — rapidly clicking through modules can't leave the wrong content on screen.
+
+### SEO
+- Server-rendered answers, so they're crawlable without JavaScript.
+- JSON-LD structured data: `WebSite`, `Organization`, `BreadcrumbList` and `ItemList`.
+- Auto-generated `sitemap.xml` and `robots.txt`, per-page canonicals, Open Graph + Twitter cards,
+  and generated OG images.
+- Every module has its own crawlable URL (`/tracks/python/module_3`).
+
+### Developer experience
+- **Content is data, not code.** Drop a `module_N.json` into `data/<track>/` and the whole site —
+  including search — updates itself. No component edits required. See `data/README.md`.
+- **Dockerized** with a slim standalone image, or run it with `npm run dev`.
+- **CI/CD on GitHub Actions** — lint + build on every push, Docker image to GitHub Container
+  Registry, and an optional SSH auto-deploy to your own server.
+- **No framework lock-in** — vanilla CSS with custom properties. No Tailwind, no CSS-in-JS, no
+  component library, no heavy runtime dependencies.
+
+### Tech stack
+Next.js 14 (App Router) · React 18 · Three.js (hero scene) · vanilla CSS · `next/font`
+(Inter + Space Grotesk + Newsreader, self-hosted at build time).
+
+---
+
+## Project structure
+- `app/layout.js` — fonts, global metadata, theme init script
 - `app/page.js` — assembles the landing page sections
 - `app/tracks/[slug]/[module]/page.js` — per-track, per-module question pages
 - `app/globals.css` — all styling: custom properties/theming, layout, and a dedicated **RESPONSIVE / MOBILE** section at the bottom with breakpoints for tablet/phone
-- `components/` — `Navbar` (desktop nav + mobile hamburger menu), `Hero`, `Tracks`, `Why`, `FooterCta`, `Footer`, `track/*`
-- `lib/` — track/question data helpers
+- `components/` — `Navbar` (desktop nav + mobile hamburger menu), `NavSearch`, `Hero`, `HeroScene`, `Tracks`, `Why`, `FooterCta`, `Footer`, `ThemeToggle`, `ScrollReveal`, `Motion3D`
+- `components/track/` — `TrackView` (lazy loading + URL sync), `TrackSidebar`, `QuestionList`, `CodeBlock`
+- `lib/` — `tracks.js` (data loading), `renderAnswer.js` (dependency-free markdown-ish answer renderer), `data.js` (landing copy), `site.js` (site config)
+- `app/api/` — `search` (question index) and `tracks/[slug]/[id]` (lazy module fetch)
 - `data/<track>/*.json` — actual question content per track/module (see `data/README.md`)
 
 ## Responsive design
@@ -108,3 +213,41 @@ If you deploy elsewhere (Vercel, Railway, Render, a Kubernetes cluster, etc.) in
 ## Notes for backend integration (later)
 - Track list, dropdown menu items, and hero stats come from `lib/tracks.js` / `data/*` — replace with a real API when ready.
 - The navbar search lazily loads a question index from `/api/search`.
+- A database-backed `/api/tracks/[slug]/[id]` would let students contribute questions without a PR.
+
+---
+
+## Roadmap
+- [x] Python track — 15 modules, 331 questions
+- [ ] Fill in the remaining five tracks (Java, JavaScript, SQL, DSA, System Design)
+- [ ] **Progress tracking** — mark questions as "practised" / "confident" and see your weak areas
+- [ ] **Flashcards mode** — question on the front, answer on the back, for active recall drilling
+- [ ] Mock-interview mode — a random cross-module question picker with a timer
+- [ ] Bookmark or share a single question as a short link
+- [ ] Dark-mode-aware syntax highlighting for code blocks
+
+Contributions are very welcome — especially new questions. See `data/README.md` for the JSON
+format; adding content requires zero code changes.
+
+---
+
+## Contributing
+Issues and PRs are open. If you're adding questions, the only rule is: keep the answer structure
+consistent with the existing modules and write it the way you'd say it out loud.
+
+```bash
+git clone https://github.com/GenZpreparation/My_Manual.git
+cd My_Manual
+npm install
+npm run dev
+```
+
+See `CONTRIBUTING.md` for the full guidelines and `.github/PULL_REQUEST_TEMPLATE.md` for the PR
+checklist.
+
+## License
+MIT — see [`LICENSE`](LICENSE). Swap it if you'd rather.
+
+## Acknowledgements
+Built with Next.js, React and Three.js. Fonts (Inter, Space Grotesk, Newsreader) are open source and
+self-hosted at build time via `next/font`.
