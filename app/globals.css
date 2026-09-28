@@ -897,21 +897,36 @@ a:focus-visible, button:focus-visible{
 
 /* -- content -- */
 .track-content{min-width:0;}
-.qa-category{padding-bottom:12px;margin-bottom:44px;scroll-margin-top:96px;}
+.qa-category{padding-bottom:12px;margin-bottom:44px;scroll-margin-top:140px;}
 .qa-category-head{
   display:flex;
   align-items:baseline;
   justify-content:space-between;
+  gap:16px;
   padding-bottom:18px;
   margin-bottom:6px;
   border-bottom:1px solid var(--line);
+}
+.qa-category-headings{min-width:0;}
+.qa-category-index{
+  display:block;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.07em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin-bottom:6px;
 }
 .qa-category-head h2{
   font-family:var(--font-newsreader),'Newsreader',serif;
   font-weight:500;
   font-size:24px;
+  line-height:1.25;
+  overflow-wrap:break-word;
 }
-.qa-category-count{font-size:13px;color:var(--ink-faint);}
+.qa-category-count{font-size:13px;color:var(--ink-faint);flex-shrink:0;}
+/* sirf mobile rail par dikhta hai */
+.track-sidebar-mobilelabel{display:none;}
 .qa-category-desc{font-size:14px;color:var(--ink-faint);margin:0 0 20px;}
 
 .qa-list{border-top:none;display:flex;flex-direction:column;gap:10px;}
@@ -920,6 +935,10 @@ a:focus-visible, button:focus-visible{
   border-radius:12px;
   background:var(--paper);
   transition:border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+  /* perf: viewport se bahar ke question ka layout/paint skip ho jaata hai.
+     60+ questions wale module me scroll bahut halka ho jaata hai. */
+  content-visibility:auto;
+  contain-intrinsic-size:auto 88px;
 }
 .qa-item:hover{border-color:var(--line);}
 .qa-item.is-open{
@@ -1002,6 +1021,8 @@ a:focus-visible, button:focus-visible{
   border:1px solid rgba(var(--glow-rgb),0.35);
   border-radius:10px;
   background:var(--paper);
+  /* lambe tokens (URL, path, package name) phone par line se bahar nahi nikalenge */
+  overflow-wrap:break-word;
 }
 .qa-answer-para{margin:0 0 14px;}
 .qa-answer-para:last-child{margin-bottom:0;}
@@ -1033,6 +1054,81 @@ a:focus-visible, button:focus-visible{
   white-space:pre;
   color:inherit;
 }
+
+/* ---- code block + toolbar (Copy / Wrap) ----
+   .qa-code wrapper dark hai aur andar ka <pre> usse overflow karta hai, isliye
+   toolbar ka background seamless lagta hai. */
+.qa-code{
+  position:relative;
+  margin:0 0 14px;
+  border-radius:10px;
+  overflow:hidden;
+  background:var(--ink);
+  color:var(--on-ink);
+}
+.qa-code:last-child{margin-bottom:0;}
+.qa-code .qa-code-block{margin:0;border-radius:0;-webkit-overflow-scrolling:touch;}
+/* example ke andar ho to extra radius/border nahi chahiye */
+.qa-code-bare{border-radius:0;}
+
+.qa-code-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:7px 10px 7px 14px;
+  border-bottom:1px solid rgba(var(--on-ink-rgb),0.14);
+  background:rgba(var(--on-ink-rgb),0.05);
+}
+.qa-code-lang{
+  font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+  font-size:10.5px;
+  letter-spacing:0.09em;
+  text-transform:uppercase;
+  color:var(--on-ink-soft);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.qa-code-tools{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.qa-code-btn{
+  font-family:inherit;
+  font-size:11.5px;
+  font-weight:600;
+  line-height:1;
+  color:var(--on-ink-soft);
+  background:transparent;
+  border:1px solid rgba(var(--on-ink-rgb),0.26);
+  border-radius:6px;
+  padding:6px 9px;
+  min-height:28px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.qa-code-btn:hover{color:var(--on-ink);border-color:rgba(var(--on-ink-rgb),0.55);background:rgba(var(--on-ink-rgb),0.1);}
+.qa-code-btn[aria-pressed="true"]{color:var(--on-ink);border-color:rgba(var(--on-ink-rgb),0.55);}
+
+/* wrap on karne par lambi lines soft-wrap ho jaati hain (phone par zaroori) */
+.qa-code.is-wrap .qa-code-block code{
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+
+/* keyboard se scroll karne par focus dikhe (pre focusable hai) */
+.qa-code-block:focus-visible{outline:2px solid var(--on-ink);outline-offset:-2px;}
+
+/* ---- wide tables ----
+   Table ko scroll wrapper me daala gaya hai, warna phone par poora page
+   horizontally scroll ho jata tha. */
+.qa-table-wrap{
+  margin:0 0 14px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  border-radius:8px;
+}
+.qa-table-wrap .qa-answer-table{margin:0;}
 
 .qa-answer-list{margin:0 0 14px;padding-left:20px;}
 .qa-answer-list:last-child{margin-bottom:0;}
@@ -1107,6 +1203,9 @@ a:focus-visible, button:focus-visible{
   margin:0;
   border-radius:0;
 }
+/* example ke andar toolbar ko chhota rakha hai, taaki code hi naape */
+.qa-example .qa-code-bar{padding:5px 8px 5px 12px;}
+.qa-example .qa-code-btn{font-size:11px;padding:5px 8px;min-height:26px;}
 .qa-example-output{
   padding:10px 16px;
   border-bottom:1px solid var(--line-soft);
@@ -1418,18 +1517,44 @@ a.track-sidebar-link{line-height:normal;font-weight:400;letter-spacing:normal;te
   .footer-brand{grid-column:1 / -1;}
 
   .track-body-grid{grid-template-columns:1fr;gap:8px;}
+  /* Mobile par sidebar sticky rail ban jata hai: module switch ke liye
+     hamesha ek ungli ke door, aur scroll karte waqt chip row chipak-ti rehti
+     hai (navbar ke bilkul niche). */
   .track-sidebar{
-    position:static;max-height:none;overflow:visible;padding-right:0;
+    position:sticky;
+    top:var(--nav-h,64px);
+    z-index:40;
+    max-height:none;overflow:visible;padding-right:0;
     margin-bottom:32px;
+    padding:10px 0;
+    background:var(--paper);
+    border-bottom:1px solid var(--line-soft);
   }
   .track-sidebar-total{display:none;}
+  .track-sidebar-mobilelabel{
+    display:block;
+    font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:8px;
+  }
   .track-sidebar-nav{
     flex-direction:row;overflow-x:auto;gap:8px;padding-bottom:6px;
     -webkit-overflow-scrolling:touch;scrollbar-width:thin;
+    scroll-snap-type:x proximity;
+    scroll-padding-left:4px;
   }
-  .track-sidebar-item{flex:0 0 auto;}
+  .track-sidebar-item{flex:0 0 auto;scroll-snap-align:center;}
   .track-sidebar-item.is-open{padding-bottom:0;}
-  .track-sidebar-link{white-space:nowrap;padding:9px 14px;}
+  /* 44px min touch target + 16px font -- phone par thumb ke liye */
+  .track-sidebar-link{
+    white-space:nowrap;
+    padding:12px 16px;
+    min-height:44px;
+    font-size:14.5px;
+    border-radius:999px;
+    border:1px solid var(--line-soft);
+  }
+  .track-sidebar-link.is-active{border-color:transparent;}
   .track-sidebar-topics-wrap{display:none;}
 
   .track-hero{padding:36px 0 32px;}
@@ -1461,11 +1586,33 @@ a.track-sidebar-link{line-height:normal;font-weight:400;letter-spacing:normal;te
   .track-hero-row{flex-direction:column;align-items:flex-start;gap:14px;}
   .track-hero-intro{font-size:15px;}
 
-  .qa-question{grid-template-columns:24px 1fr 20px;gap:10px;padding:15px 14px;}
-  .qa-q-text{font-size:14.5px;}
+  .qa-question{grid-template-columns:24px 1fr 20px;gap:10px;padding:16px 14px;min-height:56px;align-items:center;}
+  .qa-q-text{font-size:15px;line-height:1.45;}
+  .qa-num{align-self:center;padding-top:0;}
+  .qa-toggle{align-self:center;}
   .qa-answer{margin:0 14px 14px calc(24px + 10px + 14px);padding:14px;font-size:14px;}
+  .qa-answer p,.qa-answer li{overflow-wrap:break-word;}
   .qa-category-head{flex-direction:column;align-items:flex-start;gap:4px;}
   .qa-category-head h2{font-size:20px;}
+
+  /* code phone par: chhota font + thoda kam padding, toolbar ke buttons
+     thumb ke liye 34px high */
+  .qa-code-block{font-size:12.5px;line-height:1.6;padding:14px;}
+  .qa-code-bar{padding:6px 8px 6px 12px;}
+  .qa-code-btn{min-height:34px;padding:0 11px;font-size:12px;}
+  .qa-example-output pre{font-size:12px;}
+  .qa-table-wrap{border-radius:6px;}
+
+  /* notch / rounded-screen phones ke liye safe-area padding */
+  .wrap,.nav-inner,.footer-cta-inner,.footer-main,.footer-bottom-inner{
+    padding-left:max(18px,env(safe-area-inset-left));
+    padding-right:max(18px,env(safe-area-inset-right));
+  }
+  .nav-mobile{
+    padding-left:max(18px,env(safe-area-inset-left));
+    padding-right:max(18px,env(safe-area-inset-right));
+    padding-bottom:max(32px,env(safe-area-inset-bottom));
+  }
 
   .dropdown{width:min(92vw,400px);}
 }
@@ -1478,3 +1625,48 @@ a.track-sidebar-link{line-height:normal;font-weight:400;letter-spacing:normal;te
   .qa-question{grid-template-columns:1fr 20px;}
   .qa-num{display:none;}
 }
+
+/* ================= UI/UX + MOBILE POLISH ================= */
+
+/* iOS Safari apne aap font size badha deta hai (landscape me text bada ho
+   jaata hai) -- isse layout toot-ta hai, isliye band kar dete hai. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+
+/* Android/iOS ka default blue "tap flash" hatata hai + proper :active feel */
+button,a,summary,label{
+  -webkit-tap-highlight-color:transparent;
+}
+.qa-question:active,
+.track-sidebar-link:active,
+.qa-code-btn:active,
+.qa-error button:active{opacity:0.72;}
+
+/* Module chip rail par horizontal swipe karte waqt page sideways na scroll ho */
+@media (max-width:860px){
+  .track-sidebar-nav{overscroll-behavior-x:contain;}
+}
+
+/* Question #qa-N par aakar seedha sticky rail ke neeche nahi chhona chahiye */
+.qa-item{scroll-margin-top:150px;}
+
+/* Code block: horizontal scroll hua to dono kinare par halki shadow, taaki
+   pata chale ki aur lines hain. local gradients scroll hone par side hata
+   jaate hain, isliye end par shadow nahi atakti. */
+.qa-code-block{
+  background-image:
+    linear-gradient(to right, var(--ink) 30%, transparent),
+    linear-gradient(to left, var(--ink) 30%, transparent),
+    linear-gradient(to right, rgba(var(--on-ink-rgb),0.22), transparent),
+    linear-gradient(to left, rgba(var(--on-ink-rgb),0.22), transparent);
+  background-position:left center,right center,left center,right center;
+  background-repeat:no-repeat;
+  background-size:36px 100%,36px 100%,12px 100%,12px 100%;
+  background-attachment:local,local,scroll,scroll;
+}
+
+/* Skeleton shimmer reduce-motion wale users ke liye band */
+@media (prefers-reduced-motion: reduce){
+  .qa-skeleton{animation:none;background:var(--paper-raised);}
+  .qa-item{content-visibility:visible;}
+}
+

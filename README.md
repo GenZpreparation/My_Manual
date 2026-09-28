@@ -18,6 +18,34 @@ Free, no-login interview-question manual (Java, Python, SQL, DSA, JavaScript, Sy
 - The track sidebar becomes a horizontally-scrollable chip bar on small screens instead of a fixed sticky column.
 - 3D hero scene / cursor-tilt effects already skip themselves on touch devices, low-memory devices, and `prefers-reduced-motion`.
 
+## UI/UX + performance work (track/Q&A page)
+Interview content (`data/**/*.json`) is **untouched** by all of this — changes are only in components and `app/globals.css`.
+
+**Mobile**
+- The module chip rail is now **sticky under the navbar** (≤860px), so switching modules stays one thumb-reach away while scrolling. Chips get 44px min touch targets, 14.5px text and scroll-snap.
+- The active module chip auto-centers itself in the rail (on load, refresh, or search jump), computed manually via `scrollLeft` so it never jerks the page vertically.
+- Question rows get 56px min height, 15px question text, and `align-items:center` so the `+`/`−` sits on the vertical center.
+- Code blocks drop to 12.5px with 14px padding, and the Copy/Wrap buttons grow to 34px.
+- `text-size-adjust:100%` stops iOS Safari from inflating fonts in landscape; `env(safe-area-inset-*)` padding for notched phones; `-webkit-tap-highlight-color:transparent` removes the blue Android tap flash.
+
+**Reading UX**
+- **Copy** button on every code block (clipboard API + `execCommand` fallback for non-secure contexts) with a "Copied" confirmation.
+- **Wrap** toggle for long code lines — the default is horizontal scroll, but on a phone soft-wrap is one tap away.
+- Horizontal-scroll edge shadows on code blocks so it's obvious more lines exist.
+- Tables are wrapped in a scroll container (`.qa-table-wrap`) — previously a wide table pushed the whole page sideways.
+- "Module 3 of 15" breadcrumb above each module heading.
+- Long URLs/paths no longer overflow the answer box (`overflow-wrap:break-word`).
+
+**Performance**
+- Each question row is a `memo`-ized component, so opening/closing one question re-renders 2 rows instead of all 60.
+- `content-visibility:auto` + `contain-intrinsic-size` on `.qa-item` skips layout/paint for questions outside the viewport (disabled under `prefers-reduced-motion`).
+- Mobile module rail uses `overscroll-behavior-x:contain` so swiping chips doesn't scroll the page.
+
+**Accessibility**
+- `aria-controls`/`aria-expanded` wired to the answer panel; `role="status"` + `aria-live="polite"` announces module/question load state.
+- Only *actually scrollable* code blocks become keyboard-focusable (measured with `ResizeObserver`) — otherwise a page would have 50+ useless tab stops.
+- Focus-visible outline on code blocks, and all animations respect `prefers-reduced-motion`.
+
 ## Run locally
 ```bash
 npm install

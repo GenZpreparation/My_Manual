@@ -74,14 +74,20 @@ export default function TrackView({ slug, modules, totalCount, initialId, initia
       const target =
         openQ != null ? document.getElementById(`qa-${openQ}`) : document.getElementById(activeId);
       if (!target) return;
+      // Sticky navbar + (mobile par) sticky module rail dono content ke upar
+      // rehte hain, isliye scroll-margin hata kar thoda neeche rakhte hain.
+      const offset = 140;
       const top = target.getBoundingClientRect().top;
       if (openQ != null) target.scrollIntoView({ behavior: "smooth", block: "center" });
-      else if (top < 90) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      else if (top < offset) {
+        window.scrollTo({ top: window.scrollY + top - offset, behavior: "smooth" });
+      }
     });
     return () => cancelAnimationFrame(raf);
   }, [status, questions, openQ, activeId]);
 
   const activeModule = modules.find((m) => m.id === activeId) || modules[0];
+  const activeIndex = modules.findIndex((m) => m.id === activeId);
 
   return (
     <section className="track-body">
@@ -99,12 +105,24 @@ export default function TrackView({ slug, modules, totalCount, initialId, initia
           {activeModule && (
             <div className="qa-category" id={activeModule.id}>
               <div className="qa-category-head">
-                <h2>{activeModule.title || activeModule.label}</h2>
+                <div className="qa-category-headings">
+                  <span className="qa-category-index">
+                    Module {activeIndex >= 0 ? activeIndex + 1 : ""} of {modules.length}
+                  </span>
+                  <h2>{activeModule.title || activeModule.label}</h2>
+                </div>
                 <span className="qa-category-count">{activeModule.count} questions</span>
               </div>
               {activeModule.description && (
                 <p className="qa-category-desc">{activeModule.description}</p>
               )}
+
+              {/* screen readers ko batata hai ki content badal raha hai */}
+              <p className="seo-only" role="status" aria-live="polite">
+                {status === "loading" && `Loading ${activeModule.label} questions`}
+                {status === "error" && `Could not load ${activeModule.label} questions`}
+                {status === "ready" && `${activeModule.label}: ${questions.length} questions`}
+              </p>
 
               {status === "loading" && (
                 <div aria-busy="true" aria-label="Loading questions">
