@@ -43,7 +43,7 @@ export default function Hero() {
               <span className="btn-arrow">→</span>
             </a>
             <a className="btn-ghost" href="#why">
-              Why it's different
+              Why it&apos;s different
             </a>
           </div>
         </div>

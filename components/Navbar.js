@@ -139,8 +139,8 @@ export default function Navbar({ tracks: tracksProp }) {
               <ul className="mobile-track-list">
                 {navTracks.map((track) =>
                   track.comingSoon ? (
-                    <li key={track.name} className="is-disabled" aria-disabled="true">
-                      <span>{track.name}</span>
+                    <li key={track.name} className="is-disabled">
+                      <span aria-disabled="true">{track.name}</span>
                       <span className="mobile-track-count">Coming soon</span>
                     </li>
                   ) : (

@@ -158,6 +158,49 @@ npm run dev
 ```
 Open http://localhost:3000
 
+## Deploy to Vercel (recommended for this project)
+
+This is a static Next.js app, so Vercel is the easiest target — no server to maintain, and every
+module page is prerendered at build time.
+
+### Option A — connect the GitHub repo (recommended)
+1. Go to [vercel.com/new](https://vercel.com/new) and sign in with GitHub.
+2. Import **`GenZpreparation/My_Manual`**. Vercel auto-detects Next.js — leave **Framework Preset**,
+   **Build Command** (`npm run build`) and **Output Directory** at their defaults.
+3. Add the environment variable (below).
+4. Click **Deploy**. Every future push to `main` redeploys automatically.
+
+### Option B — from the terminal
+```bash
+npm i -g vercel
+vercel          # first run: login + link to a project
+vercel --prod   # production deploy
+```
+
+### Environment variable (important in production)
+Set this under **Vercel → Project → Settings → Environment Variables → Add**, for Production,
+Preview and Development:
+
+| Variable | Value |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | `https://your-domain.com` (or `https://<project>.vercel.app` until you attach a custom domain) |
+
+Without it `lib/site.js` falls back to `http://localhost:3000`, so canonical URLs, `sitemap.xml` and
+OG tags all point at localhost — bad for SEO and for social previews.
+
+> Add a custom domain later? Update this variable to the custom domain too, otherwise the canonical
+> tags and the sitemap will disagree with each other in search results.
+
+### Already handled for Vercel
+- `next.config.js` detects `VERCEL=1` and **disables `output: "standalone"`** — that output is only
+  needed for the Docker image, and Vercel uses its own runtime.
+- `patch-og.js` **skips itself on non-Windows**, so the Windows-only `@vercel/og` font/wasm fix never
+  runs on Vercel and can't break the install step.
+- `.dockerignore` keeps Docker-only files out of the uploaded source.
+- A blocking inline script sets `data-theme` before first paint, so there's no white flash on a
+  dark-mode load.
+
+
 ## Build
 ```bash
 npm run build
