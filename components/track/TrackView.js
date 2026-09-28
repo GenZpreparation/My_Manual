@@ -97,6 +97,7 @@ export default function TrackView({ slug, modules, totalCount, initialId, initia
           items={modules}
           totalCount={totalCount}
           activeId={activeModule?.id}
+          activeIndex={activeIndex}
           onSelect={select}
           onPrefetch={(id) => load(id).catch(() => {})}
         />

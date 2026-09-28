@@ -12,8 +12,8 @@
 
 import { useEffect, useRef } from "react";
 
-export default function TrackSidebar({ slug, items, totalCount, activeId, onSelect, onPrefetch }) {
-  const activeRef = useRef(null);
+export default function TrackSidebar({ slug, items, totalCount, activeId, activeIndex = 0, onSelect, onPrefetch }) {
+  const chips = useRef([]);
 
   // Mobile par rail horizontally scroll hoti hai, to active module chip
   // offscreen ho sakta hai (refresh / search se aaya ho). Use hamesha
@@ -21,14 +21,17 @@ export default function TrackSidebar({ slug, items, totalCount, activeId, onSele
   // NOTE: scrollIntoView() ki jagah manual scrollLeft -- scrollIntoView page
   // ko bhi vertical scroll kar deta tha, jo chip switch karte waqt jerk deta.
   useEffect(() => {
-    const chip = activeRef.current;
-    const rail = chip && chip.closest(".track-sidebar-nav");
+    const chip = chips.current[activeIndex];
+    const rail = chip && chip.parentElement;
     if (!chip || !rail) return;
     // Desktop par rail vertical hai (scrollWidth == clientWidth) -- kuch nahi karna
     if (rail.scrollWidth <= rail.clientWidth + 1) return;
+    // Bilkul left edge pe already hai to scroll mat karo (warna smooth-scroll
+    // ka flicker dikhta hai jab pehla hi chip active ho)
+    if (rail.scrollLeft <= 0) return;
     const target = chip.offsetLeft - (rail.clientWidth - chip.offsetWidth) / 2;
     rail.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
-  }, [activeId]);
+  }, [activeIndex]);
 
   return (
     <aside className="track-sidebar">
@@ -42,17 +45,19 @@ export default function TrackSidebar({ slug, items, totalCount, activeId, onSele
           Modules
         </div>
         <nav className="track-sidebar-nav" aria-label="Modules in this track">
-          {items.map((item) => {
+          {items.map((item, i) => {
             const isActive = activeId === item.id;
             const topics = item.topics || [];
             return (
               <div
                 key={item.id}
                 className={`track-sidebar-item${isActive ? " is-open" : ""}`}
-                ref={isActive ? activeRef : null}
               >
                 <a
                   href={slug ? `/tracks/${slug}/${item.id}` : undefined}
+                  ref={(el) => {
+                    chips.current[i] = el;
+                  }}
                   onClick={(e) => {
                     // Ctrl/Cmd/middle-click = normal link (new tab); simple click = instant lazy switch
                     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;

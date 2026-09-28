@@ -782,10 +782,15 @@ a:focus-visible, button:focus-visible{
 .track-body{padding:56px 0 96px;}
 .track-body-grid{
   display:grid;
-  grid-template-columns:220px 1fr;
+  /* minmax(0,1fr) -- default `1fr` ka matlab hota hai `minmax(auto,1fr)`, jismein
+     grid item apne content se bada ho sakta hai. Mobile par chip rail 15 modules
+     ki hoti hai, to auto-min se poora column (~2000px) phail jaata tha aur page
+     horizontally scroll ho jaata tha. `0` minimum force karta hai. */
+  grid-template-columns:220px minmax(0,1fr);
   gap:56px;
   align-items:start;
 }
+.track-body-grid > *{min-width:0;}
 
 /* -- sidebar --
    Sticky panel jo apni khud ki height viewport ke hisaab se clamp karta
@@ -1516,7 +1521,7 @@ a.track-sidebar-link{line-height:normal;font-weight:400;letter-spacing:normal;te
   .footer-main{grid-template-columns:1fr 1fr;gap:32px 24px;padding:48px 24px 32px;}
   .footer-brand{grid-column:1 / -1;}
 
-  .track-body-grid{grid-template-columns:1fr;gap:8px;}
+  .track-body-grid{grid-template-columns:minmax(0,1fr);gap:8px;}
   /* Mobile par sidebar sticky rail ban jata hai: module switch ke liye
      hamesha ek ungli ke door, aur scroll karte waqt chip row chipak-ti rehti
      hai (navbar ke bilkul niche). */
@@ -1621,9 +1626,12 @@ a.track-sidebar-link{line-height:normal;font-weight:400;letter-spacing:normal;te
 @media (max-width:380px){
   .brand-text{display:none;}
   .hero-copy h1{font-size:27px;}
-  .qa-answer{margin-left:14px;}
-  .qa-question{grid-template-columns:1fr 20px;}
-  .qa-num{display:none;}
+  /* NOTE: .qa-num / .qa-question / .qa-answer ka responsive layout ab
+     640px wale block me handle ho raha hai (full-width answer + number
+     visible). Yahan se override karna unko wapas chhupa deta tha. */
+  .qa-question{grid-template-columns:24px 1fr 18px;gap:8px;padding:13px 11px;}
+  .qa-num{font-size:12px;}
+  .qa-answer{padding:0 12px 16px;}
 }
 
 /* ================= UI/UX + MOBILE POLISH ================= */
@@ -1665,6 +1673,89 @@ button,a,summary,label{
 }
 
 /* Skeleton shimmer reduce-motion wale users ke liye band */
+
+/* ================= PHONE: Q&A READING EXPERIENCE =================
+   Ye rules isliye alag se likhe hain ki 640px ke block pehle se upar
+   likha hai; ye niche aakar naturally override kar dete hain. */
+
+@media (max-width:640px){
+
+  /* --- 1. Answer ko poori width do ---
+     Desktop pe answer, question ke text se align hota hai (left indent).
+     Phone pe woh 48px indent + 2 layers padding mila kar line ko sirf
+     ~35 characters tak s-immit kar deti thi -- padhne me bahut mehnat.
+     Mobile pe card ke andar flush kar dete hain: 3 nested bordered boxes
+     (qa-item > qa-answer > qa-quick-answer) se sirf ek bacha. */
+  .qa-answer{
+    margin:0;
+    padding:0 16px 18px;
+    font-size:14.5px;
+    line-height:1.7;
+    border:none;
+    border-radius:0;
+    background:none;
+  }
+  .qa-answer .qa-q-tag{margin-bottom:10px;}
+
+  /* Andar ke boxes ka padding bhi kam -- vertical bhi, horizontal bhi */
+  .qa-quick-answer{padding:12px 13px;margin-bottom:16px;}
+  .qa-quick-answer p{font-size:14.5px;}
+  .qa-tip{padding:11px 13px;}
+  .qa-tip p{font-size:13.5px;}
+  .qa-example-title{padding:9px 13px;}
+  .qa-example-output{padding:9px 13px;}
+  .qa-example-caption{padding:10px 13px;font-size:13.5px;}
+  .qa-section{margin-bottom:16px;}
+  .qa-example-list{gap:12px;}
+  .qa-answer-list{padding-left:18px;}
+
+  /* Code block ko card ke andar se poora width do (bar + pre dono) */
+  .qa-code,.qa-table-wrap{margin-left:-2px;margin-right:-2px;}
+
+  /* --- 2. Hero ko kam jagah lo ---
+     Pehle poora hero + tagline + intro ek screen se zyada le raha tha,
+     jisse questions tak pahunchne ke liye 2 scroll lagte the. */
+  .track-hero{padding:24px 0 20px;}
+  .track-hero h1{font-size:28px;line-height:1.15;}
+  .track-hero-index{font-size:14px;margin-bottom:2px;}
+  .track-hero-tagline{font-size:14px;margin-top:6px;}
+  .track-hero-intro{font-size:14.5px;line-height:1.6;margin-top:14px;}
+  .track-breadcrumb{margin-bottom:16px;font-size:13px;}
+
+  .track-body{padding:28px 0 64px;}
+  .qa-category{margin-bottom:32px;scroll-margin-top:120px;}
+
+  /* --- 3. Chip rail ka look theek karo ---
+     (a) last chip bilkul kinare pe kat raha tha -- fade mask se pata chalta
+         hai ki aage aur modules hain (scrollable ka standard signal).
+     (b) active chip ke peeche .track-sidebar-item.is-open ka background
+         ek ajeeb beige rectangle bana raha tha jo pill se alag size ka tha.
+     (c) rail ke upar/below ka extra vertical space bhi kam kiya. */
+  .track-sidebar{
+    padding:8px 0 6px;
+    margin-bottom:20px;
+  }
+  .track-sidebar-item.is-open{background:transparent;padding-bottom:0;}
+  .track-sidebar-mobilelabel{margin-bottom:6px;}
+  .track-sidebar-nav{
+    /* NOTE: Yahan pehle ek right-side fade mask tha. Woh galat tha -- jab
+       active chip rail ke bilkul right edge par hota (Module 2 jaisa), to
+       wo aadha fade hokar "kaatta hua" dikhta, jo kuch tootne jaisa lagta
+       tha. Ab koi mask nahi: ek half-visible chip hi standard signal hai
+       ki rail aage scroll hoti hai. */
+    padding-bottom:8px;
+    padding-right:4px;
+  }
+  .track-sidebar-link{padding:11px 14px;min-height:42px;font-size:14px;}
+
+  /* --- 4. Question number wapas lao ---
+     380px ke niche .qa-num hide ho jaata tha, jisse question list
+     desktop se bilkul alag lagti thi (number wahin se shuru hota hai). */
+  .qa-num{display:block;font-size:13px;}
+  .qa-question{grid-template-columns:26px 1fr 20px;gap:9px;padding:14px 13px;min-height:54px;}
+  .qa-q-text{font-size:15px;line-height:1.45;}
+}
+
 @media (prefers-reduced-motion: reduce){
   .qa-skeleton{animation:none;background:var(--paper-raised);}
   .qa-item{content-visibility:visible;}
