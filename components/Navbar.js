@@ -45,6 +45,11 @@ export default function Navbar({ tracks: tracksProp }) {
   };
 
   return (
+    <>
+    {/* NOTE: `.nav` par `backdrop-filter` lagaya hai (frosted glass), aur wo
+        `position: fixed` children ka containing block bana deta hai. Agar menu
+        aur scrim header ke andar rehte, to unki height 0 ho jaati thi aur
+        dropdown clip ho raha tha. Isliye wo header ke bahar render hote hain. */}
     <header className={`nav${scrolled ? " is-scrolled" : ""}`} id="siteNav" ref={headerRef}>
       <div className="nav-inner">
         <Link href="/" className="brand" onClick={closeMenu}>
@@ -115,15 +120,16 @@ export default function Navbar({ tracks: tracksProp }) {
           </button>
         </div>
       </div>
+    </header>
 
-      <div
-        id="mobileMenu"
-        className={`nav-mobile${open ? " is-open" : ""}`}
-        aria-hidden={!open}
-      >
-        <div className="mobile-search">
-          <NavSearch />
-        </div>
+    <div
+      id="mobileMenu"
+      className={`nav-mobile${open ? " is-open" : ""}`}
+      aria-hidden={!open}
+    >
+      <div className="mobile-search">
+        <NavSearch onNavigate={closeMenu} />
+      </div>
 
         <nav className="mobile-nav-links">
           <div className={`mobile-accordion${tracksOpen ? " is-open" : ""}`}>
@@ -164,9 +170,9 @@ export default function Navbar({ tracks: tracksProp }) {
             Start practicing
           </Link>
         </nav>
-      </div>
+    </div>
 
-      {open && <button type="button" className="nav-scrim" aria-label="Close menu" onClick={closeMenu} />}
-    </header>
+    {open && <button type="button" className="nav-scrim" aria-label="Close menu" onClick={closeMenu} />}
+    </>
   );
 }

@@ -1445,6 +1445,12 @@ a.track-sidebar-link{line-height:normal;font-weight:400;letter-spacing:normal;te
 .mobile-search .nav-search input{width:100%;}
 .mobile-search .nav-search-wrap{position:relative;display:block;margin-bottom:22px;}
 .mobile-search .nav-results{width:100%;left:0;right:0;}
+/* Mobile keyboard khuli ho to viewport chhota ho jaata hai, isliye dropdown
+   ki height vh se limited rahegi aur panel scroll karwayega. */
+@media (max-width:900px){
+  .mobile-search .nav-results{max-height:min(46vh,340px);}
+  .nav-mobile{padding-bottom:calc(32px + env(safe-area-inset-bottom));}
+}
 
 .mobile-nav-links{display:flex;flex-direction:column;gap:4px;}
 .mobile-nav-link{
