@@ -1,13 +1,48 @@
 import "./globals.css";
-import { Inter, Space_Grotesk, Newsreader } from "next/font/google";
+import localFont from "next/font/local";
 import ScrollReveal from "@/components/ScrollReveal";
 import Motion3D from "@/components/Motion3D";
 import { SITE_URL, SITE_NAME, DEFAULT_TITLE } from "@/lib/site";
 
-// Wahi 3 fonts, bas ab build time pe self-host hote hai (extra network hop nahi, render-blocking CSS nahi).
-const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], display: "swap", variable: "--font-space" });
-const newsreader = Newsreader({ subsets: ["latin"], style: ["normal", "italic"], axes: ["opsz"], display: "swap", variable: "--font-newsreader" });
+// Wahi 3 fonts (Inter + Space Grotesk + Newsreader) — par ab `next/font/local`
+// se, `next/font/google` se nahi.
+//
+// Kyun badla: `next/font/google` build time par fonts.gstatic.com se font
+// download karta hai. Jab Vercel ka build machine us domain tak nahi pahunch
+// paata, download fail hota hai aur build chup-chaap SUCCESS ho jaata hai —
+// lekin site system-font fallback par chala jaati hai (serif headings aur
+// Space Grotesk gayab). Ab fonts repo me hi hain, to build ko network ki
+// zarurat hi nahi: har machine par same output, aur build thoda tez bhi.
+//
+// Files `fonts/` me hain, sirf `latin` subset (same as pehle `subsets:
+// ["latin"]`). Ye sab variable fonts hain — ek hi file me poora weight range.
+const inter = localFont({
+  src: "../fonts/inter-latin-normal.woff2",
+  weight: "100 900",
+  style: "normal",
+  display: "swap",
+  variable: "--font-inter",
+  fallback: ["system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+});
+
+const spaceGrotesk = localFont({
+  src: "../fonts/space-grotesk-latin-normal.woff2",
+  weight: "300 700",
+  style: "normal",
+  display: "swap",
+  variable: "--font-space",
+  fallback: ["system-ui", "-apple-system", "sans-serif"],
+});
+
+const newsreader = localFont({
+  src: [
+    { path: "../fonts/newsreader-latin-normal.woff2", weight: "200 800", style: "normal" },
+    { path: "../fonts/newsreader-latin-italic.woff2", weight: "200 800", style: "italic" },
+  ],
+  display: "swap",
+  variable: "--font-newsreader",
+  fallback: ["Georgia", "Times New Roman", "serif"],
+});
 
 export const viewport = {
   themeColor: [

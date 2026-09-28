@@ -7,5 +7,7 @@ node_modules
 Dockerfile
 .dockerignore
 docker-compose.yml
-next.config.js
+# NOTE: next.config.js ko kabhi mat exclude karo -- Docker build me iske bina
+# `output: "standalone"` set nahi hoga aur Dockerfile ka `.next/standalone`
+# copy step fail ho jayega.
 
