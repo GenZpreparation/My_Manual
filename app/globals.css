@@ -1285,6 +1285,276 @@ a:focus-visible, button:focus-visible{
   color:var(--ink-soft);
 }
 
+/* ================= DIAGRAMS (answer.diagrams) =================
+   components/track/Diagram.js ye classes render karta hai. Saari styling
+   sirf CSS variables se aati hai, isliye light/dark dono me automatically fit
+   ho jaati hai -- koi inline theme nahi, koi extra library nahi.            */
+
+.dg{
+  margin:0 0 16px;
+  border:1px solid var(--line-soft);
+  border-radius:12px;
+  background:var(--paper-raised);
+  padding:16px;
+}
+.dg:last-child{margin-bottom:0;}
+.dg-title{
+  font-family:var(--font-display);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.09em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  margin-bottom:12px;
+}
+.dg-caption{
+  margin:12px 0 0;
+  font-size:12.5px;
+  line-height:1.6;
+  color:var(--ink-soft);
+}
+
+/* --- tones: har renderer me same 4 values -------------------------------- */
+.dg-tone-neutral{background:var(--paper);color:var(--ink);border:1px solid var(--line);}
+.dg-tone-strong{background:var(--ink);color:var(--on-ink);border:1px solid var(--ink);}
+.dg-tone-soft{background:transparent;color:var(--ink);border:1px dashed var(--line);}
+.dg-tone-warn{
+  background:var(--paper);color:var(--ink);
+  border:1px solid var(--line);border-left:3px solid var(--ink);
+}
+
+/* --- flow: vertical flowchart -------------------------------------------- */
+.dg-flow{list-style:none;margin:0;padding:0;}
+.dg-flow-step{display:flex;flex-direction:column;align-items:center;}
+
+/* node ke upar wale connector: ek line + neeche point karte arrow ka teesra */
+.dg-arrow{
+  position:relative;
+  width:2px;height:26px;
+  background:var(--line);
+  display:flex;
+  justify-content:center;
+}
+.dg-arrow-head{
+  position:absolute;bottom:0;
+  width:0;height:0;
+  border-left:5px solid transparent;
+  border-right:5px solid transparent;
+  border-top:6px solid var(--line);
+}
+.dg-arrow-label{
+  position:absolute;
+  left:10px;top:50%;
+  transform:translateY(-50%);
+  font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+  font-size:11px;
+  color:var(--ink-faint);
+  white-space:nowrap;
+}
+
+.dg-node{
+  width:100%;
+  border-radius:10px;
+  padding:11px 14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  text-align:center;
+}
+.dg-node-label{font-size:14px;font-weight:600;line-height:1.45;}
+.dg-node-sub{font-size:12.5px;line-height:1.5;opacity:0.78;}
+
+/* "Why?" toggle -- chhota, khud se khulta hai click par */
+.dg-note{
+  width:100%;margin-top:7px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.dg-note-btn{
+  font:inherit;
+  font-size:10.5px;font-weight:600;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:inherit;
+  opacity:0.7;
+  background:transparent;
+  border:1px solid currentColor;
+  border-radius:20px;
+  padding:3px 10px;
+  cursor:pointer;
+  transition:opacity 0.15s ease;
+}
+.dg-note-btn:hover{opacity:1;}
+.dg-note-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+.dg-note-body{font-size:12.5px;line-height:1.6;text-align:center;opacity:0.85;}
+
+/* --- compare: side-by-side cards ---------------------------------------- */
+/* --dg-cols JSON se aata hai, isliye 2 ya 3 columns dono theek baithte hain */
+.dg-compare{
+  display:grid;
+  grid-template-columns:repeat(var(--dg-cols,2),minmax(0,1fr));
+  gap:10px;
+}
+.dg-col{
+  border-radius:10px;
+  padding:12px 13px;
+  min-width:0;
+  display:flex;flex-direction:column;
+}
+.dg-col-head{display:flex;flex-direction:column;gap:2px;padding-bottom:9px;}
+.dg-col-title{font-family:var(--font-display);font-size:15px;font-weight:700;line-height:1.3;}
+.dg-col-sub{font-size:11.5px;line-height:1.45;opacity:0.75;}
+.dg-col-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:10px;
+  padding:6px 0;
+  border-top:1px solid var(--line-soft);
+  min-width:0;
+}
+.dg-row-label{font-size:12.5px;color:var(--ink-soft);flex-shrink:0;}
+.dg-row-value{
+  font-size:13px;font-weight:600;
+  text-align:right;
+  overflow-wrap:anywhere;
+  min-width:0;
+}
+.dg-tv-mute{color:var(--ink-faint);font-weight:500;}
+.dg-tv-good{color:var(--ink);text-decoration:underline;text-underline-offset:2px;}
+/* strong (solid ink) tone wali column me labels on-ink colour chahiye */
+.dg-tone-strong .dg-row-label,
+.dg-tone-strong .dg-col-sub{color:var(--on-ink-soft);}
+.dg-tone-strong .dg-col-row{border-top-color:rgba(250,247,240,0.18);}
+
+/* --- matrix: decision table --------------------------------------------- */
+.dg-table-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--line-soft);}
+.dg-table{width:100%;border-collapse:collapse;font-size:13px;min-width:420px;}
+.dg-table th,.dg-table td{
+  border:1px solid var(--line-soft);
+  padding:8px 12px;
+  text-align:left;
+  vertical-align:top;
+}
+.dg-table th{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:0.03em;
+  white-space:nowrap;
+}
+.dg-table td{color:var(--ink-soft);}
+.dg-table td.is-key{color:var(--ink);font-weight:600;white-space:nowrap;}
+/* ek column highlight -- "is column ko kab chuno" wali column */
+.dg-table th.is-emphasis,
+.dg-table td.is-emphasis{
+  background:color-mix(in srgb,var(--ink) 7%,transparent);
+  color:var(--ink);
+  font-weight:600;
+}
+.dg-table tfoot td{
+  font-size:12.5px;
+  font-style:italic;
+  color:var(--ink);
+  background:color-mix(in srgb,var(--ink) 5%,transparent);
+}
+
+/* --- refs: variable -> object map ---------------------------------------- */
+.dg-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.dg-tab{
+  font:inherit;
+  font-size:12px;font-weight:600;
+  color:var(--ink-soft);
+  background:transparent;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:5px 13px;
+  min-height:30px;
+  cursor:pointer;
+  transition:background 0.15s ease,color 0.15s ease,border-color 0.15s ease;
+}
+.dg-tab:hover{border-color:var(--ink-faint);}
+.dg-tab.is-active{background:var(--ink);color:var(--on-ink);border-color:var(--ink);}
+.dg-tab:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+
+.dg-refs{display:flex;flex-direction:column;gap:8px;}
+.dg-ref{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0;}
+.dg-ref-name{
+  font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+  font-size:12.5px;font-weight:600;
+  min-width:26px;
+}
+.dg-ref-arrow{color:var(--ink-faint);font-size:13px;flex-shrink:0;}
+.dg-ref-obj{
+  border-radius:8px;
+  padding:6px 11px;
+  display:flex;align-items:baseline;gap:8px;
+  flex-wrap:wrap;
+  min-width:0;
+}
+.dg-ref-type{font-size:11px;opacity:0.7;text-transform:uppercase;letter-spacing:0.06em;}
+.dg-ref-value{
+  font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+  font-size:12.5px;
+  overflow-wrap:anywhere;
+}
+/* shared object -- dashed outline se turant dikhta hai ki do names ek hi
+   object par hain (yahi mutable-state bug ki wajah hai) */
+.dg-ref.is-shared .dg-ref-obj{border-style:dashed;border-width:2px;}
+.dg-ref-badge{
+  font-size:10.5px;font-weight:700;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:2px 8px;
+}
+.dg-note-line{
+  margin:12px 0 0;
+  padding-top:10px;
+  border-top:1px solid var(--line-soft);
+  font-size:12.5px;
+  line-height:1.6;
+  color:var(--ink);
+}
+
+/* phone par side-by-side cards stack ho jaate hain, table scroll hoti hai */
+@media (max-width:600px){
+  .dg{padding:13px;}
+  .dg-compare{grid-template-columns:1fr;}
+  .dg-arrow-label{font-size:10px;left:8px;}
+  .dg-col-row{flex-direction:column;align-items:flex-start;gap:2px;}
+  .dg-row-value{text-align:left;}
+  .dg-ref{gap:6px;}
+  .dg-ref-obj{width:100%;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .dg-tab{transition:none;}
+}
+
+/* fork: ek node se do raste. pure CSS -- SVG ki zaroorat nahi */
+.dg-fork{position:relative;width:100%;height:26px;}
+.dg-fork-stem{position:absolute;left:50%;top:0;width:2px;height:14px;background:var(--line);}
+.dg-fork-bar{position:absolute;top:14px;left:25%;right:25%;height:2px;background:var(--line);}
+.dg-branches{
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+}
+.dg-branch{
+  border-radius:10px;
+  padding:10px 12px;
+  display:flex;flex-direction:column;gap:3px;
+  text-align:center;
+}
+.dg-branch-label{font-size:13.5px;font-weight:600;line-height:1.4;}
+.dg-branch-sub{font-size:12px;line-height:1.5;opacity:0.75;}
+
 @media (prefers-reduced-motion: reduce){
   .qa-answer-wrap{animation:none;}
 }
