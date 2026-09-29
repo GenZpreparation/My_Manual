@@ -8,7 +8,7 @@
 # ---------------------------------------------------------------------------
 
 # ---------- 1. deps: sirf dependencies install (cache-friendly layer) ----------
-FROM node:20-alpine AS deps
+FROM node:26-alpine AS deps
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 # package.json ka `postinstall` -> `node patch-og.js` chalata hai, isliye ye file
@@ -19,7 +19,7 @@ COPY package.json package-lock.json patch-og.js ./
 RUN --mount=type=cache,target=/root/.npm npm ci
 
 # ---------- 2. builder: app build karta hai ----------
-FROM node:20-alpine AS builder
+FROM node:26-alpine AS builder
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 COPY --from=deps /app/node_modules ./node_modules
@@ -34,7 +34,7 @@ RUN mkdir -p public
 RUN npm run build
 
 # ---------- 3. runner: sirf production runtime, chhota final image ----------
-FROM node:20-alpine AS runner
+FROM node:26-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
