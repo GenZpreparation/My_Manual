@@ -52,173 +52,22 @@
       "category": "data-types",
       "question": "What is the difference between mutable and immutable objects in Python?",
       "answer": {
-        "short_answer": "A **mutable** object can be edited in place after it is created. An **immutable** object can never change, so an operation that looks like an edit actually builds a **new** object and moves the name onto it.",
-        "detailed_explanation": "A name in Python is only a label. It points at an object in memory, and operations never change the label itself. They either **edit the object the label points to**, or **move the label to a different object**. That single distinction is the whole idea behind mutability.\n\n- **Mutable** objects have methods that change their own contents, such as `append`, `remove`, `update`, `add` and `clear`.\n- **Immutable** objects have no such methods. `s.upper()` reads like an edit, but it returns a new object and discards the original.\n\nSo the quick test is this: after the operation, **is the original object different?** If it is, the object was mutable.\n\nA useful side effect of immutability is safe sharing. If a hundred functions hold the same string, none of them can damage it for the others. That is exactly why `str`, `int`, `tuple` and `frozenset` are immutable, and why a `tuple` can be a dictionary key while a `list` cannot.",
-        "diagrams": [
-          {
-            "type": "compare",
-            "anchor": "short",
-            "title": "The one difference that matters",
-            "columns": [
-              {
-                "title": "Mutable",
-                "sub": "list, dict, set, bytearray",
-                "tone": "neutral",
-                "rows": [
-                  {
-                    "label": "Can it change?",
-                    "value": "Yes, in place"
-                  },
-                  {
-                    "label": "Editing methods",
-                    "value": "append, add, update"
-                  },
-                  {
-                    "label": "Safe to share?",
-                    "value": "No, one bug hits all"
-                  }
-                ]
-              },
-              {
-                "title": "Immutable",
-                "sub": "int, str, tuple, frozenset",
-                "tone": "strong",
-                "rows": [
-                  {
-                    "label": "Can it change?",
-                    "value": "Never"
-                  },
-                  {
-                    "label": "What + does",
-                    "value": "Builds a new object"
-                  },
-                  {
-                    "label": "Safe to share?",
-                    "value": "Yes, free of risk"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "flow",
-            "title": "What really happens when you change a value",
-            "steps": [
-              {
-                "label": "You run an operation",
-                "sub": "x += 1   or   items.append(3)",
-                "tone": "neutral"
-              },
-              {
-                "from": "ask Python",
-                "label": "Is that object immutable?",
-                "sub": "str, int, tuple, frozenset",
-                "branches": [
-                  {
-                    "label": "Yes, immutable",
-                    "sub": "Python builds a new object and moves the name to it",
-                    "tone": "soft"
-                  },
-                  {
-                    "label": "No, mutable",
-                    "sub": "Python edits the very same object in place",
-                    "tone": "warn"
-                  }
-                ]
-              },
-              {
-                "from": "either way",
-                "label": "The name still holds one reference",
-                "sub": "What changed is the object behind it",
-                "tone": "neutral",
-                "note": "This is why a = a + 1 and a += 1 look different but end up doing the same thing to an int. On a list, a += [1] still mutates the original list in place."
-              }
-            ]
-          },
-          {
-            "type": "refs",
-            "anchor": "end",
-            "title": "The classic bug: two names, one list",
-            "states": [
-              {
-                "label": "1. Create and share",
-                "rows": [
-                  {
-                    "name": "a",
-                    "type": "list",
-                    "value": "[10, 20]",
-                    "shared": true,
-                    "badge": "same object"
-                  },
-                  {
-                    "name": "b",
-                    "type": "list",
-                    "value": "[10, 20]",
-                    "shared": true,
-                    "badge": "same object"
-                  }
-                ],
-                "note": "b = a copied nothing. Both names point to one single list sitting in memory."
-              },
-              {
-                "label": "2. a.append(30)",
-                "rows": [
-                  {
-                    "name": "a",
-                    "type": "list",
-                    "value": "[10, 20, 30]",
-                    "shared": true,
-                    "tone": "strong"
-                  },
-                  {
-                    "name": "b",
-                    "type": "list",
-                    "value": "[10, 20, 30]",
-                    "shared": true,
-                    "tone": "warn",
-                    "badge": "changed too"
-                  }
-                ],
-                "note": "b was never touched, yet it changed. The list was shared, so the edit was shared too. This is exactly why a function that takes a list can surprise its caller."
-              }
-            ]
-          }
-        ],
+        "short_answer": "Mutable objects can be changed after they are created, while immutable objects cannot be changed in place after creation.",
+        "detailed_explanation": "Mutability tells us whether an object’s state can be modified after the object exists. Lists, dictionaries, and sets are common mutable types. Integers, floats, strings, tuples, bytes, and booleans are common immutable types. With a mutable object, an operation such as append() can change the same object. With an immutable object, an apparent change creates or uses another object and the name can be rebound to it. This matters when multiple variables refer to the same object.",
         "code_examples": [
           {
-            "title": "Mutable: the object itself is edited",
-            "code": "items = [1, 2, 3]\nitems.append(4)\nprint(items)",
+            "title": "Mutable List",
+            "code": "numbers = [1, 2, 3]\nnumbers.append(4)\nprint(numbers)",
             "output": "[1, 2, 3, 4]",
-            "explanation": "append() edits the existing list, so the same object now holds four items."
+            "explanation": "The existing list is modified in place, so list is mutable."
           },
           {
-            "title": "Immutable: a brand new object is built",
+            "title": "Immutable String",
             "code": "text = 'Python'\ntext = text + ' 3'\nprint(text)",
             "output": "Python 3",
-            "explanation": "The old string is untouched. Python built a second string and moved the name text onto it."
-          },
-          {
-            "title": "Proof with id(): the same object was edited",
-            "code": "items = [1, 2]\nbefore = id(items)\nitems.append(3)\nprint(before == id(items))",
-            "output": "True",
-            "explanation": "The id never changed, which proves the list was edited in place rather than replaced."
+            "explanation": "The original string cannot be modified in place; a new string value is created and text refers to it."
           }
-        ],
-        "important_points": [
-          "`x = 5` does not store 5 inside the variable. It binds the name x to an int object that holds 5.",
-          "Assignment `b = a` never copies anything. It simply adds a second name for the same object.",
-          "Immutable does not mean the value is constant for the whole program. The name can still be re-bound to a new object at any time.",
-          "A tuple is an immutable container, but the objects inside it can be mutable. `(1, [2])` can never change its slots, yet the list inside it can.",
-          "Immutable objects are hashable by default, which is why they are allowed as dictionary keys and set members."
-        ],
-        "common_mistakes": [
-          "Writing `lst2 = lst1` and expecting a copy. Use `lst1.copy()` for a shallow copy or `copy.deepcopy(lst1)` for a deep one.",
-          "Assuming a tuple makes the whole structure immutable. `t = (1, [2, 3])` still allows `t[1].append(4)`.",
-          "Calling `.sort()` on a string or a tuple. Only lists have sort().",
-          "Using a list as a dictionary key, which raises `TypeError: unhashable type: 'list'`."
-        ],
-        "real_world_usage": "Dictionaries and sets are mutable because data has to grow and shrink as it arrives, so caches, config maps and lookup tables all depend on mutability. Immutable values are preferred for anything shared: configuration read by several modules, dictionary keys, and any value handed to a function that must not be able to alter the caller's data. Tuples are used for fixed records and function return values precisely because they cannot change after creation.",
-        "interview_tip": "Do not stop at 'list is mutable, tuple is immutable'. The interviewer wants to hear that Python has no idea what a variable holds, only that a name is a reference to an object, and that `x = 5` re-binds the name rather than changing the number. Close with one line about why that makes immutable objects safe to share, and the answer is complete."
+        ]
       }
     },
     {
@@ -226,150 +75,22 @@
       "category": "data-types",
       "question": "What are mutable and immutable data types in Python?",
       "answer": {
-        "short_answer": "**Mutable** types are `list`, `dict`, `set` and `bytearray`, plus your own class instances. **Immutable** types are `int`, `float`, `bool`, `complex`, `str`, `bytes`, `tuple`, `frozenset` and `None`.",
-        "detailed_explanation": "Every built-in type sits on one side of this line, and you can check the side at runtime instead of memorising it. Just ask whether the object has methods that edit its own contents.\n\n- **Mutable types** change in place: `list`, `dict`, `set`, `bytearray`. Your own classes are mutable by default as well.\n- **Immutable types** never change: `int`, `float`, `bool`, `complex`, `str`, `bytes`, `tuple`, `frozenset`, and the `None` singleton.\n\nTwo details trip almost everyone up. First, `int` being immutable does not make your variable constant. Writing `x = 10` and then `x = 20` is perfectly legal, because immutability is a property of the object, not of the name. Second, immutability belongs to the container and not to what the container holds. A tuple can contain a list, and that list can still be changed.",
-        "diagrams": [
-          {
-            "type": "matrix",
-            "anchor": "short",
-            "title": "Every built-in type, sorted",
-            "head": [
-              "Type",
-              "Mutable?",
-              "Hashable?",
-              "Typical job"
-            ],
-            "emphasis": 1,
-            "rows": [
-              [
-                "int, float, bool",
-                "No",
-                "Yes",
-                "Numbers and flags"
-              ],
-              [
-                "str",
-                "No",
-                "Yes",
-                "Text"
-              ],
-              [
-                "tuple",
-                "No",
-                "Yes, if items are",
-                "Fixed records, dict keys"
-              ],
-              [
-                "frozenset",
-                "No",
-                "Yes",
-                "A set you never mutate"
-              ],
-              [
-                "bytes",
-                "No",
-                "Yes",
-                "Raw binary data"
-              ],
-              [
-                "list",
-                "Yes",
-                "No",
-                "Ordered, changeable items"
-              ],
-              [
-                "dict",
-                "Yes",
-                "No",
-                "Key to value lookup"
-              ],
-              [
-                "set",
-                "Yes",
-                "No",
-                "Unique items, fast membership"
-              ],
-              [
-                "bytearray",
-                "Yes",
-                "No",
-                "Editable binary data"
-              ]
-            ],
-            "footer": [
-              "The rule behind it",
-              "Immutable is hashable",
-              "so it can be a key",
-              "Mutable is not hashable"
-            ],
-            "caption": "Immutable types are hashable automatically, which is exactly why dictionary keys and set members must be immutable. A mutable key could change while it sat inside the structure, and the lookup would break."
-          },
-          {
-            "type": "flow",
-            "title": "The gotcha: an immutable container is not a frozen structure",
-            "steps": [
-              {
-                "label": "t = (1, [2, 3])",
-                "sub": "a tuple, so its own slots can never change",
-                "tone": "neutral"
-              },
-              {
-                "from": "try t[0] = 99",
-                "label": "TypeError",
-                "sub": "tuple does not support item assignment",
-                "tone": "warn"
-              },
-              {
-                "from": "but try",
-                "label": "t[1].append(4)",
-                "sub": "this runs perfectly fine",
-                "tone": "soft",
-                "note": "The tuple only controls which objects sit in its slots, not what those objects do. The list inside it stayed mutable, so it changed while the tuple itself kept the same size."
-              },
-              {
-                "from": "so to really freeze it",
-                "label": "Freeze the inner type too",
-                "sub": "use (1, (2, 3)) or a frozenset",
-                "tone": "strong"
-              }
-            ]
-          }
-        ],
+        "short_answer": "Mutable types include list, dict, set, and bytearray. Immutable types include int, float, bool, str, tuple, bytes, and frozenset.",
+        "detailed_explanation": "The important point is whether an object can change internally without being replaced. A dictionary can gain or remove keys, and a list can gain or remove elements, so they are mutable. A string or integer cannot have its existing value changed in place. A tuple is immutable as a container, although it may contain a mutable object such as a list. Understanding this distinction helps explain references, copying, function arguments, and bugs caused by shared mutable state.",
         "code_examples": [
           {
-            "title": "Two lines that look identical",
-            "code": "items = [1, 2]\nitems[0] = 99            # fine, list is mutable\nprint(items)\n\npair = (1, 2)\npair[0] = 99             # TypeError",
-            "output": "[99, 2]\nTypeError: 'tuple' object does not support item assignment",
-            "explanation": "The first line edits the object in place. The second tries to do the same and Python refuses, because a tuple has no way to change itself."
+            "title": "Mutable Dictionary",
+            "code": "user = {'name': 'Abhi'}\nuser['age'] = 21\nprint(user)",
+            "output": "{'name': 'Abhi', 'age': 21}",
+            "explanation": "The dictionary is changed after creation."
           },
           {
-            "title": "Hashability follows mutability",
-            "code": "print({(1, 2): 'tuple key'})      # works\nprint({[1, 2]: 'list key'})       # TypeError",
-            "output": "{(1, 2): 'tuple key'}\nTypeError: unhashable type: 'list'",
-            "explanation": "A dict needs to know exactly where a key lives. If a key could mutate, that location would become wrong, so only immutable objects are accepted as keys."
-          },
-          {
-            "title": "Your own class is mutable by default",
-            "code": "class User:\n    def __init__(self, name):\n        self.name = name\n\nu = User('Abhi')\nu.name = 'Amit'\nprint(u.name)",
-            "output": "Amit",
-            "explanation": "Plain classes are mutable. Locking a class down is a deliberate extra step, which is exactly why frozen dataclasses exist."
+            "title": "Immutable Integer",
+            "code": "x = 10\nx += 5\nprint(x)",
+            "output": "15",
+            "explanation": "The integer 10 is not modified; x is rebound to the integer 15."
           }
-        ],
-        "important_points": [
-          "`int` is immutable, but `x = 1` followed by `x = 2` is not an error. You are binding the name to a different object.",
-          "Immutable types are hashable by default and mutable types are not. That is the rule behind dictionary keys and set members.",
-          "A tuple is an immutable container, yet the objects inside a tuple can still be mutable.",
-          "Your own classes are mutable unless you deliberately lock them down.",
-          "`None` is a singleton and immutable, so compare it with `is None` rather than `== None`."
-        ],
-        "common_mistakes": [
-          "Assuming `x = 1` then `x = 2` breaks because ints are immutable. It does not.",
-          "Using a list or a dict as a dictionary key and hitting `TypeError: unhashable type`.",
-          "Believing a tuple freezes everything nested inside it.",
-          "Testing with `==` and concluding nothing changed, when the object identity actually did change."
-        ],
-        "real_world_usage": "Most application code works with mutable types because real data grows. Immutable types appear wherever a value must not drift: dictionary keys, set members, configuration read by many modules, and any value passed into a function that should not be able to alter the caller's data. Type hints lean on this too, because a frozen dataclass is far safer to pass around than a plain class.",
-        "interview_tip": "Say the list off your fingers in one breath: mutable are list, dict, set and bytearray; immutable are int, float, bool, complex, str, bytes, tuple and frozenset. Then add the line that lifts the answer above memorising, which is that immutable objects are hashable, and that is why they are allowed as dictionary keys."
+        ]
       }
     },
     {
@@ -377,193 +98,22 @@
       "category": "data-types",
       "question": "What is the difference between a list and a tuple?",
       "answer": {
-        "short_answer": "Both are **ordered** collections that allow duplicates and support indexing. The real difference is mutability: a **list** can be edited in place, a **tuple** cannot. Use a list for a collection that changes, a tuple for a fixed shape.",
-        "detailed_explanation": "They behave so much alike that this is asked more than any other comparison. Both preserve order, both allow duplicates, both support indexing, slicing and iteration, and both can hold mixed types.\n\nThe difference is that a list can change after it is created and a tuple cannot. That one fact cascades into almost everything else you need to know:\n\n- A list cannot be a dictionary key or a set member, because it is unhashable. A tuple can be, provided all of its items are hashable.\n- A tuple takes slightly less memory, because it does not have to carry spare capacity for future growth.\n- Appending to a list is fast, because Python keeps spare room internally so the append usually avoids resizing.\n\nSo the practical rule is short. If the collection will change, use a list. If the shape is fixed and you want the reader to know it cannot change, use a tuple.",
-        "diagrams": [
-          {
-            "type": "compare",
-            "anchor": "short",
-            "title": "List and tuple, side by side",
-            "columns": [
-              {
-                "title": "list",
-                "sub": "[1, 2, 3]   mutable",
-                "tone": "neutral",
-                "rows": [
-                  {
-                    "label": "Can change?",
-                    "value": "Yes, in place"
-                  },
-                  {
-                    "label": "Duplicates",
-                    "value": "Allowed"
-                  },
-                  {
-                    "label": "Dict key",
-                    "value": "No, unhashable"
-                  },
-                  {
-                    "label": "Memory",
-                    "value": "Slightly more"
-                  },
-                  {
-                    "label": "Use it for",
-                    "value": "Things that grow"
-                  }
-                ]
-              },
-              {
-                "title": "tuple",
-                "sub": "(1, 2, 3)   immutable",
-                "tone": "strong",
-                "rows": [
-                  {
-                    "label": "Can change?",
-                    "value": "Never"
-                  },
-                  {
-                    "label": "Duplicates",
-                    "value": "Allowed"
-                  },
-                  {
-                    "label": "Dict key",
-                    "value": "Yes, if items hash"
-                  },
-                  {
-                    "label": "Memory",
-                    "value": "Slightly less"
-                  },
-                  {
-                    "label": "Use it for",
-                    "value": "Fixed shapes, keys"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "matrix",
-            "title": "The small things that trip people up",
-            "head": [
-              "",
-              "list",
-              "tuple"
-            ],
-            "emphasis": 2,
-            "rows": [
-              [
-                "Literal",
-                "[1, 2, 3]",
-                "(1, 2, 3)"
-              ],
-              [
-                "Empty",
-                "[]",
-                "()"
-              ],
-              [
-                "Exactly one item",
-                "[5]",
-                "(5,) - note the comma"
-              ],
-              [
-                "Indexing and slicing",
-                "Yes",
-                "Yes"
-              ],
-              [
-                "append / remove",
-                "Yes",
-                "No"
-              ],
-              [
-                "sort()",
-                "Yes, in place",
-                "No, use sorted()"
-              ],
-              [
-                "Hashable",
-                "No",
-                "Yes, if all items are"
-              ],
-              [
-                "Can be a dict key",
-                "No",
-                "Yes"
-              ]
-            ],
-            "footer": [
-              "Use it for",
-              "Collections that change",
-              "Fixed records and keys"
-            ]
-          },
-          {
-            "type": "flow",
-            "title": "Why a tuple refuses to change",
-            "steps": [
-              {
-                "label": "pair = (1, 2)",
-                "sub": "a tuple object with two fixed slots",
-                "tone": "neutral"
-              },
-              {
-                "from": "pair[0] = 99",
-                "label": "TypeError is raised",
-                "sub": "tuple does not support item assignment",
-                "tone": "warn"
-              },
-              {
-                "from": "so you write",
-                "label": "pair = (99, pair[0])",
-                "sub": "this works, but it is not an edit",
-                "tone": "soft",
-                "note": "The tuple was never modified. Python built a second tuple and moved the name onto it. That is a re-bind, exactly like adding a string together."
-              },
-              {
-                "from": "the cost",
-                "label": "A new object every time",
-                "sub": "no reuse, so rebuilding in a loop is slow",
-                "tone": "warn"
-              }
-            ]
-          }
-        ],
+        "short_answer": "A list is an ordered, mutable collection, while a tuple is an ordered, immutable collection.",
+        "detailed_explanation": "Both can store multiple values, support indexing and slicing, and can contain mixed data types. The main difference is mutability. Use a list when the collection needs to change. Use a tuple when the structure should remain fixed. Tuples can also be used as dictionary keys when all their elements are hashable; lists cannot be dictionary keys because lists are mutable and unhashable.",
         "code_examples": [
           {
-            "title": "Growing a list versus changing a tuple",
-            "code": "numbers = [1, 2, 3]\nnumbers.append(4)     # fine\nprint(numbers)\n\npair = (1, 2, 3)\npair[0] = 99          # TypeError",
-            "output": "[1, 2, 3, 4]\nTypeError: 'tuple' object does not support item assignment",
-            "explanation": "The list grows in place. The tuple has no method that can change it, so Python refuses at the first sign of an in-place edit."
+            "title": "List",
+            "code": "items = [1, 2, 3]\nitems.append(4)\nprint(items)",
+            "output": "[1, 2, 3, 4]",
+            "explanation": "A list can be changed after creation."
           },
           {
-            "title": "The comma that catches everyone",
-            "code": "not_a_tuple = (5)      # just the int 5\nreal_tuple = (5,)      # a one item tuple\n\nprint(type(not_a_tuple))\nprint(type(real_tuple))",
-            "output": "<class 'int'>\n<class 'tuple'>",
-            "explanation": "Parentheses alone do not make a tuple. Without the trailing comma, Python simply evaluates the single value and hands that back."
-          },
-          {
-            "title": "A tuple works as a dictionary key",
-            "code": "locations = {('paris', 'france'): 'eiffel tower'}\nprint(locations[('paris', 'france')])\n\ntry:\n    {[1, 2]: 'list key'}\nexcept TypeError as e:\n    print(e)",
-            "output": "eiffel tower\nunhashable type: 'list'",
-            "explanation": "A tuple of hashable items can be a key. A list cannot, because a mutable key could change while it is stored inside the dict."
+            "title": "Tuple",
+            "code": "items = (1, 2, 3)\nprint(items)",
+            "output": "(1, 2, 3)",
+            "explanation": "A tuple keeps its elements fixed and does not support item assignment."
           }
-        ],
-        "important_points": [
-          "A tuple literal needs a trailing comma to hold exactly one item: `(5,)` and not `(5)`.",
-          "A tuple is hashable only if every item inside it is hashable. A tuple holding a list is not hashable.",
-          "`sorted()` always returns a list. To get a sorted tuple use `tuple(sorted(values))`.",
-          "Returning several values from a function hands back a tuple, which is why you can unpack it directly.",
-          "Two tuples can be compared, and the comparison is element by element, left to right."
-        ],
-        "common_mistakes": [
-          "Writing `(5)` and expecting a one item tuple.",
-          "Trying to call `append`, `remove` or `sort` on a tuple.",
-          "Assuming a tuple freezes the objects inside it. `t = ([1], [2])` still allows `t[0].append(9)`.",
-          "Forgetting that unpacking works on a list too, so `a, b = [1, 2]` is perfectly valid."
-        ],
-        "real_world_usage": "Tuples are the default shape for anything fixed: the multiple return values of a function, coordinates, database rows, and the keys of a dict when a compound key is needed. Lists are used for anything that grows, such as search results, cart items or a queue. Using a tuple for fixed data also gives a small performance win, because Python does not have to reserve spare capacity for growth.",
-        "interview_tip": "Start with the one real difference, mutability, and let the rest follow as consequences instead of listing them as unrelated facts. A strong finish is that a tuple can be a dict key while a list cannot, because only immutable objects are hashable. Say that and the interviewer knows you understand why, not just what."
+        ]
       }
     },
     {
@@ -571,189 +121,22 @@
       "category": "data-types",
       "question": "What is the difference between a list and a set?",
       "answer": {
-        "short_answer": "A **list** is ordered, allows duplicates and is reached by index. A **set** is unordered, keeps only unique values and is built for fast membership tests. Use a list when position matters, a set when you need uniqueness or fast lookup.",
-        "detailed_explanation": "Both hold a group of values, but they are built to answer different questions.\n\nA list answers \"what is at position 3?\". It remembers the order you added things in, and it happily stores the same value many times. Reaching position 3 means walking from the front, so the work grows with the size of the list.\n\nA set answers \"is this value present?\". It keeps each value only once, and it remembers where each one lives using that value's hash. Looking a value up is therefore close to constant time instead of a full scan.\n\nTwo consequences follow from that. Membership in a list is a linear scan, so `value in big_list` walks the entire list. Membership in a set is a direct jump into a hash slot. And `set(...)` is the classic way to strip duplicates and make repeated lookups cheap.",
-        "diagrams": [
-          {
-            "type": "compare",
-            "anchor": "short",
-            "title": "Different questions, different tools",
-            "columns": [
-              {
-                "title": "list",
-                "sub": "[3, 1, 2, 1]",
-                "tone": "neutral",
-                "rows": [
-                  {
-                    "label": "Order",
-                    "value": "Kept"
-                  },
-                  {
-                    "label": "Duplicates",
-                    "value": "Allowed"
-                  },
-                  {
-                    "label": "Access",
-                    "value": "By index, items[0]"
-                  },
-                  {
-                    "label": "value in list",
-                    "value": "O(n) full scan"
-                  },
-                  {
-                    "label": "Use it for",
-                    "value": "Ordered items"
-                  }
-                ]
-              },
-              {
-                "title": "set",
-                "sub": "{3, 1, 2}",
-                "tone": "strong",
-                "rows": [
-                  {
-                    "label": "Order",
-                    "value": "Not kept"
-                  },
-                  {
-                    "label": "Duplicates",
-                    "value": "Removed"
-                  },
-                  {
-                    "label": "Access",
-                    "value": "No indexing"
-                  },
-                  {
-                    "label": "value in set",
-                    "value": "O(1) hash jump"
-                  },
-                  {
-                    "label": "Use it for",
-                    "value": "Unique items"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "flow",
-            "title": "Why a set lookup is fast",
-            "steps": [
-              {
-                "label": "Check 'apple' in a set of 1000 fruits",
-                "sub": "Python asks the value for its hash",
-                "tone": "neutral"
-              },
-              {
-                "from": "hash('apple')",
-                "label": "A single number comes back",
-                "sub": "the same value always gives the same number",
-                "tone": "neutral"
-              },
-              {
-                "from": "so jump straight to",
-                "label": "That one slot in the table",
-                "sub": "no scanning, no comparing against every item",
-                "tone": "strong"
-              },
-              {
-                "from": "then",
-                "label": "One comparison decides it",
-                "sub": "is the value sitting in that slot the one you asked for?",
-                "tone": "soft"
-              },
-              {
-                "from": "which also explains",
-                "label": "Why duplicates vanish",
-                "sub": "an equal value lands in the same slot, so it is not stored twice",
-                "tone": "strong"
-              }
-            ]
-          },
-          {
-            "type": "matrix",
-            "anchor": "end",
-            "title": "Choosing between them",
-            "head": [
-              "You need to...",
-              "Use a",
-              "Because"
-            ],
-            "emphasis": 1,
-            "rows": [
-              [
-                "keep the order",
-                "list",
-                "a set has no defined order"
-              ],
-              [
-                "allow duplicates",
-                "list",
-                "a set silently drops repeats"
-              ],
-              [
-                "reach items[0]",
-                "list",
-                "sets are not indexable"
-              ],
-              [
-                "check membership very often",
-                "set",
-                "O(1) instead of O(n)"
-              ],
-              [
-                "remove duplicates",
-                "set(...)",
-                "builds one from any iterable"
-              ],
-              [
-                "compare two collections",
-                "set",
-                "and, or, minus are built in"
-              ]
-            ],
-            "footer": [
-              "Remember",
-              "list is order and position",
-              "set is uniqueness and speed"
-            ]
-          }
-        ],
+        "short_answer": "A list is an ordered sequence that allows duplicates and indexing. A set stores unique elements and is designed mainly for membership testing and set operations.",
+        "detailed_explanation": "Lists are useful when order and position matter. Sets are useful when you need unique values or operations such as union and intersection. A set automatically eliminates duplicate values. Set elements must be hashable. You should not use a set when you need reliable positional access like items[0].",
         "code_examples": [
           {
-            "title": "Duplicates and order",
-            "code": "values = [1, 2, 2, 3, 1]\nprint(values)            # duplicates and order kept\n\nunique = set(values)\nprint(unique)            # duplicates removed\nprint(sorted(unique))    # sorted() brings the order back",
-            "output": "[1, 2, 2, 3, 1]\n{1, 2, 3}\n[1, 2, 3]",
-            "explanation": "A set does not remember order, so wrapping it in sorted() is the standard way to get predictable output."
+            "title": "List",
+            "code": "values = [1, 2, 2, 3]\nprint(values[1])",
+            "output": "2",
+            "explanation": "The list keeps duplicates and supports indexing."
           },
           {
-            "title": "The speed difference you can measure",
-            "code": "items = list(range(100_000))\nprint(99_999 in items)     # walks the whole list\n\nlookup = set(items)\nprint(99_999 in lookup)    # jumps straight to it",
-            "output": "True\nTrue",
-            "explanation": "Both answer True, but the list has to check element after element, while the set goes directly to the right slot."
-          },
-          {
-            "title": "Set operations a list cannot do",
-            "code": "a = {1, 2, 3}\nb = {3, 4}\n\nprint(a | b)   # union\nprint(a & b)   # intersection\nprint(a - b)   # difference",
-            "output": "{1, 2, 3, 4}\n{3}\n{1, 2}",
-            "explanation": "Union, intersection and difference come built into sets. With lists you would have to write those loops yourself."
+            "title": "Set",
+            "code": "values = {1, 2, 2, 3}\nprint(values)",
+            "output": "{1, 2, 3}",
+            "explanation": "Duplicate values are stored only once in a set. The displayed order should not be relied upon for set ordering."
           }
-        ],
-        "important_points": [
-          "Sets need hashable items, so a set of lists is not allowed, while a set of tuples is fine.",
-          "A set has no index. `values[0]` is a TypeError.",
-          "You cannot change the contents of a set in place. `add` and `remove` work, but there is no `set[0] = x`.",
-          "An empty set is `set()`, never `{}`. Curly braces create an empty dict.",
-          "To get order back, wrap it: `sorted(myset)`."
-        ],
-        "common_mistakes": [
-          "Writing `s = {}` and expecting a set. That is an empty dict, so use `set()`.",
-          "Trying `myset[0]`, or expecting `add` to preserve the order you added things in.",
-          "Putting an unhashable item such as a list inside a set and getting `TypeError: unhashable type`.",
-          "Using a list for heavy membership checks and then wondering why the loop feels slow."
-        ],
-        "real_world_usage": "Sets are the natural choice for de-duplicating records, tracking which ids have already been seen, cleaning duplicates out of user input, and comparing two collections such as the follower lists of two accounts. Lists remain right whenever order carries meaning, like a ranked results page or a transaction history.",
-        "interview_tip": "The strongest version of this answer explains the speed. Say that a set stores values in hash slots, so membership is roughly O(1), while a list has to be scanned, which is O(n). That one sentence shows you understand the data structure, and it is the part the interviewer is listening for."
+        ]
       }
     },
     {
@@ -761,188 +144,22 @@
       "category": "data-types",
       "question": "What is the difference between a list and a dictionary?",
       "answer": {
-        "short_answer": "A **list** is a sequence reached by position, so `items[0]` is the first item. A **dict** is a mapping reached by key, so `user['name']` is the value stored under that key. Use a list when order and position matter, a dict when each value has a meaningful label.",
-        "detailed_explanation": "The difference is not really about speed, it is about what you use to reach the value.\n\nA list is indexed by position, and positions are counted from zero. That is fine when the items are interchangeable, like a list of scores, but it is awkward when every item has a name. If the order changes, each index that pointed at the right thing now points at the wrong thing.\n\nA dict is indexed by key. Instead of remembering that the name sits at index 1, you ask for the name directly. The order of the keys becomes an implementation detail rather than something your code depends on.\n\nA good rule is to ask how you would describe the item. If the honest answer is \"the third one\", use a list. If the answer is something meaningful like a user id or a country code, use a dict.",
-        "diagrams": [
-          {
-            "type": "compare",
-            "anchor": "short",
-            "title": "Reached by position, or by name?",
-            "columns": [
-              {
-                "title": "list",
-                "sub": "['Amit', 'Abhi', 'Rahul']",
-                "tone": "neutral",
-                "rows": [
-                  {
-                    "label": "Reached by",
-                    "value": "Position (index)"
-                  },
-                  {
-                    "label": "Key type",
-                    "value": "Any int position"
-                  },
-                  {
-                    "label": "Key missing",
-                    "value": "IndexError"
-                  },
-                  {
-                    "label": "Duplicates",
-                    "value": "Allowed"
-                  },
-                  {
-                    "label": "Best for",
-                    "value": "Plain sequences"
-                  }
-                ]
-              },
-              {
-                "title": "dict",
-                "sub": "{'name': 'Abhi', 'age': 21}",
-                "tone": "strong",
-                "rows": [
-                  {
-                    "label": "Reached by",
-                    "value": "Key (a label)"
-                  },
-                  {
-                    "label": "Key type",
-                    "value": "Hashable only"
-                  },
-                  {
-                    "label": "Key missing",
-                    "value": "KeyError"
-                  },
-                  {
-                    "label": "Duplicates",
-                    "value": "Keys must be unique"
-                  },
-                  {
-                    "label": "Best for",
-                    "value": "Labelled records"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "matrix",
-            "title": "The same job, two tools",
-            "head": [
-              "Task",
-              "With a list",
-              "With a dict"
-            ],
-            "emphasis": 2,
-            "rows": [
-              [
-                "First item",
-                "items[0]",
-                "a known key"
-              ],
-              [
-                "Find a user's age",
-                "scan and check",
-                "user['age']"
-              ],
-              [
-                "Count entries",
-                "len(items)",
-                "len(data)"
-              ],
-              [
-                "Add a new field",
-                "not possible cleanly",
-                "data['city'] = 'Pune'"
-              ],
-              [
-                "Check something exists",
-                "in list scans",
-                "in dict is O(1)"
-              ],
-              [
-                "Remove an entry",
-                "by value or index",
-                "by key, del data['k']"
-              ],
-              [
-                "Duplicate keys",
-                "Allowed",
-                "Last write wins"
-              ]
-            ],
-            "footer": [
-              "Rule of thumb",
-              "Position matters",
-              "Name matters"
-            ]
-          },
-          {
-            "type": "flow",
-            "anchor": "end",
-            "title": "How a dict finds a value instantly",
-            "steps": [
-              {
-                "label": "user['age']",
-                "sub": "you ask for the value by its key",
-                "tone": "neutral"
-              },
-              {
-                "from": "hash('age')",
-                "label": "A number comes back",
-                "sub": "dict keys are always hashable",
-                "tone": "neutral"
-              },
-              {
-                "from": "then look in",
-                "label": "The table, at that one slot",
-                "sub": "a dict also keeps keys in insertion order, but that is a promise, not how lookup works",
-                "tone": "strong"
-              },
-              {
-                "from": "then",
-                "label": "Compare the stored key",
-                "sub": "if it matches, you get the value in one step",
-                "tone": "soft"
-              }
-            ]
-          }
-        ],
+        "short_answer": "A list stores values in sequence and normally accesses them by position, while a dictionary stores key-value pairs and accesses values by keys.",
+        "detailed_explanation": "Choose a list when you have a collection where positional order is important. Choose a dictionary when each value has a meaningful key, such as name, id, or price. List indexes are positions starting from zero. Dictionary keys must be hashable and are used to retrieve associated values. Modern Python dictionaries preserve insertion order, but their main abstraction is mapping keys to values.",
         "code_examples": [
           {
-            "title": "Position versus name",
-            "code": "students = ['Amit', 'Abhi', 'Rahul']\nprint(students[1])        # by position\n\nstudent = {'name': 'Abhi', 'age': 21}\nprint(student['name'])    # by key",
-            "output": "Abhi\nAbhi",
-            "explanation": "The same answer, but the list only works if you remember the position, while the dict asks for the thing you actually want."
+            "title": "List",
+            "code": "students = ['Amit', 'Abhi', 'Rahul']\nprint(students[1])",
+            "output": "Abhi",
+            "explanation": "The second item is accessed by its index."
           },
           {
-            "title": "What happens when the key is missing",
-            "code": "prices = {'pen': 10}\nprint(prices['pen'])\n\n# print(prices['book'])   # KeyError\nprint(prices.get('book', 0))   # 0",
-            "output": "10\n0",
-            "explanation": "Indexing with a missing key raises KeyError. The get method is the safe way to read a value that may not be there."
-          },
-          {
-            "title": "Building a dict from pairs",
-            "code": "pairs = [('name', 'Abhi'), ('age', 21)]\nprint(dict(pairs))\n\nsquares = {n: n * n for n in range(5)}\nprint(squares)",
-            "output": "{'name': 'Abhi', 'age': 21}\n{0: 0, 1: 1, 2: 4, 3: 9, 4: 16}",
-            "explanation": "A dict can be built from key value pairs, and the dict comprehension is the readable way to build one inside a loop."
+            "title": "Dictionary",
+            "code": "student = {'name': 'Abhi', 'age': 21}\nprint(student['name'])",
+            "output": "Abhi",
+            "explanation": "The value is accessed using the key name."
           }
-        ],
-        "important_points": [
-          "Dict keys must be hashable and unique. Writing the same key twice simply overwrites the old value.",
-          "Iterating a dict gives you the keys. Use `data.values()` or `data.items()` when you need the rest.",
-          "Since Python 3.7 a dict keeps insertion order, so output is predictable, but the key is still how you look things up.",
-          "`data.keys()` returns a view rather than a copy, so it reflects changes made to the dict afterwards.",
-          "A list index is a position while a dict key is a label. Confusing the two is the most common bug in this area."
-        ],
-        "common_mistakes": [
-          "Using `data[0]` and expecting the first item. A dict is not indexable by position.",
-          "Writing `data.keys()[0]`, which fails because keys() returns a view, not a list.",
-          "Letting a missing key raise KeyError in production code instead of reaching for get.",
-          "Keeping parallel lists such as a names list and an ages list, instead of a list of dicts or a dict of lists."
-        ],
-        "real_world_usage": "A dict is the default choice whenever data carries labels, which is most real application code: JSON payloads, database rows turned into records, configuration, and counting with `collections.Counter`. Lists stay the right tool for sequences where order is the point, such as a feed of results, a queue or a history.",
-        "interview_tip": "Do not answer this as a speed comparison, because that is the weaker answer. Say that a list is indexed by position and a dict is indexed by key, then give one sentence about why keys are better once the order can change. Finish with the practical rule: if you would describe the item by a name, use a dict; if you would describe it by its position, use a list."
+        ]
       }
     },
     {
