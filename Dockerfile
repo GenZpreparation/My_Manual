@@ -4,6 +4,10 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
+# package.json ka `postinstall` -> `node patch-og.js` chalata hai. Isliye ye
+# file is layer me honi chahiye, warna `npm ci` "MODULE_NOT_FOUND" se fail ho
+# jaata hai (Linux par ye script kuch nahi karti, sirf exit 0 karti hai).
+COPY patch-og.js ./
 RUN npm ci
 
 # ---------- 2. builder: app build karta hai ----------
