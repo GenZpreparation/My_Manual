@@ -15,6 +15,10 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# public/ git me track nahi hai (khali folder), isliye checkout me nahi hota.
+# Runner stage usse copy karta hai: usse pehle yahan folder bana do, warna
+# `COPY --from=builder /app/public` "not found" se build fail ho jaata hai.
+RUN mkdir -p public
 ENV NEXT_TELEMETRY_DISABLED=1
 # Build-time public env vars yahan pass ho sakte hai, e.g.:
 # ARG NEXT_PUBLIC_SITE_URL
