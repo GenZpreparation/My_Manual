@@ -56,6 +56,12 @@ export default function NavSearch({ onNavigate }) {
     setOpen(false);
     setTerm("");
     if (onNavigate) onNavigate();
+    // DSA sheet ke problems alag page (/dsa) rehte hai -- unhe `?p=<id>` se
+    // kholte hain, taaki search result seedha sahi problem par scroll ho.
+    if (r.t === "dsa") {
+      router.push(`/dsa?p=${encodeURIComponent(r.i)}`);
+      return;
+    }
     const base = `/tracks/${r.t}`;
     const url = `${base}/${r.m}?q=${r.i}`;
     if (pathname === base || pathname.startsWith(`${base}/`)) {

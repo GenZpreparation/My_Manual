@@ -2,5 +2,7 @@
   "index": "05",
   "name": "Data Structures & Algorithms",
   "icon": "🧩",
-  "meta": "arrays to graphs"
+  "meta": "718 problems · easy to hard",
+  "route": "/dsa",
+  "count": 718
 }

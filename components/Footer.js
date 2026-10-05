@@ -33,6 +33,9 @@ export default function Footer() {
           <h4>Explore</h4>
           <ul>
             <li>
+              <Link href="/dsa">DSA Questions</Link>
+            </li>
+            <li>
               <Link href="/#why">Why this</Link>
             </li>
             <li>

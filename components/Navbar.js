@@ -2,15 +2,20 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ThemeToggle from "@/components/ThemeToggle";
 import NavSearch from "@/components/NavSearch";
 
 export default function Navbar({ tracks: tracksProp }) {
   const navTracks = tracksProp || [];
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [tracksOpen, setTracksOpen] = useState(false);
   const headerRef = useRef(null);
+
+  // Active link: current page ka section navbar me highlighted rehta hai
+  const isDsa = pathname === "/dsa" || pathname.startsWith("/dsa/");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -93,6 +98,16 @@ export default function Navbar({ tracks: tracksProp }) {
             <Link href="/#why">Why this</Link>
           </div>
 
+          <div className="nav-item">
+            <Link
+              href="/dsa"
+              className={isDsa ? "is-active" : undefined}
+              aria-current={isDsa ? "page" : undefined}
+            >
+              DSA Questions
+            </Link>
+          </div>
+
           <NavSearch />
 
           <Link className="nav-cta" href="/#tracks">
@@ -164,6 +179,15 @@ export default function Navbar({ tracks: tracksProp }) {
 
           <Link href="/#why" className="mobile-nav-link" onClick={closeMenu}>
             Why this
+          </Link>
+
+          <Link
+            href="/dsa"
+            className={"mobile-nav-link" + (isDsa ? " is-active" : "")}
+            onClick={closeMenu}
+            aria-current={isDsa ? "page" : undefined}
+          >
+            DSA Questions
           </Link>
 
           <Link className="nav-cta mobile-nav-cta" href="/#tracks" onClick={closeMenu}>

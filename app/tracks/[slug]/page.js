@@ -5,7 +5,8 @@ import { SITE_NAME } from "@/lib/site";
 
 export const dynamicParams = true; // naya data/<slug> folder turant chalta hai; unknown slug notFound() deta hai
 export const generateStaticParams = () =>
-  getTracks().filter((t) => !t.comingSoon).map((t) => ({ slug: t.slug }));
+  // Jin tracks ka apna route hai (dsa -> /dsa), unka track page nahi hota.
+  getTracks().filter((t) => !t.comingSoon && !t.customRoute).map((t) => ({ slug: t.slug }));
 
 export function generateMetadata({ params }) {
   const t = getTrack(params.slug);

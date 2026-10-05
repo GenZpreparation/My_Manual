@@ -16,8 +16,45 @@ data/
 │   └── ...
 ├── java/                  <- abhi sirf track.json -> site pe "Coming soon" dikhta hai
 │   └── track.json
-├── sql/          javascript/          dsa/          system-design/
+├── dsa/                    <- LIVE, par apna page hai: /dsa
+│   ├── track.json          <- sirf navbar/home card ke liye (route: "/dsa")
+│   └── problems.json       <- 718 DSA problems (questions + practice links)
+├── sql/          javascript/          system-design/
 ```
+
+## DSA sheet alag kyun hai (`/dsa`)
+
+`data/dsa/` me track ka normal format nahi hai. Wahan **question + model answer**
+nahi, **problem + practice link** hote hai (LeetCode / GFG), aur progress user
+ke browser me localStorage me save hota hai. Isliye:
+
+- Data padhne ke liye: `lib/dsa.js` (server-only, `fs` use karta hai)
+- Page: `app/dsa/page.js` -> `/dsa`
+- Client components: `components/dsa/` (constants `lib/dsaShared.js` se)
+
+`track.json` me `"route": "/dsa"` likhne se wo track "Coming soon" nahi dikhta
+aur navbar/home/footer ka link seedha `/dsa` par jaata hai.
+
+### `problems.json` me ek problem ka format
+
+```json
+{
+  "id": "a_0001",
+  "part": "A",
+  "source": "DSA Master Sheet",
+  "difficulty": "easy",
+  "topic": "Basic Maths",
+  "subtopic": null,
+  "master_serial": 42,
+  "stars": 1,
+  "title": "Check if a number is Armstrong",
+  "links": { "leetcode": null, "gfg": "https://..." }
+}
+```
+
+`filters.topic_order_part_a` se sidebar me topics ka order tay hota hai. Problem
+add karna ho to bas `problems` array me ek entry daal do -- baaki (counts,
+difficulty totals, search index, sitemap) apne aap update ho jaata hai.
 
 ## Naya language kaise add kare (2 minute)
 
