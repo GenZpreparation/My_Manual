@@ -24,6 +24,27 @@ const nextConfig = {
       },
     ];
   },
+
+  // ---- Security hardening ----
+  // Next 14.2.35 me image-optimization API (/_next/image) ke liye ek critical
+  // advisory hai (GHSA-2xp9-vwfh-vxw4 -- AVIF input se unauthenticated RCE).
+  // 14.x line me abhi patched version nahi nikla (fix Next 16 me hai), aur
+  // `npm audit fix --force` major upgrade kar deta hai -- isliye hum endpoint
+  // ko hi band kar dete hain.
+  //
+  // Safe kyun hai: ye project `next/image` use hi nahi karta (sirf plain <img>
+  // aur static CSS/SVG icons), to ye endpoint kabhi use nahi hota. Redirect
+  // se wo surface permanently hat jata hai -- future me koi next/image add
+  // kare to usse pata chal jayega (404) ki ye path available nahi hai.
+  async redirects() {
+    return [
+      {
+        source: "/_next/image",
+        destination: "/_not-found",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

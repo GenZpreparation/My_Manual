@@ -1,4 +1,4 @@
-import { SITE_URL, SITE_NAME } from "@/lib/site";
+import { SITE_NAME } from "@/lib/site";
 
 // Web App Manifest -- yahi file browser ko batata hai ki site ko phone ke home
 // screen par "install" kaise karna hai. Next ise /manifest.webmanifest par
@@ -8,8 +8,15 @@ import { SITE_URL, SITE_NAME } from "@/lib/site";
 //   1. manifest with name + icons (192 & 512) + start_url + display
 //   2. HTTPS (Vercel pe free hai)
 //   3. ek service worker (offline + install prompt)
+//
+// ⚠️ ICONS RELATIVE PATH ME RAKHE HAIN (SITE_URL nahi use karte)
+// Agar absolute URL dete (`${SITE_URL}/icons/...`) to NEXT_PUBLIC_SITE_URL set
+// na hone par wo `http://localhost:3000/...` ban jata tha -- aur browser
+// localhost se icon load hi nahi kar pata, jisse install FAIL ho jata.
+// Relative path har domain par khud resolve ho jata hai (vercel.app bhi,
+// apna custom domain bhi), isliye domain na lene par bhi kaam karega.
 const icon = (name, size, purpose) => ({
-  src: `${SITE_URL}/icons/${name}`,
+  src: `/icons/${name}`,
   sizes: `${size}x${size}`,
   type: "image/png",
   purpose,
@@ -53,14 +60,14 @@ export default function manifest() {
         short_name: "DSA",
         description: "718 DSA problems, easy to hard",
         url: "/dsa?utm_source=pwa",
-        icons: [{ src: `${SITE_URL}/icons/icon-192.png`, sizes: "192x192" }],
+        icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }],
       },
       {
         name: "Python Interview Questions",
         short_name: "Python",
         description: "Python interview questions and answers",
         url: "/tracks/python?utm_source=pwa",
-        icons: [{ src: `${SITE_URL}/icons/icon-192.png`, sizes: "192x192" }],
+        icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }],
       },
     ],
   };
