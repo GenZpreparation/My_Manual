@@ -1,4 +1,5 @@
 import Link from "next/link";
+import InstallLink from "@/components/InstallLink";
 import { getTracks } from "@/lib/tracks";
 
 export default function Footer() {
@@ -40,6 +41,11 @@ export default function Footer() {
             </li>
             <li>
               <Link href="/#tracks">All tracks</Link>
+            </li>
+            {/* iOS me bottom bar dismiss ho jata hai, to footer me ek permanent
+                raasta chhodte hain -- yahan se bhi install kar sakte ho. */}
+            <li>
+              <InstallLink />
             </li>
             <li>
               <span className="footer-soon" title="Coming soon">Newly added questions</span>
